@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#e5edf1</color>
+    <color name="colorPrimaryDark">#e5edf1</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="font_color_blue">#ff00b0ec</color>
+    <color name="font_color_white">#ffffff</color>
+    <color name="font_color_dark">#ff030303</color>
+    <color name="font_color_light_grey">#ffacaeb0</color>
+    <dimen name="font_size_extra_small">14sp</dimen>
+
+    <color name="toolbar_bg_color">#ff2c2c7c</color>
+    <color name="edit_text_stroke_color_grey">#ffebeced</color>
+    <color name="btn_color_blue">#ff1983c3</color>
 </resources>

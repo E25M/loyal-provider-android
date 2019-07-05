@@ -1,11 +1,64 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/font_color_blue</item>
     </style>
 
+    <style name="TextViewStylePetName">
+        <item name="android:textColor">@color/font_color_blue</item>
+        <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
+    </style>
+
+    <style name="ToolBarMain">
+        <item name="android:background">@color/toolbar_bg_color</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!--style_view_header-->
+    <style name="TitleText">
+        <item name="android:textColor">@color/font_color_white</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="SelfInviteTextView">
+        <item name="android:textColor">@color/font_color_dark</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="SelfInviteDescriptionTextView">
+        <item name="android:textColor">@color/font_color_dark</item>
+        <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
+    </style>
+
+    <!--outlined text view-->
+    <style name="boxedTextFieldGrey" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edit_text_stroke_color_grey</item>
+        <item name="android:colorControlActivated">@color/font_color_light_grey</item>
+        <item name="android:textColorHint">@color/font_color_light_grey</item>
+        <item name="hintTextAppearance">@style/TextInputLayoutTextAppearance</item>
+    </style>
+
+    <style name="TextInputLayoutTextAppearance" parent="TextAppearance.AppCompat">
+        <!-- Floating label appearance here -->
+        <item name="android:textColor">@color/font_color_light_grey</item>
+    </style>
+
+    <style name="textViewStyleSmall">
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <!--button theme-->
+    <style name="AppTheme.ButtonBlue" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:colorButtonNormal">@color/btn_color_blue</item>
+        <item name="android:backgroundTint">@color/btn_color_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
 </resources>
