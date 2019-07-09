@@ -28,12 +28,13 @@
 
     <style name="SelfInviteTextView">
         <item name="android:textColor">@color/font_color_dark</item>
-        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SelfInviteDescriptionTextView">
-        <item name="android:textColor">@color/font_color_dark</item>
-        <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
+        <item name="android:textColor">@color/font_color_gray_1</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
 
     <!--outlined text view-->
@@ -58,6 +59,14 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:colorButtonNormal">@color/btn_color_blue</item>
         <item name="android:backgroundTint">@color/btn_color_blue</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
+
+    <style name="AppTheme.ButtonGray" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/font_color_dark_blue</item>
+        <item name="android:colorButtonNormal">@color/btn_color_gray</item>
+        <item name="android:backgroundTint">@color/btn_color_gray</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
