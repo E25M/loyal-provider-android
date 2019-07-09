@@ -10,6 +10,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_parent_self_invite)
 
-
+        
     }
 }

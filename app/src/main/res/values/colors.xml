@@ -6,11 +6,15 @@
 
     <color name="font_color_blue">#ff00b0ec</color>
     <color name="font_color_white">#ffffff</color>
-    <color name="font_color_dark">#ff030303</color>
+    <color name="font_color_dark">#ff000000</color>
+    <color name="font_color_gray_1">#ffa7a8a7</color>
     <color name="font_color_light_grey">#ffacaeb0</color>
-    <dimen name="font_size_extra_small">14sp</dimen>
+    <color name="font_color_dark_blue">#ff2c2c7c</color>
+
 
     <color name="toolbar_bg_color">#ff2c2c7c</color>
     <color name="edit_text_stroke_color_grey">#ffebeced</color>
-    <color name="btn_color_blue">#ff1983c3</color>
+    <color name="btn_color_blue">#ff00b0ec</color>
+    <color name="btn_color_gray">#ffe7ebf4</color>
+
 </resources>
