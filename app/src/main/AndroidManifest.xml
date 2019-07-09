@@ -11,10 +11,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".view.login.LoginActivity">
+        </activity>
         <activity android:name=".HomeScreen"/>
-        <activity android:name=".view.splash.SplashActivity"
-                  android:launchMode="singleTask">
+        <activity
+                android:name=".view.splash.SplashActivity"
+                android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
