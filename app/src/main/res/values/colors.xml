@@ -11,10 +11,11 @@
     <color name="font_color_light_grey">#ffacaeb0</color>
     <color name="font_color_dark_blue">#ff2c2c7c</color>
 
-
     <color name="toolbar_bg_color">#ff2c2c7c</color>
     <color name="edit_text_stroke_color_grey">#ffebeced</color>
     <color name="btn_color_blue">#ff00b0ec</color>
     <color name="btn_color_gray">#ffe7ebf4</color>
+
+    <color name="shadow_color_white">#a3000000</color>
 
 </resources>

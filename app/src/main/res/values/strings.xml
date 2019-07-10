@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Loyal-Provider</string>
-
     <string name="txt_loyal_inc">2019 Loyal Pet, Inc.</string>
     <string name="text_sign_up_for_loyal">Sign-Up for Loyal</string>
     <string name="text_self_invite_description">Track your pet\'s care at our hospital</string>
@@ -9,4 +7,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="link_www_loyal_pet">www.loyal.pet</string>
+
+    <string name="msg_install_new_version">Install the newest version to proceed</string>
+    <string name="msg_title_update_available">Update Available</string>
+    <string name="no_connection">No internet connection</string>
+    <string name="msg_invite_sent">Invite Sent Successfully</string>
+    <string name="msg_invite_sent_description">We have provided a link to download Loyal Consumer\n
+    Mobile Application to the email address or phone\n
+    number specified by you</string>
+    <string name="text_ok">OK</string>
 </resources>
