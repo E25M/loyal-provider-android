@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import okhttp3.RequestBody
 import pet.loyal.provider.BuildConfig
-import pet.loyal.provider.api.responses.AppVersionBaseResponse
-import pet.loyal.provider.api.responses.AppVersionResponse
-import pet.loyal.provider.api.responses.SelfInviteBaseResponse
-import pet.loyal.provider.api.responses.SelfInviteResponse
+import pet.loyal.provider.api.responses.*
 import pet.loyal.provider.api.service.ProviderAPIService
 import pet.loyal.provider.util.getRequestHeaders
 import retrofit2.Call
@@ -77,5 +74,22 @@ class ProviderRepositoryImpl: ProviderRepository {
         })
 
         return resetPasswordLiveData
+    }
+
+
+    override fun login(requestBody: RequestBody, token: String): LiveData<LoginBaseResponse> {
+        val loginLiveData = MutableLiveData<LoginBaseResponse>()
+        val call =  apiService.login(getRequestHeaders(token), requestBody)
+        val basResponse = LoginBaseResponse()
+        call.enqueue(object : Callback<LoginResponse>{
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
+            }
+        })
+        return loginLiveData
     }
 }

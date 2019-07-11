@@ -9,9 +9,11 @@ class Constants {
         const val data_login_token = "login_token"
         const val data_is_authenticated = "is_authenticated"
 
+        // url endpoints
         const val url_apk = "tablet/"
         const val url_init = "tablet/init"
         const val url_invite = "tablet/invite"
+        const val url_login = "tablet/login"
 
         const val extra_url_apk = "extra.url.apk"
         const val extra_download_apk_status = "extra.download.apk.status"

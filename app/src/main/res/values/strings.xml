@@ -5,7 +5,7 @@
     <string name="text_self_invite_description">Track your pet\'s care at our hospital</string>
     <string name="btn_name_invite">Invite</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="link_www_loyal_pet">www.loyal.pet</string>
 
@@ -17,6 +17,8 @@
     Mobile Application to the email address or phone\n
     number specified by you</string>
     <string name="text_ok">OK</string>
+
+
     <!--login screen-->
     <string name="txt_login">Login</string>
     <string name="hint_password">Password</string>
@@ -26,5 +28,11 @@
     <string name="hint_input_email">Email / User Name</string>
     <string name="txt_provider_login">Provider Login</string>
     <string name="txt_welcome">Welcome to Loyal</string>
+    <string name="msg_empty_username">Email/username cannot be empty</string>
+    <string name="msg_empty_password">Password cannot be empty</string>
+    <string name="msg_invalid_credentials">Invalid username or password</string>
+    <string name="msg_inactive_account">The account associated with this email
+        address/username has been deactivated</string>
+
 
 </resources>
