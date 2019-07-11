@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Loyal-Provider</string>
 
     <string name="txt_loyal_inc">2019 Loyal Pet, Inc.</string>
     <string name="text_sign_up_for_loyal">Sign-Up for Loyal</string>
@@ -9,4 +8,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="link_www_loyal_pet">www.loyal.pet</string>
+
+    <!--login screen-->
+    <string name="txt_login">Login</string>
+    <string name="hint_password">Password</string>
+    <string name="txt_password">Signing in …</string>
+    <string name="txt_joining_loyal">Joining Loyal is by invitation only</string>
+    <string name="btn_name_ok">OK</string>
+    <string name="hint_input_email">Email / User Name</string>
+    <string name="txt_provider_login">Provider Login</string>
+    <string name="txt_welcome">Welcome to Loyal</string>
 </resources>
