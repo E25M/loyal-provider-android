@@ -1,4 +1,5 @@
 <resources>
+
     <string name="txt_loyal_inc">2019 Loyal Pet, Inc.</string>
     <string name="text_sign_up_for_loyal">Sign-Up for Loyal</string>
     <string name="text_self_invite_description">Track your pet\'s care at our hospital</string>
@@ -16,4 +17,14 @@
     Mobile Application to the email address or phone\n
     number specified by you</string>
     <string name="text_ok">OK</string>
+    <!--login screen-->
+    <string name="txt_login">Login</string>
+    <string name="hint_password">Password</string>
+    <string name="txt_password">Signing in …</string>
+    <string name="txt_joining_loyal">Joining Loyal is by invitation only</string>
+    <string name="btn_name_ok">OK</string>
+    <string name="hint_input_email">Email / User Name</string>
+    <string name="txt_provider_login">Provider Login</string>
+    <string name="txt_welcome">Welcome to Loyal</string>
+
 </resources>

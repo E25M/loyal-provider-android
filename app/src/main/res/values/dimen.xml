@@ -5,7 +5,7 @@
     <dimen name="font_size_extra_extra_small">12sp</dimen>
     <dimen name="font_size_extra_small">14sp</dimen>
     <dimen name="font_size_small">16sp</dimen>
-    <dimen name="font_size_large">20sp</dimen>
+    <dimen name="font_size_medium">20sp</dimen>
 
     <!-- margins sizes-->
     <dimen name="margin_splash_bottom">62dp</dimen>

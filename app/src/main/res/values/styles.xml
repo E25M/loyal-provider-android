@@ -28,7 +28,7 @@
 
     <style name="SelfInviteTextView">
         <item name="android:textColor">@color/font_color_dark</item>
-        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -42,6 +42,7 @@
         <item name="boxStrokeColor">@color/edit_text_stroke_color_grey</item>
         <item name="android:colorControlActivated">@color/font_color_light_grey</item>
         <item name="android:textColorHint">@color/font_color_light_grey</item>
+        <item name="android:textColor">@color/font_color_view_header</item>
         <item name="hintTextAppearance">@style/TextInputLayoutTextAppearance</item>
     </style>
 
@@ -52,6 +53,22 @@
 
     <style name="textViewStyleSmall">
         <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="textFieldDarkGray">
+        <item name="android:textColor">@color/font_color_view_header</item>
+    </style>
+
+    <style name="textFieldBlack">
+        <item name="android:textColor">@color/font_color_black</item>
+    </style>
+
+    <style name="textFieldDarkGray.Small">
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="textFieldBlack.medium">
+        <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
     <!--button theme-->
@@ -70,4 +87,5 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
+
 </resources>

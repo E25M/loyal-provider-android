@@ -15,12 +15,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.login.LoginActivity">
-        </activity>
-        <activity android:name=".HomeScreen"/>
-        <activity
-                android:name=".view.splash.SplashActivity"
-                android:launchMode="singleTask">
+        <activity android:name=".view.login.LoginActivity"
+        android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,7 +24,11 @@
             </intent-filter>
         </activity>
         <service android:name=".services.DownloadService"/>
-
+        <activity android:name=".view.home.HomeScreen"/>
+        <activity
+                android:name=".view.splash.SplashActivity"
+                android:launchMode="singleTask">
+        </activity>
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="480b731947cac89a8ce7d8a8641550cad1faecdd"/>
