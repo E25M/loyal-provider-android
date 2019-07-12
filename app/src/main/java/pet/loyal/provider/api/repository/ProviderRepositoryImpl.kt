@@ -70,11 +70,14 @@ class ProviderRepositoryImpl : ProviderRepository {
                 if (response.isSuccessful) {
                     baseResponse.selfInviteResponse = response.body()
                 } else {
-                    val resetPasswordResponse = Gson().fromJson(
-                        response.errorBody()!!.string(), SelfInviteResponse::class.java
-                    )
-                    baseResponse.selfInviteResponse = resetPasswordResponse
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
                 }
+//                else {
+//                    val resetPasswordResponse = Gson().fromJson(
+//                        response.errorBody()!!.string(), SelfInviteResponse::class.java)
+//                    baseResponse.selfInviteResponse = resetPasswordResponse
+//                }
+
                 resetPasswordLiveData.value = baseResponse
             }
 

@@ -12,10 +12,6 @@ import retrofit2.http.*
 
 interface ProviderAPIService {
 
-    @GET(Constants.url_apk + "{apkPath}")
-    @Streaming
-    fun downloadAPK(@Query("apkPath") apkPath: String): Call<ResponseBody>
-
     @GET(Constants.url_init)
     fun getVersion(): Call<AppVersionResponse>
 

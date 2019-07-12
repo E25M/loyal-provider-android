@@ -7,6 +7,5 @@ class LoyalProviderApp: Application() {
     override fun onCreate() {
         super.onCreate()
 
-
     }
 }

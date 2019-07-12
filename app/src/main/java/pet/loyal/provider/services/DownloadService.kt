@@ -33,10 +33,10 @@ class DownloadService: IntentService("Download Service") {
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        notificationBuilder = NotificationCompat.Builder(this, "")
+        notificationBuilder = NotificationCompat.Builder(this, "channel_provider")
             .setSmallIcon(R.drawable.ic_logo)
             .setContentTitle("Download")
-            .setContentText("Downloading File")
+            .setContentText("Downloading Loyal Provider")
             .setAutoCancel(true)
         notificationManager.notify(0, notificationBuilder.build())
 
@@ -55,9 +55,9 @@ class DownloadService: IntentService("Download Service") {
 
         val retrofitInterface = retrofit.create(ProviderAPIService::class.java)
 
-        val request = retrofitInterface.downloadAPK(urlDownload)
+//        val request = retrofitInterface.downloadAPK(urlDownload)
         try {
-            downloadFile(request.execute().body())
+//            downloadFile(request.execute().body())
         } catch (e:IOException) {
             e.printStackTrace()
             Toast.makeText(applicationContext, e.message,Toast.LENGTH_SHORT).show()

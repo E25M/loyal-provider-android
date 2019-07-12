@@ -1,10 +1,7 @@
 package pet.loyal.provider.api.responses
 
 import com.google.gson.annotations.SerializedName
+import pet.loyal.provider.model.LoyalUser
 
-class SelfInviteDataResponse(@SerializedName("_id") val id:String,
-                             @SerializedName("firstName") val firstName:String,
-                             @SerializedName("lastName") val lastName:String,
-                             @SerializedName("email") val email:String,
-                             @SerializedName("status") val status:String,
-                             @SerializedName("loggedFirstTime") val loggedFirstTime:Boolean)
+class SelfInviteDataResponse(@SerializedName("data") val data: LoyalUser,
+                             @SerializedName("status") val status:String)
