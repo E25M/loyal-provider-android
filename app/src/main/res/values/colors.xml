@@ -4,10 +4,10 @@
     <color name="colorPrimaryDark">#e5edf1</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="font_color_gray_1">#ffa7a8a7</color>
-    <color name="font_color_dark_blue">#ff2c2c7c</color>
+    <!-- colors for blue app theme-->
+    <color name="colorPrimaryBlue">#ff2c2c7c</color>
 
-    <color name="toolbar_bg_color">#ff2c2c7c</color>
+    <color name="font_color_gray_1">#ffa7a8a7</color>
     <color name="edit_text_stroke_color_grey">#ffebeced</color>
     <color name="btn_color_blue">#ff00b0ec</color>
     <color name="btn_color_gray">#ffe7ebf4</color>

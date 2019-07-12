@@ -8,13 +8,21 @@
         <item name="colorAccent">@color/font_color_blue</item>
     </style>
 
+    <!--blue colored app theme-->
+    <style name="AppThemeBlue" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>
+        <item name="colorAccent">@color/colorPrimaryBlue</item>
+    </style>
+
     <style name="TextViewStylePetName">
         <item name="android:textColor">@color/font_color_blue</item>
         <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
     </style>
 
     <style name="ToolBarMain">
-        <item name="android:background">@color/toolbar_bg_color</item>
+        <item name="android:background">@color/colorPrimaryBlue</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
@@ -81,7 +89,7 @@
     </style>
 
     <style name="AppTheme.ButtonGray" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/font_color_dark_blue</item>
+        <item name="android:textColor">@color/colorPrimaryBlue</item>
         <item name="android:colorButtonNormal">@color/btn_color_gray</item>
         <item name="android:backgroundTint">@color/btn_color_gray</item>
         <item name="android:textStyle">bold</item>
