@@ -17,19 +17,19 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".view.login.LoginActivity"
                   android:screenOrientation="landscape">
-
         </activity>
-        <activity android:name=".view.home.HomeScreen">
+        <activity android:name=".view.home.HomeScreen"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
+                android:name=".view.splash.SplashActivity"
+                android:launchMode="singleTask"
+                android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity
-                android:name=".view.splash.SplashActivity"
-                android:launchMode="singleTask">
-
         </activity>
         <meta-data
                 android:name="io.fabric.ApiKey"

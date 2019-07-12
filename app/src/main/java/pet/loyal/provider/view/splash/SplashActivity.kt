@@ -99,7 +99,11 @@ class SplashActivity : AppCompatActivity() {
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
         if (appVersion.version != BuildConfig.VERSION_NAME){
-            showForceUpdatePopup()
+            if (appVersion.isForced) {
+                showForceUpdatePopup()
+            }else{
+                showUpdatePopup()
+            }
         }else{
             if (preferenceManager.isAuthenticated()){
 //                user has logged in. navigate to the home screen

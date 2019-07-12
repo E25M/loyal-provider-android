@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             val errorResponse =
-                Gson().fromJson<CommonResponse>(throwable?.message, CommonResponse::class.java)
+                Gson().fromJson(throwable?.message, CommonResponse::class.java)
             if (throwable is ConnectException) {
                 errorMessage = getString(R.string.error_no_connection)
             } else if (errorResponse != null) {
