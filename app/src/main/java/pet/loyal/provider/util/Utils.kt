@@ -76,4 +76,12 @@ fun isConnected(context: Context): Boolean {
     }
 }
 
+fun isValidEmail(email: String): Boolean {
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
+
+fun isValidPhone(phone: CharSequence): Boolean {
+    return android.util.Patterns.PHONE.matcher(phone).matches()
+}
+
 

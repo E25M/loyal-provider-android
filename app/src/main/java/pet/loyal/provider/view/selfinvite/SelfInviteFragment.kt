@@ -1,6 +1,7 @@
 package pet.loyal.provider.view.selfinvite
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -76,6 +77,8 @@ class SelfInviteFragment : Fragment() {
                             && signInResponse.errorMessage == Constants.self_invite_parent_already_exist_inactive){
                             showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                 getString(R.string.text_info))
+                        }else{
+                            showPopup(activity!!, selfInviteResponse.throwable?.message!!, "Info")
                         }
                     } else {
                         showPopup(activity!!, selfInviteResponse.throwable?.message!!, "Info")
@@ -102,16 +105,47 @@ class SelfInviteFragment : Fragment() {
         }
     }
 
+    private fun validateEmailPhone(emailPhone: String):Boolean{
+
+        return if (emailPhone.isNotEmpty()){
+            when {
+                isValidEmail(emailPhone) -> {
+                    showValidStatus()
+                    true
+                }
+                isValidPhone(emailPhone) -> {
+                    showValidStatus()
+                    true
+                }
+                else -> {
+                    selfInviteViewModel.emailPhoneError.value =
+                        resources.getString(R.string.error_invalid_email_phone)
+                    false
+                }
+            }
+        }else{
+            selfInviteViewModel.emailPhoneError.value =
+                resources.getString(R.string.error_email_phone_empty)
+            false
+        }
+    }
+
+    private fun showValidStatus(){
+        selfInviteViewModel.isEmailPhoneError.value = false
+    }
+
     private fun sendSelfInvitation(addToCurrentAccount: Boolean){
         if (isConnected(activity!!)) {
-            if (txtEmailOrPhone.text!!.isNotEmpty()) {
-                selfInviteViewModel.selfInvite(
-                    preferenceManager.getLoginToken(),
-                    Constants.sample_first_name,
-                    Constants.sample_last_name,
-                    addToCurrentAccount,
-                    txtEmailOrPhone.text.toString()
-                )
+            if (validateEmailPhone(txtEmailOrPhone.text.toString())) {
+                if (txtEmailOrPhone.text!!.isNotEmpty()) {
+                    selfInviteViewModel.selfInvite(
+                        preferenceManager.getLoginToken(),
+                        Constants.sample_first_name,
+                        Constants.sample_last_name,
+                        addToCurrentAccount,
+                        txtEmailOrPhone.text.toString()
+                    )
+                }
             }
         }else{
             val snackBar =

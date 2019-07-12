@@ -134,7 +134,11 @@ class SplashActivity : AppCompatActivity() {
                 checkPermission()
             }
             .setNegativeButton(getString(R.string.text_cancel)){ _, _ ->
-                redirectToLogin()
+                if (preferenceManager.isAuthenticated()){
+                    invokeIntent(Intent(this, HomeScreen::class.java))
+                }else{
+                    invokeIntent(Intent(this, LoginActivity::class.java))
+                }
             }
             .show()
     }

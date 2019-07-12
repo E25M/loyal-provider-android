@@ -42,6 +42,6 @@ class Constants {
 
         //sample parameters
         const val sample_first_name = "Loyal User"
-        const val sample_last_name = ""
+        const val sample_last_name = "."
     }
 }
