@@ -98,25 +98,24 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
-
-        when {
-            appVersion.version != BuildConfig.VERSION_NAME -> {
-                downloadUrl = appVersion.downloadUrl
-                if (appVersion.isForced){
-                    showForceUpdatePopup()
-                }else{
-                    showUpdatePopup()
-                }
-            }
-            preferenceManager.isAuthenticated() -> {
-                redirectToHome()
-            }
-            else -> {
-//                redirectToLogin()
+        if (appVersion.version != BuildConfig.VERSION_NAME){
+            showForceUpdatePopup()
+        }else{
+            if (preferenceManager.isAuthenticated()){
+//                user has logged in. navigate to the home screen
+                invokeIntent(Intent(this, HomeScreen::class.java))
+            }else{
+//                user hasn't logged in . navigate to the login screen
+                invokeIntent(Intent(this, LoginActivity::class.java))
             }
         }
     }
 
+    private fun invokeIntent(intent: Intent){
+        this.finish()
+        startActivity(intent)
+    }
+  
     private fun showUpdatePopup() {
 
         val builder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

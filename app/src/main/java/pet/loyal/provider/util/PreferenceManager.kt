@@ -24,9 +24,26 @@ class PreferenceManager(context: Context) {
 
     fun saveLoginToken(loginToken: String) {
         editor.putString(Constants.data_login_token, "Bearer $loginToken").commit()
+        setAuthenticated(true)
     }
 
     fun getLoginToken(): String {
         return sharedPreferences.getString(Constants.data_login_token, "")
+    }
+
+    fun setPushToken(pushToken : String){
+        editor.putString(Constants.data_push_token, pushToken).commit()
+    }
+
+    fun getPushToken() : String {
+        return sharedPreferences.getString(Constants.data_push_token, "default")
+    }
+
+    fun setDeviceId(pushToken : String){
+        editor.putString(Constants.data_device_id, pushToken).commit()
+    }
+
+    fun getDeviceId() : String {
+        return sharedPreferences.getString(Constants.data_device_id, "default")
     }
 }
