@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "178820525594",
+    "firebase_url": "https://loyal-provider.firebaseio.com",
+    "project_id": "loyal-provider",
+    "storage_bucket": "loyal-provider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178820525594:android:ef4197198d0eb439",
+        "android_client_info": {
+          "package_name": "pet.loyal.provider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178820525594-6tdl86b5nretr1ttmhrnshdesnlrjk43.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pet.loyal.provider",
+            "certificate_hash": "12abb5d947938429ca0523193804ac8cce526241"
+          }
+        },
+        {
+          "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF9SwMIbPW09YLVgxbxxFxE_ngJY-hJDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178820525594:android:8b41c0ac6ee7dbdd",
+        "android_client_info": {
+          "package_name": "pet.loyal.provider.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178820525594-jk5dd59hkm4bq17ab8jt4oe3mbgnjq7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pet.loyal.provider.dev",
+            "certificate_hash": "12abb5d947938429ca0523193804ac8cce526241"
+          }
+        },
+        {
+          "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF9SwMIbPW09YLVgxbxxFxE_ngJY-hJDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178820525594:android:44e3b84d1695e9d3",
+        "android_client_info": {
+          "package_name": "pet.loyal.provider.qa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178820525594-s77rcdcis99ht48uk5r33649jnqidks1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pet.loyal.provider.qa",
+            "certificate_hash": "12abb5d947938429ca0523193804ac8cce526241"
+          }
+        },
+        {
+          "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF9SwMIbPW09YLVgxbxxFxE_ngJY-hJDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178820525594:android:c651dbceb53cac07",
+        "android_client_info": {
+          "package_name": "pet.loyal.provider.staging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178820525594-jeeub844dlh1vp3n96b0gobqnovlgp24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pet.loyal.provider.staging",
+            "certificate_hash": "12abb5d947938429ca0523193804ac8cce526241"
+          }
+        },
+        {
+          "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF9SwMIbPW09YLVgxbxxFxE_ngJY-hJDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178820525594-2i6vnoesk1cbkf13uqhjof0agmn3p1ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
