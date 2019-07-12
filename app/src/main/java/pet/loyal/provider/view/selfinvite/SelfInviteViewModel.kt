@@ -14,19 +14,28 @@ import pet.loyal.provider.api.responses.SelfInviteBaseResponse
 
 class SelfInviteViewModel: ViewModel() {
 
-    var providerRepository: ProviderRepository = RepositoryProvider.provideProviderRepository()
+    private var providerRepository: ProviderRepository = RepositoryProvider.provideProviderRepository()
     var dialogStatus = MutableLiveData<Int>()
     var selfInviteBaseResponse: MediatorLiveData<SelfInviteBaseResponse> = MediatorLiveData()
     var liveEmailOrPhone: MutableLiveData<String> = MutableLiveData()
 
-    fun selfInvite(token: String, emailOrPhone: String): LiveData<SelfInviteBaseResponse> {
+    fun selfInvite(token: String, firstName:String, lastName: String, confirm: Boolean,
+                   emailOrPhone: String): LiveData<SelfInviteBaseResponse> {
 
         dialogStatus.value = View.VISIBLE
 
-        val jsonObject = JSONObject().put("emailOrPhone", emailOrPhone)
-        val requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString())
+        val jsonObject = JSONObject()
+        jsonObject.put("firstName", firstName)
+        jsonObject.put("lastName", lastName)
+        jsonObject.put("emailOrPhone", emailOrPhone)
+        jsonObject.put("addToCurrentAccount", confirm)
 
-        val dataSource: LiveData<SelfInviteBaseResponse> = providerRepository.selfInvite(requestBody, token)
+        val requestBody = RequestBody.create(MediaType.parse("application/json"),
+            jsonObject.toString())
+
+        val dataSource: LiveData<SelfInviteBaseResponse> = providerRepository.selfInvite(
+            requestBody, token)
+
         selfInviteBaseResponse.addSource(dataSource) { dataResponse ->
             if (this.selfInviteBaseResponse.hasActiveObservers()) {
                 this.selfInviteBaseResponse.removeSource(dataSource)

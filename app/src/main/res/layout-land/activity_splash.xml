@@ -1,28 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        tools:context=".view.splash.SplashActivity">
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/ic_logo_splash"
-               app:layout_constraintTop_toTopOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintBottom_toTopOf="@+id/textView9"/>
+    <data>
+        <variable name="viewModel" type="pet.loyal.provider.view.splash.SplashViewModel"/>
+    </data>
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/margin_splash_bottom"
-              style="@style/TextViewStylePetName"
-              android:text="@string/txt_loyal_inc"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              android:id="@+id/textView9"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            tools:context=".view.splash.SplashActivity">
+
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/ic_logo_splash"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintBottom_toTopOf="@+id/textView9"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="@dimen/margin_splash_bottom"
+                  style="@style/TextViewStylePetName"
+                  android:text="@string/txt_loyal_inc"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:id="@+id/textView9"/>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_40"
+                android:id="@+id/progressbar_splash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{viewModel.dialogStatus}"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25"
+                style="@style/textViewStyleSmall"
+                android:text="@{viewModel.liveDownloadStatus}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressbar_splash"
+                android:id="@+id/txtDownloadStatus"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
