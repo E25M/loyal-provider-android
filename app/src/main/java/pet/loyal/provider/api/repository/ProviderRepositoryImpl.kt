@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import okhttp3.RequestBody
 import pet.loyal.provider.BuildConfig
-import pet.loyal.provider.api.responses.AppVersionBaseResponse
-import pet.loyal.provider.api.responses.AppVersionResponse
-import pet.loyal.provider.api.responses.SelfInviteBaseResponse
-import pet.loyal.provider.api.responses.SelfInviteResponse
+import pet.loyal.provider.api.responses.*
 import pet.loyal.provider.api.service.ProviderAPIService
 import pet.loyal.provider.util.getRequestHeaders
 import retrofit2.Call
@@ -17,7 +14,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ProviderRepositoryImpl: ProviderRepository {
+class ProviderRepositoryImpl : ProviderRepository {
 
     var apiService: ProviderAPIService
 
@@ -42,7 +39,10 @@ class ProviderRepositoryImpl: ProviderRepository {
                 commentLiveData.value = baseResponse
             }
 
-            override fun onResponse(call: Call<AppVersionResponse>, response: Response<AppVersionResponse>) {
+            override fun onResponse(
+                call: Call<AppVersionResponse>,
+                response: Response<AppVersionResponse>
+            ) {
                 if (response.isSuccessful) {
                     baseResponse.appVersionResponse = response.body()
                 } else {
@@ -54,12 +54,19 @@ class ProviderRepositoryImpl: ProviderRepository {
         return commentLiveData
     }
 
-    override fun selfInvite(requestBody: RequestBody, token: String): LiveData<SelfInviteBaseResponse> {
+    override fun selfInvite(
+        requestBody: RequestBody,
+        token: String
+    ): LiveData<SelfInviteBaseResponse> {
         val resetPasswordLiveData: MutableLiveData<SelfInviteBaseResponse> = MutableLiveData()
-        val call: Call<SelfInviteResponse> = apiService.selfInvite(getRequestHeaders(token), requestBody)
+        val call: Call<SelfInviteResponse> =
+            apiService.selfInvite(getRequestHeaders(token), requestBody)
         val baseResponse = SelfInviteBaseResponse()
         call.enqueue(object : Callback<SelfInviteResponse> {
-            override fun onResponse(call: Call<SelfInviteResponse>, response: Response<SelfInviteResponse>) {
+            override fun onResponse(
+                call: Call<SelfInviteResponse>,
+                response: Response<SelfInviteResponse>
+            ) {
                 if (response.isSuccessful) {
                     baseResponse.selfInviteResponse = response.body()
                 } else {
@@ -81,5 +88,28 @@ class ProviderRepositoryImpl: ProviderRepository {
         })
 
         return resetPasswordLiveData
+    }
+
+
+    override fun login(requestBody: RequestBody, token: String): LiveData<LoginBaseResponse> {
+        val loginLiveData = MutableLiveData<LoginBaseResponse>()
+        val call = apiService.login(getRequestHeaders(token), requestBody)
+        val baseResponse = LoginBaseResponse()
+        call.enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    baseResponse.loginResponse = response.body()!!
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+                loginLiveData.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                loginLiveData.value = baseResponse
+            }
+        })
+        return loginLiveData
     }
 }
