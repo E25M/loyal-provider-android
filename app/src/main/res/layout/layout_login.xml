@@ -29,6 +29,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                <ProgressBar
+                        android:id="@+id/progressBar2"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.progressBarVisibility}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayout3"
                         style="@style/boxedTextFieldGrey"
@@ -44,12 +55,13 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_login_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:hint="@string/hint_input_email"
+                            android:inputType="textFilter"
                             android:lines="1"
-                            android:text="@={viewModel.loginFields.email}"
-                            android:hint="@string/hint_input_email" />
+                            android:text="@={viewModel.loginFields.email}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -68,12 +80,13 @@
                         app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_login_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_password"
-                            android:text="@={viewModel.loginFields.password}"
+                            android:inputType="textPassword"
                             android:lines="1"
-                            android:inputType="textPassword" />
+                            android:text="@={viewModel.loginFields.password}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -86,6 +99,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="32dp"
                         android:text="@string/txt_login"
+                        android:onClick="onLoginAttempt"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +133,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
                 app:layout_constraintBottom_toTopOf="@+id/textView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,17 +147,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/txt_welcome"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewModel.progressBarVisibility}"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

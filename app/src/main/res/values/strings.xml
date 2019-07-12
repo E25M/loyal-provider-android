@@ -35,4 +35,11 @@
         address/username has been deactivated</string>
 
 
+    <!-- common error codes -->
+    <string name="error_common">Unknown error occurred</string>
+    <string name="error_no_connection">No internet connection. Make sure that Wi-Fi or mobile data is turned on.
+    </string>
+    <string name="error_failed_to_connect_to_server">Failed to connect to server . Please try again.</string>
+    <string name="error_timeout">Request timed out. Please check your internet connection</string>
+
 </resources>

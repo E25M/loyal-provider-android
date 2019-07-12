@@ -22,6 +22,8 @@ import android.content.Context
 import android.widget.Toast
 import pet.loyal.provider.R
 import pet.loyal.provider.util.*
+import pet.loyal.provider.view.home.HomeScreen
+import pet.loyal.provider.view.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -74,15 +76,22 @@ class SplashActivity : AppCompatActivity() {
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
 
-        when {
-            appVersion.version != BuildConfig.VERSION_NAME -> showForceUpdatePopup()
-            preferenceManager.isAuthenticated() -> {
-
-            }
-            else -> {
-//                redirectToLogin()
+        if (appVersion.version != BuildConfig.VERSION_NAME){
+            showForceUpdatePopup()
+        }else{
+            if (preferenceManager.isAuthenticated()){
+//                user has logged in. navigate to the home screen
+                invokeIntent(Intent(this, HomeScreen::class.java))
+            }else{
+//                user hasn't logged in . navigate to the login screen
+                invokeIntent(Intent(this, LoginActivity::class.java))
             }
         }
+    }
+
+    private fun invokeIntent(intent: Intent){
+        this.finish()
+        startActivity(intent)
     }
 
     private fun showForceUpdatePopup() {
