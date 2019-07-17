@@ -99,7 +99,11 @@ class SplashActivity : AppCompatActivity() {
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
         if (appVersion.version != BuildConfig.VERSION_NAME){
-            showForceUpdatePopup()
+            if (appVersion.isForced) {
+                showForceUpdatePopup()
+            }else{
+                showUpdatePopup()
+            }
         }else{
             if (preferenceManager.isAuthenticated()){
 //                user has logged in. navigate to the home screen
@@ -130,7 +134,11 @@ class SplashActivity : AppCompatActivity() {
                 checkPermission()
             }
             .setNegativeButton(getString(R.string.text_cancel)){ _, _ ->
-                redirectToLogin()
+                if (preferenceManager.isAuthenticated()){
+                    invokeIntent(Intent(this, HomeScreen::class.java))
+                }else{
+                    invokeIntent(Intent(this, LoginActivity::class.java))
+                }
             }
             .show()
     }

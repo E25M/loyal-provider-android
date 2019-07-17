@@ -59,5 +59,7 @@
     <string name="text_info">Info</string>
     <string name="msg_parent_inactive">This parent already exists with your facility. Please
         activate by visiting parent profile.</string>
+    <string name="error_invalid_email_phone">Invalid email address/phone number</string>
+    <string name="error_email_phone_empty">Please provide an email address or your phone number</string>
 
 </resources>

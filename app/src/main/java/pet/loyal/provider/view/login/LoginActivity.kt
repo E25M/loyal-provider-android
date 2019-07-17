@@ -1,5 +1,6 @@
 package pet.loyal.provider.view.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,9 @@ import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.util.showToast
 import java.net.ConnectException
 import android.text.InputFilter
+import android.util.Log
 import kotlinx.android.synthetic.main.layout_login.*
+import pet.loyal.provider.view.home.HomeScreen
 
 
 class LoginActivity : AppCompatActivity() {
@@ -48,6 +51,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveUserData(loginResponse: LoginResponse) {
         preferenceManager.saveLoginToken(loginResponse.data.token)
+        Log.i("Token", preferenceManager.getLoginToken())
+        Log.i("DeviceId", preferenceManager.getDeviceId())
+        invokeIntent(Intent(this, HomeScreen::class.java))
     }
 
     private fun initDataBinding() {
@@ -86,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             val errorResponse =
-                Gson().fromJson<CommonResponse>(throwable?.message, CommonResponse::class.java)
+                Gson().fromJson(throwable?.message, CommonResponse::class.java)
             if (throwable is ConnectException) {
                 errorMessage = getString(R.string.error_no_connection)
             } else if (errorResponse != null) {
@@ -108,5 +114,10 @@ class LoginActivity : AppCompatActivity() {
 
         showToast(this, errorMessage)
         viewModel.progressBarVisibility.value = View.GONE
+    }
+
+    private fun invokeIntent(intent: Intent){
+        this.finish()
+        startActivity(intent)
     }
 }

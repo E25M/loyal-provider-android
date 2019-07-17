@@ -15,6 +15,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".view.home.HomeScreen"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppThemeBlue">
+        </activity>   
         <activity android:name=".view.login.LoginActivity"
         android:screenOrientation="landscape">
             <intent-filter>
@@ -24,7 +29,6 @@
             </intent-filter>
         </activity>
         <service android:name=".services.DownloadService"/>
-        <activity android:name=".view.home.HomeScreen"/>
         <activity
                 android:name=".view.splash.SplashActivity"
                 android:launchMode="singleTask">
@@ -38,6 +42,16 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

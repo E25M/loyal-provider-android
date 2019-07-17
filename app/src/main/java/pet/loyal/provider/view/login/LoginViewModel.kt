@@ -77,7 +77,7 @@ class LoginViewModel : ViewModel() {
     }
 
 
-    fun loginUser(
+    private fun loginUser(
         pushToken: String,
         deviceId: String,
         loginToken: String

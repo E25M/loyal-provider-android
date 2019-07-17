@@ -18,6 +18,8 @@ class SelfInviteViewModel: ViewModel() {
     var dialogStatus = MutableLiveData<Int>()
     var selfInviteBaseResponse: MediatorLiveData<SelfInviteBaseResponse> = MediatorLiveData()
     var liveEmailOrPhone: MutableLiveData<String> = MutableLiveData()
+    val isEmailPhoneError = MutableLiveData<Boolean>()
+    val emailPhoneError = MutableLiveData<String>()
 
     fun selfInvite(token: String, firstName:String, lastName: String, confirm: Boolean,
                    emailOrPhone: String): LiveData<SelfInviteBaseResponse> {
