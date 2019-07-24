@@ -62,4 +62,10 @@
     <string name="error_invalid_email_phone">Invalid email address/phone number</string>
     <string name="error_email_phone_empty">Please provide an email address or your phone number</string>
 
+    <!--    main menu screen   -->
+    <string name="txt_parent_sign_up">Parent Sign Up</string>
+    <string name="txt_patient_cards">Patient Cards</string>
+    <string name="txt_support">Support</string>
+    <string name="txt_settings">Settings</string>
+
 </resources>

@@ -43,5 +43,26 @@ class Constants {
         //sample parameters
         const val sample_first_name = "Loyal User"
         const val sample_last_name = "."
+
+        const val intent_type_parent_sign_up  = 0
+        const val intent_type_patient_cards = 1
+        const val intent_type_support  = 2
+        const val intent_type_settings  = 3
+
+
+        // phases
+        const val phase_expected = "Expected"
+        const val phase_check_in = "Check-In"
+        const val phase_diagnostics = "Diagnostics"
+        const val phase_preperation = "Preparation"
+        const val phase_procedure = "Procedure "
+        const val phase_dental = "Dental "
+        const val phase_surgery = "Surgery"
+        const val phase_recovery = "Recovery"
+        const val phase_hospital = "Hospital"
+        const val phase_boarding = "Boarding"
+        const val phase_discharge = "Discharge"
+        const val phase_complete = "Complete"
+
     }
 }
