@@ -11,9 +11,9 @@
     <!--blue colored app theme-->
     <style name="AppThemeBlue" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryBlue</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>
-        <item name="colorAccent">@color/colorPrimaryBlue</item>
+        <item name="colorPrimary">@color/colorPrimaryDarkBlue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorPrimaryDarkBlue</item>
     </style>
 
     <style name="TextViewStylePetName">
@@ -74,6 +74,14 @@
     <style name="textFieldBlackFont16SP">
         <item name="android:textColor">@color/font_color_black</item>
         <item name="android:textSize">@dimen/font_size_small</item>
+     </style>
+      
+    <style name="textFieldWhite">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="textFieldLightGrey">
+        <item name="android:textColor">@color/font_color_light_grey_pet_card_description</item>
     </style>
 
     <style name="textFieldDarkGray.Small">
@@ -82,6 +90,34 @@
 
     <style name="textFieldBlack.medium">
         <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <style name="textFieldBlack.small">
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="textFieldBlack.extraSmall">
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
+
+    <style name="textFieldBlack.extraExtraSmall">
+        <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
+    </style>
+
+    <style name="textFieldBlack.superSmall">
+        <item name="android:textSize">@dimen/font_size_super_small</item>
+    </style>
+
+    <style name="textFieldWhite.medium">
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <style name="textFieldLightGrey.extraExtraSmall">
+        <item name="android:textSize">@dimen/font_size_extra_extra_small</item>
+    </style>
+
+    <style name="textFieldLightGrey.superSmall">
+        <item name="android:textSize">@dimen/font_size_super_small</item>
     </style>
 
     <!--button theme-->
@@ -125,5 +161,12 @@
         <item name="android:textColor">@color/font_color_white</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
+
+<!--    <style name="ButtonStyleCard" parent="Widget.MaterialComponents.Button">-->
+<!--        <item name="android:textColor">@android:color/white</item>-->
+<!--        <item name="android:textSize">@dimen/font_size_super_small</item>-->
+<!--        <item name="android:background">?selectableItemBackground</item>-->
+<!--    </style>-->
+
 
 </resources>

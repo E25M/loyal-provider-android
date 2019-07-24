@@ -6,6 +6,7 @@
 
     <!-- colors for blue app theme-->
     <color name="colorPrimaryBlue">#ff2c2c7c</color>
+    <color name="colorPrimaryDarkBlue">#15153e</color>
 
     <color name="font_color_gray_1">#ffa7a8a7</color>
     <color name="edit_text_stroke_color_grey">#ffebeced</color>
@@ -36,6 +37,10 @@
     <color name="font_color_dark_gray_4">#ffaca8a8</color>
     <color name="font_color_dark_gray_5">#ff9b9b9b</color>
     <color name="font_color_gray">#ff868886</color>
+
+    <color name="font_color_light_grey_pet_card_description">#a7a8a7</color>
+    <color name="font_color_light_grey_pet_card_subtitle">#868886</color>
+
 
     <!-- Phase colors -->
     <color name="phase_color_expected">#00205b</color>
