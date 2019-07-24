@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/mainContainer"
+            android:orientation="vertical"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/font_color_white"
+            app:cardUseCompatPadding="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_color_gray_1"
+                android:padding="@dimen/margin_8">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="Finished surgery of tongue"
+                    style="@style/textViewWhite"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/txtDateTime"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:id="@+id/txtSentMessage"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/btnDropDown"
+                    android:text="07:09 AM, 09/22/2018"
+                    style="@style/textViewWhite"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:id="@+id/txtDateTime"/>
+
+            <ImageButton android:id="@+id/btnDropDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_8"
+                    android:src="@drawable/ic_drop_down_white"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintTop_toTopOf="@id/txtSentMessage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/txtSentMessage"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtSentMessage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:listitem="@layout/layout_photo_gallery_item"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

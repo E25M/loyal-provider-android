@@ -3,6 +3,7 @@ package pet.loyal.provider.view.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import pet.loyal.provider.R
+import pet.loyal.provider.view.editpetcard.EditPetCardFragment
 import pet.loyal.provider.view.selfinvite.SelfInviteFragment
 
 class HomeScreen : AppCompatActivity() {
@@ -15,7 +16,7 @@ class HomeScreen : AppCompatActivity() {
     }
 
     private fun loadSelfInviteFragment() {
-        val newsFeedFragment = SelfInviteFragment()
+        val newsFeedFragment = EditPetCardFragment()
         supportFragmentManager.beginTransaction().replace(R.id.mainContainer, newsFeedFragment)
             .disallowAddToBackStack().commit()
     }

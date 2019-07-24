@@ -112,4 +112,35 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
         return loginLiveData
     }
+
+    override fun getPetCardById(
+        appointmentId: String,
+        token: String
+    ): LiveData<PetCardBaseResponse> {
+        val petCardLiveData: MutableLiveData<PetCardBaseResponse> = MutableLiveData()
+        val call: Call<PetCardResponse> = apiService.getPetCardById(getRequestHeaders(token),
+            appointmentId)
+        val baseResponse = PetCardBaseResponse()
+
+        call.enqueue(object : Callback<PetCardResponse> {
+
+            override fun onFailure(call: Call<PetCardResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                petCardLiveData.value = baseResponse
+            }
+
+            override fun onResponse(
+                call: Call<PetCardResponse>,
+                response: Response<PetCardResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.petCardResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+                petCardLiveData.value = baseResponse
+            }
+        })
+        return petCardLiveData
+    }
 }

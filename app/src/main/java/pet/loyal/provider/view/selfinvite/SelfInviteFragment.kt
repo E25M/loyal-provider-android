@@ -1,7 +1,6 @@
 package pet.loyal.provider.view.selfinvite
 
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,13 +16,9 @@ import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.api.responses.SelfInviteDataResponse
-import pet.loyal.provider.api.responses.SelfInviteResponse
 import pet.loyal.provider.databinding.FragmentParentSelfInviteBinding
 import pet.loyal.provider.util.*
 import pet.loyal.provider.view.login.LoginActivity
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.util.concurrent.TimeoutException
 
 /**
  * A simple [Fragment] subclass.
@@ -136,14 +131,14 @@ class SelfInviteFragment : Fragment() {
 
     private fun sendSelfInvitation(addToCurrentAccount: Boolean){
         if (isConnected(activity!!)) {
-            if (validateEmailPhone(txtEmailOrPhone.text.toString())) {
-                if (txtEmailOrPhone.text!!.isNotEmpty()) {
+            if (validateEmailPhone(edtTxtMessage.text.toString())) {
+                if (edtTxtMessage.text!!.isNotEmpty()) {
                     selfInviteViewModel.selfInvite(
                         preferenceManager.getLoginToken(),
                         Constants.sample_first_name,
                         Constants.sample_last_name,
                         addToCurrentAccount,
-                        txtEmailOrPhone.text.toString()
+                        edtTxtMessage.text.toString()
                     )
                 }
             }
@@ -172,7 +167,7 @@ class SelfInviteFragment : Fragment() {
                 sendSelfInvitation(true)
             }
             .setNegativeButton(getString(R.string.text_cancel)){ _, _ ->
-                redirectToLogin()
+
             }
             .show()
     }
@@ -189,7 +184,7 @@ class SelfInviteFragment : Fragment() {
             )
             .setCancelable(false)
             .setPositiveButton(getString(R.string.text_ok)) { _, _ ->
-                sendSelfInvitation(true)
+
             }
             .show()
     }

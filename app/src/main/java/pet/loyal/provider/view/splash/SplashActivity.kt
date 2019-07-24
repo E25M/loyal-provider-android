@@ -99,6 +99,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
         if (appVersion.version != BuildConfig.VERSION_NAME){
+            downloadUrl = appVersion.downloadUrl
             if (appVersion.isForced) {
                 showForceUpdatePopup()
             }else{
@@ -187,75 +188,90 @@ class SplashActivity : AppCompatActivity() {
                 PERMISSION_REQUEST_WRITE_STORAGE
             )
         } else {
+
             downloadTheFile()
         }
     }
 
     private fun downloadTheFile() {
 
-        val configuration = ClientConfiguration()
-        configuration.maxErrorRetry = 3
-        configuration.connectionTimeout = 501000
-        configuration.socketTimeout = 501000
-        configuration.protocol = Protocol.HTTP
+        if (downloadUrl != null) {
+            val configuration = ClientConfiguration()
+            configuration.maxErrorRetry = 3
+            configuration.connectionTimeout = 501000
+            configuration.socketTimeout = 501000
+            configuration.protocol = Protocol.HTTP
 
-        val credentialsProvider = CognitoCachingCredentialsProvider(
-    this, Constants.aws_identity_pool_id, Regions.US_EAST_2)
+            val credentialsProvider = CognitoCachingCredentialsProvider(
+                this, Constants.aws_identity_pool_id, Regions.US_EAST_2
+            )
 
-        val s3 = AmazonS3Client(credentialsProvider) //Changed
-        s3.setRegion(Region.getRegion(Regions.US_EAST_2))
+            val s3 = AmazonS3Client(credentialsProvider) //Changed
+            s3.setRegion(Region.getRegion(Regions.US_EAST_2))
 
-        val transferUtility = TransferUtility.builder()
-            .context(applicationContext)
-            .awsConfiguration(AWSMobileClient.getInstance().configuration)
-            .s3Client(s3)
-            .build()
+            val transferUtility = TransferUtility.builder()
+                .context(applicationContext)
+                .awsConfiguration(AWSMobileClient.getInstance().configuration)
+                .s3Client(s3)
+                .build()
 
-        val folder = File("${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}")
-        if (!folder.exists()){
-            folder.mkdir()
-        }
-
-        val file = File(
-            "${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}",
-            Constants.file_apk_apk)
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-
-        val downloadObserver = transferUtility.download(Constants.s3_bucket, downloadUrl, file)
-
-        // Attach a listener to get state updates
-        downloadObserver.setTransferListener(object : TransferListener {
-            override fun onStateChanged(id: Int, state: TransferState) {
-                if (state == TransferState.COMPLETED) {
-                    // Handle a completed upload.
-                    showInstallPopup()
-                    splashViewModel.dialogStatus.value = View.GONE
-                }else if(state == TransferState.IN_PROGRESS){
-                    splashViewModel.dialogStatus.value = View.VISIBLE
-                }
+            val folder =
+                File("${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}")
+            if (!folder.exists()) {
+                folder.mkdir()
             }
 
-            override fun onProgressChanged(id: Int, current: Long, total: Long) {
-                try {
-                    val done = (((current.toDouble() / total) * 100.0).toInt()) //as Int
-                    splashViewModel.liveDownloadStatus.value = "Downloading.. $done %"
+            val file = File(
+                "${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}",
+                Constants.file_apk_apk
+            )
+            if (!file.exists()) {
+                file.createNewFile()
+            }
+
+            val downloadObserver = transferUtility.download(Constants.s3_bucket, downloadUrl, file)
+
+            // Attach a listener to get state updates
+            downloadObserver.setTransferListener(object : TransferListener {
+                override fun onStateChanged(id: Int, state: TransferState) {
+                    if (state == TransferState.COMPLETED) {
+                        // Handle a completed upload.
+                        showInstallPopup()
+                        splashViewModel.dialogStatus.value = View.GONE
+                    } else if (state == TransferState.IN_PROGRESS) {
+                        splashViewModel.dialogStatus.value = View.VISIBLE
+                    }
+                }
+
+                override fun onProgressChanged(id: Int, current: Long, total: Long) {
+                    try {
+                        val done = (((current.toDouble() / total) * 100.0).toInt()) //as Int
+                        splashViewModel.liveDownloadStatus.value = "Downloading.. $done %"
 //                    showToast(this@SplashActivity, done.toString())
-                    Log.d(TAG, "DOWNLOAD - - ID: $id, percent done = $done")
+                        Log.d(TAG, "DOWNLOAD - - ID: $id, percent done = $done")
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Trouble calculating progress percent", e)
+                    }
                 }
-                catch (e: Exception) {
-                    Log.e(TAG, "Trouble calculating progress percent", e)
+
+                override fun onError(id: Int, ex: Exception) {
+                    showPopupWithFinish(
+                        this@SplashActivity,
+                        getString(R.string.msg_download_failed),
+                        "Error"
+                    )
+                    Log.d(TAG, "DOWNLOAD ERROR - - ID: $id - - EX: ${ex.message.toString()}")
                 }
-            }
-
-            override fun onError(id: Int, ex: Exception) {
-                showPopupWithFinish(this@SplashActivity, getString(R.string.msg_download_failed), "Error")
-                Log.d(TAG, "DOWNLOAD ERROR - - ID: $id - - EX: ${ex.message.toString()}")
-            }
-        })
-
+            })
         Log.d(TAG, "Bytes Transferred: ${downloadObserver.bytesTransferred}")
+
+        }else{
+            showPopupWithFinish(
+                this@SplashActivity,
+                getString(R.string.msg_download_failed),
+                "Error"
+            )
+        }
     }
 
     private fun installApk(){
