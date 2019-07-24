@@ -30,7 +30,7 @@
     <string name="btn_name_ok">OK</string>
     <string name="hint_input_email">Email / User Name</string>
     <string name="txt_provider_login">Provider Login</string>
-    <string name="txt_welcome">Welcome to Loyal</string>
+    <string name="txt_welcome">Welcome to Loyal Pet</string>
     <string name="msg_empty_username">Email/username cannot be empty</string>
     <string name="msg_empty_password">Password cannot be empty</string>
     <string name="msg_invalid_credentials">Invalid username or password</string>
