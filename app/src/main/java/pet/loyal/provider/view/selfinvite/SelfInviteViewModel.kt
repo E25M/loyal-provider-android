@@ -29,7 +29,7 @@ class SelfInviteViewModel: ViewModel() {
         val jsonObject = JSONObject()
         jsonObject.put("firstName", firstName)
         jsonObject.put("lastName", lastName)
-        jsonObject.put("emailOrPhone", emailOrPhone)
+        jsonObject.put("phoneEmail", emailOrPhone)
         jsonObject.put("addToCurrentAccount", confirm)
 
         val requestBody = RequestBody.create(MediaType.parse("application/json"),

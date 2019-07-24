@@ -71,6 +71,11 @@
         <item name="android:textColor">@color/font_color_black</item>
     </style>
 
+    <style name="textFieldBlackFont16SP">
+        <item name="android:textColor">@color/font_color_black</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
     <style name="textFieldDarkGray.Small">
         <item name="android:textSize">@dimen/font_size_small</item>
     </style>
@@ -88,11 +93,36 @@
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
 
+    <!--button theme-->
+    <style name="AppTheme.ButtonBlack" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/font_color_white</item>
+        <item name="android:colorButtonNormal">@color/bg_color_black</item>
+        <item name="android:backgroundTint">@color/bg_color_black</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
+
     <style name="AppTheme.ButtonGray" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/colorPrimaryBlue</item>
         <item name="android:colorButtonNormal">@color/btn_color_gray</item>
         <item name="android:backgroundTint">@color/btn_color_gray</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
+
+    <style name="textFieldGrayFont10SP">
+        <item name="android:textColor">#ff868886</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="AppointmentTypeWellnessVisit">
+        <item name="android:textColor">@color/font_color_white</item>
+        <item name="android:textSize">@dimen/font_size_super_small</item>
+        <item name="android:text">General</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="textViewWhite">
+        <item name="android:textColor">@color/font_color_white</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
 

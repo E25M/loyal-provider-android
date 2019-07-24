@@ -21,6 +21,7 @@ import android.text.InputFilter
 import android.util.Log
 import kotlinx.android.synthetic.main.layout_login.*
 import pet.loyal.provider.view.home.HomeScreen
+import pet.loyal.provider.view.selfinvite.SelfInviteFragment
 
 
 class LoginActivity : AppCompatActivity() {

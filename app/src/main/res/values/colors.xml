@@ -11,11 +11,15 @@
     <color name="edit_text_stroke_color_grey">#ffebeced</color>
     <color name="btn_color_blue">#ff00b0ec</color>
     <color name="btn_color_gray">#ffe7ebf4</color>
-
+    <color name="bg_main_color">#e7ebf4ff</color>
+    <color name="bg_state_change_button">#ff15153e</color>
+    <color name="bg_color_black">#ff000000</color>
+    <color name="bg_color_gray_1">#ffa7a8a7</color>
+    <color name="bg_color_gray_2">#ffdee3ec</color>
 
     <color name="shadow_color_white">#a3000000</color>
     <!--font colors-->
-    <color name="font_color_view_header">#ff322f31</color>f
+    <color name="font_color_view_header">#ff322f31</color>
     <color name="font_color_light_grey">#ffacaeb0</color>
     <color name="font_color_blue">#ff00b0ec</color>
     <color name="font_color_dark">#ff030303</color>
@@ -31,6 +35,19 @@
     <color name="font_color_share">#ff26292d</color>
     <color name="font_color_dark_gray_4">#ffaca8a8</color>
     <color name="font_color_dark_gray_5">#ff9b9b9b</color>
+    <color name="font_color_gray">#ff868886</color>
 
-
+    <!-- Phase colors -->
+    <color name="phase_color_expected">#00205b</color>
+    <color name="phase_color_check_in">#00aeff</color>
+    <color name="phase_color_diagnostics">#ffd900</color>
+    <color name="phase_color_pre_op">#2dde98</color>
+    <color name="phase_color_procedure">#028e3a</color>
+    <color name="phase_color_dental">#006837</color>
+    <color name="phase_color_surgery">#007e43</color>
+    <color name="phase_color_recovery">#ff0092</color>
+    <color name="phase_color_hospitalized">#774aa4</color>
+    <color name="phase_color_boarding">#862633</color>
+    <color name="phase_color_discharge">#ff6a00</color>
+    <color name="phase_color_completed">#1cc7d0</color>
 </resources>

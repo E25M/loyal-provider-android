@@ -15,6 +15,9 @@ class Constants {
         const val url_init = "tablet/init"
         const val url_invite = "tablet/invite"
         const val url_login = "tablet/login"
+        const val url_appointment_by_id = "tablet/ptb/appointment/"
+
+        const val query_appointment_id = "appointment-ID"
 
         // Login fail scenarios
         const val error_invalid_credentials = "invalid_credentials"
@@ -43,5 +46,10 @@ class Constants {
         //sample parameters
         const val sample_first_name = "Loyal User"
         const val sample_last_name = "."
+
+        //Phase message view types
+        const val view_type_sent_message = 0
+        const val view_type_custom_message = 1
+        const val view_type_template_message = 2
     }
 }

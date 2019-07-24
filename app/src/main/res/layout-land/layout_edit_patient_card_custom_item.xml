@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_12">
+
+            <CheckBox android:id="@+id/chkBoxTicketMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_checkbox_blue"
+                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_8"
+                    android:background="@drawable/bg_custom_message"
+                    app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"
+                    android:id="@+id/layoutMessage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/textViewStyleSmall"
+                        android:inputType="textEmailAddress"
+                        android:id="@+id/edtTxtMessage"
+                        android:background="@null"
+                        android:minLines="2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView android:id="@+id/txtRemainingTextCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_8"
+                        android:text="100 characters remaining"
+                        app:layout_constraintTop_toBottomOf="@id/edtTxtMessage"
+                        app:layout_constraintEnd_toStartOf="@id/btnAddMessage"/>
+
+                <ImageButton android:id="@+id/btnAddMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_8"
+                        android:src="@drawable/ic_add_message"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintTop_toBottomOf="@id/edtTxtMessage"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageButton android:id="@+id/btnDropDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_16"
+                    android:src="@drawable/ic_drop_down_black"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintStart_toEndOf="@id/layoutMessage"
+                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
+
+            <ImageButton android:id="@+id/btnAddPhoto"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_add_photo_white"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:background="@drawable/bg_add_photo_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layoutMessage"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_16"
+                    app:layout_constraintTop_toBottomOf="@id/layoutMessage"
+                    app:layout_constraintStart_toEndOf="@id/btnAddPhoto"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:listitem="@layout/layout_photo_gallery_item"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

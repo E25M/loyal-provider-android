@@ -115,7 +115,7 @@
                             android:text="@{viewModel.liveEmailOrPhone}"
                             android:hint="Email or Phone Number"
                             android:inputType="textEmailAddress"
-                            android:id="@+id/txtEmailOrPhone"/>
+                            android:id="@+id/edtTxtMessage"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <Button
