@@ -60,6 +60,16 @@ fun showPopup(context: Context, message: String, title: String) {
     aDialog.show()
 }
 
+fun showAlertDialog(context: Context, title: String, message: String) {
+    val builder = AlertDialog.Builder(context)
+    builder.setTitle(title)
+    builder.setMessage(message)
+    builder.setPositiveButton(
+        context.getString(R.string.btn_name_ok)
+    ) { dialogInterface, _ -> dialogInterface.dismiss() }
+    builder.create().show()
+}
+
 fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
@@ -101,6 +111,24 @@ fun getPhaseColors(phaseId: Int, context: Context): Int {
         11 -> context.resources.getColor(R.color.phase_color_discharge, null)
         12 -> context.resources.getColor(R.color.phase_color_completed, null)
         else -> context.resources.getColor(R.color.bg_color_black, null)
+    }
+}
+
+fun getPhaseColorsOld(phaseId: Int, context: Context): Int {
+    return when (phaseId) {
+        1 -> context.resources.getColor(R.color.phase_color_expected)
+        2 -> context.resources.getColor(R.color.phase_color_check_in)
+        3 -> context.resources.getColor(R.color.phase_color_diagnostics)
+        4 -> context.resources.getColor(R.color.phase_color_pre_op)
+        5 -> context.resources.getColor(R.color.phase_color_procedure)
+        6 -> context.resources.getColor(R.color.phase_color_dental)
+        7 -> context.resources.getColor(R.color.phase_color_surgery)
+        8 -> context.resources.getColor(R.color.phase_color_recovery)
+        9 -> context.resources.getColor(R.color.phase_color_hospitalized)
+        10 -> context.resources.getColor(R.color.phase_color_boarding)
+        11 -> context.resources.getColor(R.color.phase_color_discharge)
+        12 -> context.resources.getColor(R.color.phase_color_completed)
+        else -> context.resources.getColor(R.color.bg_color_black)
     }
 }
 

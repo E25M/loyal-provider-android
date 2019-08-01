@@ -9,4 +9,4 @@ import pet.loyal.provider.model.SentMessage
 data class PetCardDataResponse(@SerializedName("appointment") val appointment:Appointment?,
                                @SerializedName("ptbSentMessages") val ptbSentMessages: ArrayList<SentMessage>,
                                @SerializedName("ptbMessageTemplates") val ptbMessageTemplates: ArrayList<MessageTemplate>,
-                               @SerializedName("phrases") val phases: ArrayList<Phase>)
+                               @SerializedName("phases") val phases: ArrayList<Phase>)

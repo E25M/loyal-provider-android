@@ -9,6 +9,17 @@ class Constants {
         const val data_login_token = "login_token"
         const val data_device_id = "device_id"
         const val data_is_authenticated = "is_authenticated"
+        const val data_user_id = "user_id"
+        const val data_user_type = "user_type"
+        const val data_user_first_name = "user_first_name"
+        const val data_user_last_name = "user_last_name"
+        const val data_user_phone = "user_phone"
+        const val data_user_email = "user_email"
+        const val data_user_designation = "user_designation"
+        const val data_user_avatar = "user_avatar"
+
+        const val data_facility_phone = "user_facility_phone"
+        const val data_facility_name = "user_facility_name"
 
         // url endpoints
         const val url_apk = "tablet/"
@@ -16,6 +27,8 @@ class Constants {
         const val url_invite = "tablet/invite"
         const val url_login = "tablet/login"
         const val url_appointment_by_id = "tablet/ptb/appointment/"
+        const val url_save_ptb_messages = "tablet/ptb/save/"
+        const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"
 
@@ -28,6 +41,7 @@ class Constants {
 
         const val extra_url_apk = "extra.url.apk"
         const val extra_download_apk_status = "extra.download.apk.status"
+        const val extra_phase_list = "extra.phase.list"
 
         const val action_download_apk = "pet.loyal.provider.download.apk"
 
@@ -51,5 +65,12 @@ class Constants {
         const val view_type_sent_message = 0
         const val view_type_custom_message = 1
         const val view_type_template_message = 2
+        const val custom_message_character_limit = 100
+
+        //select image
+        const val folder_loyal = "/Loyal"
+        const val captured_pic_name = "captured_pic_name"
+
+        const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
     }
 }

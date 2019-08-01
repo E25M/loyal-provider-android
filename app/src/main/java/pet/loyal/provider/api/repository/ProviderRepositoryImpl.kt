@@ -143,4 +143,40 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
         return petCardLiveData
     }
+
+    override fun savePTBMessage(
+        requestBody: RequestBody,
+        token: String
+    ): LiveData<SavePTBMessageBaseResponse> {
+        val savePTBMessageLiveData: MutableLiveData<SavePTBMessageBaseResponse> = MutableLiveData()
+        val call: Call<SavePTBMessageResponse> =
+            apiService.savePTBMessage(getRequestHeaders(token), requestBody)
+        val baseResponse = SavePTBMessageBaseResponse()
+        call.enqueue(object : Callback<SavePTBMessageResponse> {
+            override fun onResponse(
+                call: Call<SavePTBMessageResponse>,
+                response: Response<SavePTBMessageResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.savePTBMessageResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+//                else {
+//                    val resetPasswordResponse = Gson().fromJson(
+//                        response.errorBody()!!.string(), SelfInviteResponse::class.java)
+//                    baseResponse.selfInviteResponse = resetPasswordResponse
+//                }
+
+                savePTBMessageLiveData.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<SavePTBMessageResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                savePTBMessageLiveData.value = baseResponse
+            }
+        })
+
+        return savePTBMessageLiveData
+    }
 }

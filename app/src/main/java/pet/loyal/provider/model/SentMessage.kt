@@ -8,4 +8,5 @@ data class SentMessage(@SerializedName("phaseMessageId") val phaseMessageId:Stri
                        @SerializedName("phaseId") val phaseId:Int,
                        @SerializedName("appointmentId") val appointmentId: String,
                        @SerializedName("message") val message: String,
-                       @SerializedName("dateTime") val dateTime:String)
+                       @SerializedName("dateTime") val dateTime:String,
+                       @SerializedName("gallery") val gallery:ArrayList<String>?)

@@ -94,4 +94,10 @@ dependencies {
     implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') {
         transitive = true
     }
+
+    //  picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //  cloudinary
+    implementation 'com.cloudinary:cloudinary-android:1.24.0'
 }

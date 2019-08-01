@@ -63,6 +63,11 @@
         <item name="android:textSize">@dimen/font_size_small</item>
     </style>
 
+    <style name="textViewStyleExtraSmall">
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+        <item name="android:textColor">@color/font_color_black</item>
+    </style>
+
     <style name="textFieldDarkGray">
         <item name="android:textColor">@color/font_color_view_header</item>
     </style>
@@ -124,6 +129,14 @@
     <style name="textViewWhite">
         <item name="android:textColor">@color/font_color_white</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
+
+    <style name="AppTheme.ButtonBlueText">
+        <item name="android:textColor">@color/font_color_blue</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+        <item name="android:backgroundTint">@color/font_color_white</item>
+        <item name="android:colorButtonNormal">@color/font_color_white</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>

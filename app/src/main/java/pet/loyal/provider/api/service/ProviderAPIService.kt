@@ -1,10 +1,7 @@
 package pet.loyal.provider.api.service
 
 import okhttp3.RequestBody
-import pet.loyal.provider.api.responses.AppVersionResponse
-import pet.loyal.provider.api.responses.LoginResponse
-import pet.loyal.provider.api.responses.PetCardResponse
-import pet.loyal.provider.api.responses.SelfInviteResponse
+import pet.loyal.provider.api.responses.*
 import pet.loyal.provider.util.Constants
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,4 +23,8 @@ interface ProviderAPIService {
     @POST(Constants.url_login)
     fun login(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
             Call<LoginResponse>
+
+    @POST(Constants.url_save_ptb_messages)
+    fun savePTBMessage(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
+            Call<SavePTBMessageResponse>
 }
