@@ -5,7 +5,6 @@
 
     <androidx.cardview.widget.CardView
             android:id="@+id/mainContainer"
-            android:orientation="vertical"
             app:cardElevation="2dp"
             app:cardBackgroundColor="@color/font_color_white"
             app:cardUseCompatPadding="true"
@@ -20,7 +19,7 @@
             <CheckBox android:id="@+id/chkBoxTicketMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_checkbox"
+                    android:button="@drawable/bg_checkbox"
                     app:layout_constraintTop_toTopOf="@id/layoutMessage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
@@ -31,18 +30,27 @@
                     style="@style/boxedTextFieldGrey"
                     app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     app:layout_constraintEnd_toStartOf="@id/btnDropDown"
                     android:id="@+id/layoutMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:theme="@style/textViewStyleSmall"
+                        android:theme="@style/textViewStyleExtraSmall"
                         android:inputType="textEmailAddress"
                         android:id="@+id/edtTxtMessage"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView android:id="@+id/txtMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/textViewStyleExtraSmall"
+                    app:layout_constraintStart_toStartOf="@id/layoutMessage"
+                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
+                    app:layout_constraintEnd_toEndOf="@id/layoutMessage"
+                    app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
 
             <ImageButton android:id="@+id/btnDropDown"
                     android:layout_width="wrap_content"
@@ -65,6 +73,7 @@
                     app:layout_constraintTop_toBottomOf="@id/layoutMessage"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewImageGallery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"

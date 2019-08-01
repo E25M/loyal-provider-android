@@ -6,6 +6,7 @@
     <data>
         <variable name="viewModel"
                 type="pet.loyal.provider.view.editpetcard.EditPetCardViewModel"/>
+        <import type="pet.loyal.provider.util.AvatarImageViewBindingUtil" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,30 +18,34 @@
         <androidx.cardview.widget.CardView
                 android:layout_width="262dp"
                 android:layout_height="190dp"
-                android:background="@drawable/bg_pet_details"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="0dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/bg_pet_details"
                     android:paddingBottom="16sp">
 
                 <ImageView
                         android:layout_width="0dp"
                         android:layout_height="4dp"
-                        android:src="@drawable/bg_edit_patient_card_deco"
+                        app:setSrcDrawable="@{viewModel.livePhaseColorDrawable}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
+
                 <cn.carbs.android.avatarimageview.library.AvatarImageView
                         android:id="@+id/imgPetProfile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_margin="16dp"
+                        app:setImage="@{viewModel.livePetImage}"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/img_pet_sample"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                         android:layout_width="wrap_content"
@@ -49,7 +54,7 @@
                         android:layout_marginTop="8dp"
                         android:id="@+id/txtPetName"
                         style="@style/textFieldBlackFont16SP"
-                        android:text="Fiona, Devis"
+                        android:text="@{viewModel.livePetName}"
                         app:layout_constraintStart_toEndOf="@id/imgPetProfile"
                         app:layout_constraintTop_toTopOf="@id/imgPetProfile" />
 
@@ -59,7 +64,7 @@
                         android:layout_marginStart="16dp"
                         android:id="@+id/txtPetDetails"
                         style="@style/textFieldGrayFont10SP"
-                        android:text="Equidoe, Pony\nFemale"
+                        android:text="@{viewModel.liveBreedSpecies}"
                         app:layout_constraintStart_toEndOf="@id/imgPetProfile"
                         app:layout_constraintTop_toBottomOf="@id/txtPetName" />
 
@@ -69,9 +74,11 @@
                         android:paddingStart="8dp"
                         android:paddingTop="4dp"
                         android:paddingEnd="8dp"
-                        android:paddingBottom="8dp"
+                        android:gravity="center"
+                        android:text="@{viewModel.livePhase}"
+                        android:paddingBottom="4dp"
                         android:layout_marginStart="16dp"
-                        android:background="@drawable/bg_general"
+                        app:setDrawable="@{viewModel.liveColor}"
                         style="@style/AppointmentTypeWellnessVisit"
                         app:layout_constraintTop_toBottomOf="@id/txtPetDetails"
                         app:layout_constraintStart_toEndOf="@id/imgPetProfile"/>
@@ -125,14 +132,16 @@
     <androidx.cardview.widget.CardView
             android:layout_width="678dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_pet_details"
+            app:cardCornerRadius="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_8">
+                android:background="@drawable/bg_messages"
+                android:padding="@dimen/margin_8">
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewMessages"
@@ -145,26 +154,37 @@
                     app:layout_constraintBottom_toTopOf="@id/btnCancel"
                     tools:listitem="@layout/layout_edit_patient_card_item"/>
 
-            <Button android:id="@+id/btnCancel"
+            <Button android:id="@+id/btnUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_update"
                     android:layout_marginEnd="@dimen/margin_16"
                     android:layout_marginBottom="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerViewMessages"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <Button android:id="@+id/btnUpdate"
+            <Button android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_cancel"
                     style="@style/AppTheme.ButtonBlack"
                     android:layout_marginBottom="4dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintTop_toTopOf="@id/btnCancel"
-                    app:layout_constraintEnd_toStartOf="@id/btnCancel"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerViewMessages"
+                    app:layout_constraintTop_toTopOf="@id/btnUpdate"
+                    app:layout_constraintEnd_toStartOf="@id/btnUpdate"
                     app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="@{viewModel.liveProgressDialog}"
+                    app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

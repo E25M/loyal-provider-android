@@ -34,7 +34,13 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="SelfInviteTextView">
+    <style name="SelfInviteTextView">=======
+data class Phase (
+    @SerializedName("id") val id : String,
+    @SerializedName("name") val name : String
+)
+
+>>>>>>> 6667cdcae32d3877062103eab9f878a7154462dc
         <item name="android:textColor">@color/font_color_dark</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textStyle">bold</item>
@@ -61,6 +67,11 @@
 
     <style name="textViewStyleSmall">
         <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="textViewStyleExtraSmall">
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+        <item name="android:textColor">@color/font_color_black</item>
     </style>
 
     <style name="textFieldDarkGray">
@@ -162,11 +173,17 @@
         <item name="android:textSize">@dimen/font_size_extra_small</item>
     </style>
 
+    <style name="AppTheme.ButtonBlueText">
+        <item name="android:textColor">@color/font_color_blue</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+        <item name="android:backgroundTint">@color/font_color_white</item>
+        <item name="android:colorButtonNormal">@color/font_color_white</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 <!--    <style name="ButtonStyleCard" parent="Widget.MaterialComponents.Button">-->
 <!--        <item name="android:textColor">@android:color/white</item>-->
 <!--        <item name="android:textSize">@dimen/font_size_super_small</item>-->
 <!--        <item name="android:background">?selectableItemBackground</item>-->
 <!--    </style>-->
-
 
 </resources>

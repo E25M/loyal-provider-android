@@ -17,6 +17,7 @@
     <color name="bg_color_black">#ff000000</color>
     <color name="bg_color_gray_1">#ffa7a8a7</color>
     <color name="bg_color_gray_2">#ffdee3ec</color>
+    <color name="bg_color_gray_3">#fff6f6f6</color>
 
     <color name="shadow_color_white">#a3000000</color>
     <!--font colors-->

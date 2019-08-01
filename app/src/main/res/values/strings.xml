@@ -37,7 +37,6 @@
     <string name="msg_inactive_account">The account associated with this email
         address/username has been deactivated</string>
 
-
     <!-- common error codes -->
     <string name="error_common">Unknown error occurred</string>
     <string name="error_no_connection">No internet connection. Make sure that Wi-Fi or mobile data is turned on.
@@ -62,6 +61,14 @@
     <string name="error_invalid_email_phone">Invalid email address/phone number</string>
     <string name="error_email_phone_empty">Please provide an email address or your phone number</string>
 
+    <!-- edit pet card screen -->
+    <string name="text_take_a_photo">Take a photo</string>
+    <string name="text_choose_a_photo">Choose a photo</string>
+
+    <string name="error_upload_failed">Upload failed</string>
+    <string name="error_no_selected_ptb_message">Please select at least one message to proceed</string>
+    <string name="text_add_new_message">Add new message</string>
+    <string name="text_done">Done</string>
     <!--    main menu screen   -->
     <string name="txt_parent_sign_up">Parent Sign Up</string>
     <string name="txt_patient_cards">Patient Cards</string>

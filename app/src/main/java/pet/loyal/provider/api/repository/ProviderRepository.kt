@@ -14,6 +14,11 @@ interface ProviderRepository {
 
     fun login(requestBody: RequestBody, token: String):
             LiveData<LoginBaseResponse>
+  
+    fun getPetCardById(appointmentId: String, token: String): LiveData<PetCardBaseResponse>
+
+    fun savePTBMessage(requestBody: RequestBody , token: String ) :
+            LiveData<SavePTBMessageBaseResponse>
 
     fun getPetCardById(appointmentId: String, token: String):
             LiveData<PetCardBaseResponse>

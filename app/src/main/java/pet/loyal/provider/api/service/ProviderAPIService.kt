@@ -26,6 +26,10 @@ interface ProviderAPIService {
     fun login(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
             Call<LoginResponse>
 
+    @POST(Constants.url_save_ptb_messages)
+    fun savePTBMessage(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
+            Call<SavePTBMessageResponse>
+  
     @POST(Constants.url_get_ptb)
     fun getPetTrackingBoard(
         @HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody
@@ -37,4 +41,5 @@ interface ProviderAPIService {
     fun getfacilityList(
        @HeaderMap hashMap: HashMap<String, String>
     ): Call<GetFacilityResponse>
+  
 }
