@@ -118,8 +118,10 @@ class ProviderRepositoryImpl : ProviderRepository {
         token: String
     ): LiveData<PetCardBaseResponse> {
         val petCardLiveData: MutableLiveData<PetCardBaseResponse> = MutableLiveData()
-        val call: Call<PetCardResponse> = apiService.getPetCardById(getRequestHeaders(token),
-            appointmentId)
+        val call: Call<PetCardResponse> = apiService.getPetCardById(
+            getRequestHeaders(token),
+            appointmentId
+        )
         val baseResponse = PetCardBaseResponse()
 
         call.enqueue(object : Callback<PetCardResponse> {
@@ -142,5 +144,67 @@ class ProviderRepositoryImpl : ProviderRepository {
             }
         })
         return petCardLiveData
+    }
+
+
+    override fun getPetTrackingBoard(
+        requestBody: RequestBody,
+        token: String
+    ): LiveData<PetTrackingBoardBaseResponse> {
+        val petTrackingBoardResponse = MutableLiveData<PetTrackingBoardBaseResponse>()
+        val call = apiService.getPetTrackingBoard(getRequestHeaders(token), requestBody)
+        var baseResponse = PetTrackingBoardBaseResponse()
+
+        call.enqueue(object : Callback<PetTrackingBoardResponse> {
+
+            override fun onFailure(call: Call<PetTrackingBoardResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                petTrackingBoardResponse.value = baseResponse
+            }
+
+            override fun onResponse(
+                call: Call<PetTrackingBoardResponse>,
+                response: Response<PetTrackingBoardResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.petTrackingBoardResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+                petTrackingBoardResponse.value = baseResponse
+            }
+
+        })
+
+        return petTrackingBoardResponse
+    }
+
+    override fun getFacilityList(token: String): LiveData<GetFacilityBaseResponse> {
+        val facilityListResponse = MutableLiveData<GetFacilityBaseResponse>()
+        val call = apiService.getfacilityList(getRequestHeaders(token))
+
+        val baseResponse = GetFacilityBaseResponse()
+
+        call.enqueue(object : Callback<GetFacilityResponse> {
+            override fun onResponse(
+                call: Call<GetFacilityResponse>,
+                response: Response<GetFacilityResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.facilityResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                facilityListResponse.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<GetFacilityResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                facilityListResponse.value = baseResponse
+            }
+        })
+
+        return facilityListResponse
     }
 }

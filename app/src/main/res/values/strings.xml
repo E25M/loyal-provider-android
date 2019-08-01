@@ -68,4 +68,11 @@
     <string name="txt_support">Support</string>
     <string name="txt_settings">Settings</string>
 
+    <!-- settings screen -->
+    <string name="hint_search_facility">Search facility…</string>
+    <string name="txt_select_facility">Select Your Facility</string>
+    <string name="btn_name_apply">Apply</string>
+    <string name="txt_confirm_application">Are you sure you want confirm setting
+        up Loyal Tablet Application for</string>
+
 </resources>

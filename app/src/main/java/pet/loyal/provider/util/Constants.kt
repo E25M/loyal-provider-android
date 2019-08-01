@@ -12,10 +12,12 @@ class Constants {
 
         // url endpoints
         const val url_apk = "tablet/"
-        const val url_init = "tablet/init"
-        const val url_invite = "tablet/invite"
-        const val url_login = "tablet/login"
-        const val url_appointment_by_id = "tablet/ptb/appointment/"
+        const val url_init = "init"
+        const val url_invite = "invite"
+        const val url_login = "login"
+        const val url_appointment_by_id = "ptb/appointment/"
+        const val url_get_ptb = "ptb/appointments"
+        const val url_get_facility_list = "facility-list"
 
         const val query_appointment_id = "appointment-ID"
 
