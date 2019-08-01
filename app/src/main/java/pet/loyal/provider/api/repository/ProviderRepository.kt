@@ -12,10 +12,19 @@ interface ProviderRepository {
     fun selfInvite(requestBody: RequestBody, token: String):
             LiveData<SelfInviteBaseResponse>
 
-    fun login(requestBody: RequestBody , token: String ): LiveData<LoginBaseResponse>
-
+    fun login(requestBody: RequestBody, token: String):
+            LiveData<LoginBaseResponse>
+  
     fun getPetCardById(appointmentId: String, token: String): LiveData<PetCardBaseResponse>
 
     fun savePTBMessage(requestBody: RequestBody , token: String ) :
             LiveData<SavePTBMessageBaseResponse>
+
+    fun getPetCardById(appointmentId: String, token: String):
+            LiveData<PetCardBaseResponse>
+
+    fun getPetTrackingBoard(requestBody: RequestBody, token: String):
+            LiveData<PetTrackingBoardBaseResponse>
+
+    fun getFacilityList(token: String) : LiveData<GetFacilityBaseResponse>
 }

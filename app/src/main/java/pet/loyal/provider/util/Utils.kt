@@ -8,12 +8,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashMap
 import androidx.annotation.RequiresApi
 import android.view.animation.DecelerateInterpolator
 import android.animation.ValueAnimator
 import android.view.View
 import pet.loyal.provider.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun getRequestHeaders(token: String): HashMap<String, String> {
     val hashMap = hashMapOf<String, String>()
@@ -78,7 +79,8 @@ fun showToast(context: Context, message: String) {
 fun isConnected(context: Context): Boolean {
     var connected = false
     return try {
-        val cm = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val nInfo = cm.activeNetworkInfo
         connected = nInfo != null && nInfo.isAvailable && nInfo.isConnected
         connected
@@ -158,5 +160,14 @@ fun collapse(v: View, duration: Int, targetHeight: Int) {
     valueAnimator.interpolator = DecelerateInterpolator()
     valueAnimator.duration = duration.toLong()
     valueAnimator.start()
+}
+
+fun formatDate(defaultDateString: String, preferredFormat: SimpleDateFormat): String {
+    val defaultFormat = SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+        Locale.getDefault()
+    )
+    val date = defaultFormat.parse(defaultDateString)
+    return preferredFormat.format(date)
 }
 
