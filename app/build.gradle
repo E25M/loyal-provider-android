@@ -88,6 +88,12 @@ dependencies {
         transitive = true
     }
 
+    // round Image view
+    implementation 'cn.carbs.android:AvatarImageView:1.0.4'
+
+    //  picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     //AWS s3
     implementation 'com.amazonaws:aws-android-sdk-s3:2.7.+'
     implementation 'com.amazonaws:aws-android-sdk-cognito:2.7.+'
@@ -100,4 +106,8 @@ dependencies {
 
     //  cloudinary
     implementation 'com.cloudinary:cloudinary-android:1.24.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+    // segmented button
+    implementation 'com.github.ceryle:SegmentedButton:v2.0.2'
 }

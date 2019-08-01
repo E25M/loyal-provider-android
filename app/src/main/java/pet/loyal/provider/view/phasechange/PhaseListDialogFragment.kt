@@ -50,7 +50,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     }
 
     private fun loadPhaseList(){
-        val phaseListRecyclerViewAdapter = PhaseListRecyclerViewAdapter( , this)
+        val phaseListRecyclerViewAdapter = PhaseListRecyclerViewAdapter(phaseList, this)
     }
 
     private fun sendPhaseChange(){
