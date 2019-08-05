@@ -199,7 +199,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     selectedPhaseList.add(phase)
                 }
             }
-            loadPhaseChangeDialog(selectedPhaseList)
+            if (selectedPhaseList.size > 0) {
+                loadPhaseChangeDialog(selectedPhaseList)
+            }else{
+                showToast(activity!!, "This is the final phase..")
+            }
         }
 
         fragmentEditPatiantCardBinding.layoutPrevious.setOnClickListener {
@@ -209,7 +213,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     selectedPhaseList.add(phase)
                 }
             }
-            loadPhaseChangeDialog(selectedPhaseList)
+            if (selectedPhaseList.size > 0) {
+                loadPhaseChangeDialog(selectedPhaseList)
+            }else{
+                showToast(activity!!, "This is the earliest phase..")
+            }
         }
 
         return fragmentEditPatiantCardBinding.root
@@ -500,8 +508,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun redirectToLogin() {
-        //Todo:
-//        preferenceManager.deleteSession()
+        preferenceManager.deleteSession()
         showToast(context!!, getString(R.string.txt_logged_out))
         startActivity(Intent(activity, LoginActivity::class.java))
         activity?.finish()

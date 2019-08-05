@@ -27,7 +27,7 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
-        changeFragment(Constants.fragment_type_home)
+        loadHomeFragment(Constants.fragment_type_home)
     }
 
     private fun initDataBinding() {
@@ -47,7 +47,6 @@ class HomeScreen : AppCompatActivity() {
             .disallowAddToBackStack().commit()
     }
 
-
     fun onLogout(view: View) {
         preferenceManager.deleteSession()
         this.finish()
@@ -55,9 +54,15 @@ class HomeScreen : AppCompatActivity() {
     }
 
     fun navigateToHome(view: View) {
-        changeFragment(Constants.fragment_type_home)
+        loadHomeFragment(Constants.fragment_type_home)
     }
 
+    private fun loadHomeFragment(type: Int) {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.constraint_layout_container_main,
+            getFragment(type)
+        ).commit()
+    }
 
     fun changeFragment(type: Int) {
         supportFragmentManager.beginTransaction().replace(
