@@ -116,6 +116,7 @@ class Constants {
         const val fragment_type_home = 0
         const val fragment_type_pet_cards = 1
         const val fragment_type_settings = 2
+        const val fragment_type_parent_sign_up = 3
 
     }
 }

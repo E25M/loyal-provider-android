@@ -81,4 +81,20 @@ class PreferenceManager(context: Context) {
     fun getFacilityId() : String {
         return sharedPreferences.getString(Constants.data_facility_id , "default")
     }
+
+    fun deleteSession() {
+        editor.remove(Constants.data_user_id)
+            .remove(Constants.data_login_token)
+            .remove(Constants.data_is_authenticated)
+            .remove(Constants.data_user_type)
+            .remove(Constants.data_user_first_name)
+            .remove(Constants.data_user_last_name)
+            .remove(Constants.data_user_phone)
+            .remove(Constants.data_user_email)
+            .remove(Constants.data_user_avatar)
+            .remove(Constants.data_facility_id)
+            .remove(Constants.data_facility_name)
+            .remove(Constants.data_facility_phone)
+            .commit()
+    }
 }

@@ -73,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
         Fabric.with(this, Crashlytics())
     }
 
-    private fun setObservers(){
+    private fun setObservers() {
         splashViewModel.appVersionResponse.observe(this, Observer { appVersionResponse ->
             run {
                 if (appVersionResponse?.throwable != null) {
@@ -85,8 +85,10 @@ class SplashActivity : AppCompatActivity() {
                             redirectToLogin()
                         }
                     } else {
-                        showPopupWithFinish(this, appVersionResponse.throwable?.message!!,
-                            "Info")
+                        showPopupWithFinish(
+                            this, appVersionResponse.throwable?.message!!,
+                            "Info"
+                        )
                     }
                 } else {
                     handleAppVersion(appVersionResponse?.appVersionResponse?.data!!)
@@ -96,46 +98,47 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun handleAppVersion(appVersion: AppVersionDataResponse) {
-        if (appVersion.version != BuildConfig.VERSION_NAME){
+        if (appVersion.version != BuildConfig.VERSION_NAME) {
             downloadUrl = appVersion.downloadUrl
             if (appVersion.isForced) {
                 showForceUpdatePopup()
-            }else{
+            } else {
                 showUpdatePopup()
             }
-        }else{
-            if (preferenceManager.isAuthenticated()){
+        } else {
+            if (preferenceManager.isAuthenticated()) {
 //                user has logged in. navigate to the home screen
                 invokeIntent(Intent(this, HomeScreen::class.java))
-            }else{
+            } else {
 //                user hasn't logged in . navigate to the login screen
                 invokeIntent(Intent(this, LoginActivity::class.java))
             }
         }
     }
 
-    private fun invokeIntent(intent: Intent){
+    private fun invokeIntent(intent: Intent) {
         this.finish()
         startActivity(intent)
     }
-  
+
     private fun showUpdatePopup() {
 
-        val builder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
-        } else {
-            AlertDialog.Builder(this)
-        }
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
+            } else {
+                AlertDialog.Builder(this)
+            }
         builder.setTitle(getString(R.string.msg_title_update_available))
             .setMessage(getString(R.string.msg_download_new_version))
             .setCancelable(false)
             .setPositiveButton(getString(R.string.text_update)) { _, _ ->
                 checkPermission()
             }
-            .setNegativeButton(getString(R.string.text_cancel)){ _, _ ->
-                if (preferenceManager.isAuthenticated()){
+            .setNegativeButton(getString(R.string.text_cancel)) { _, _ ->
+                if (preferenceManager.isAuthenticated()) {
                     invokeIntent(Intent(this, HomeScreen::class.java))
-                }else{
+                } else {
                     invokeIntent(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -144,11 +147,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun showForceUpdatePopup() {
 
-        val builder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
-        } else {
-            AlertDialog.Builder(this)
-        }
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
+            } else {
+                AlertDialog.Builder(this)
+            }
         builder.setTitle(getString(R.string.msg_title_update_available))
             .setMessage(getString(R.string.msg_download_new_version))
             .setCancelable(false)
@@ -160,11 +164,12 @@ class SplashActivity : AppCompatActivity() {
 
     private fun showInstallPopup() {
 
-        val builder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
-        } else {
-            AlertDialog.Builder(this)
-        }
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog)
+            } else {
+                AlertDialog.Builder(this)
+            }
         builder.setTitle(getString(R.string.msg_title_install_update))
             .setMessage(getString(R.string.msg_install_new_version))
             .setCancelable(false)
@@ -175,7 +180,7 @@ class SplashActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun checkPermission(){
+    private fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -261,9 +266,9 @@ class SplashActivity : AppCompatActivity() {
                     Log.d(TAG, "DOWNLOAD ERROR - - ID: $id - - EX: ${ex.message.toString()}")
                 }
             })
-        Log.d(TAG, "Bytes Transferred: ${downloadObserver.bytesTransferred}")
+            Log.d(TAG, "Bytes Transferred: ${downloadObserver.bytesTransferred}")
 
-        }else{
+        } else {
             showPopupWithFinish(
                 this@SplashActivity,
                 getString(R.string.msg_download_failed),
@@ -272,13 +277,18 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun installApk(){
+    private fun installApk() {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider",
-            File("${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}" +
-                    Constants.file_apk_apk
-            )),
-            Constants.file_mime_type)
+        intent.setDataAndType(
+            FileProvider.getUriForFile(
+                this, BuildConfig.APPLICATION_ID + ".provider",
+                File(
+                    "${Environment.getExternalStorageDirectory()}${Constants.folder_app_apk}" +
+                            Constants.file_apk_apk
+                )
+            ),
+            Constants.file_mime_type
+        )
         intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         startActivity(intent)
     }
@@ -297,7 +307,11 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_WRITE_STORAGE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

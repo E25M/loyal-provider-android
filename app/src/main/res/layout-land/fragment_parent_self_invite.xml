@@ -11,55 +11,55 @@
             android:layout_height="match_parent"
             android:id="@+id/containerView">
 
-        <androidx.appcompat.widget.Toolbar android:id="@+id/toolBar"
-                                           android:layout_width="match_parent"
-                                           android:layout_height="50dp"
-                                           style="@style/ToolBarMain"
-                                           app:layout_constraintTop_toTopOf="parent">
+<!--        <androidx.appcompat.widget.Toolbar android:id="@+id/toolBar"-->
+<!--                                           android:layout_width="match_parent"-->
+<!--                                           android:layout_height="50dp"-->
+<!--                                           style="@style/ToolBarMain"-->
+<!--                                           app:layout_constraintTop_toTopOf="parent">-->
 
-            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                               android:layout_height="wrap_content">
-                <ImageButton android:id="@+id/imgFacilityLogo"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:background="@android:color/transparent"
-                             android:src="@drawable/facility_logo_sample"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:layout_constraintBottom_toBottomOf="parent"/>
+<!--            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"-->
+<!--                                                               android:layout_height="wrap_content">-->
+<!--                <ImageButton android:id="@+id/imgFacilityLogo"-->
+<!--                             android:layout_width="wrap_content"-->
+<!--                             android:layout_height="wrap_content"-->
+<!--                             android:background="@android:color/transparent"-->
+<!--                             android:src="@drawable/facility_logo_sample"-->
+<!--                             app:layout_constraintStart_toStartOf="parent"-->
+<!--                             app:layout_constraintTop_toTopOf="parent"-->
+<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-                <ImageButton android:id="@+id/btnHome"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:padding="12dp"
-                             android:background="@android:color/transparent"
-                             android:src="@drawable/ic_home"
-                             app:layout_constraintEnd_toStartOf="@id/btnLogout"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:layout_constraintBottom_toBottomOf="parent"/>
+<!--                <ImageButton android:id="@+id/btnHome"-->
+<!--                             android:layout_width="wrap_content"-->
+<!--                             android:layout_height="wrap_content"-->
+<!--                             android:padding="12dp"-->
+<!--                             android:background="@android:color/transparent"-->
+<!--                             android:src="@drawable/ic_home"-->
+<!--                             app:layout_constraintEnd_toStartOf="@id/btnLogout"-->
+<!--                             app:layout_constraintTop_toTopOf="parent"-->
+<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-                <ImageButton android:id="@+id/btnLogout"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:padding="12dp"
-                             android:background="@android:color/transparent"
-                             android:src="@drawable/ic_logout"
-                             app:layout_constraintEnd_toEndOf="parent"
-                             app:layout_constraintTop_toTopOf="parent"
-                             app:layout_constraintBottom_toBottomOf="parent"/>
+<!--                <ImageButton android:id="@+id/btnLogout"-->
+<!--                             android:layout_width="wrap_content"-->
+<!--                             android:layout_height="wrap_content"-->
+<!--                             android:padding="12dp"-->
+<!--                             android:background="@android:color/transparent"-->
+<!--                             android:src="@drawable/ic_logout"-->
+<!--                             app:layout_constraintEnd_toEndOf="parent"-->
+<!--                             app:layout_constraintTop_toTopOf="parent"-->
+<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-        </androidx.appcompat.widget.Toolbar>
+<!--        </androidx.appcompat.widget.Toolbar>-->
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewMain"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/toolBar"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintCardView"
@@ -67,110 +67,115 @@
                     android:layout_height="wrap_content">
 
                 <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:id="@+id/textView6"
                         style="@style/SelfInviteTextView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:gravity="center"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/txtDescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="50dp"
                         android:layout_marginBottom="@dimen/margin_large_3"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="@string/text_sign_up_for_loyal"/>
+                        android:gravity="center"
+                        android:text="@string/text_sign_up_for_loyal"
+                        app:layout_constraintBottom_toTopOf="@id/txtDescription"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
-                        android:text="@string/text_self_invite_description"
+                        android:id="@+id/txtDescription"
+                        style="@style/SelfInviteDescriptionTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtDescription"
+                        android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        style="@style/SelfInviteDescriptionTextView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="@dimen/margin_large_2"
+                        android:gravity="center"
+                        android:text="@string/text_self_invite_description"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="24dp"/>
+                        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_forgot_pw_email"
+                        style="@style/boxedTextFieldGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        style="@style/boxedTextFieldGrey"
-                        app:layout_constraintTop_toBottomOf="@+id/txtDescription"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
                         app:errorEnabled="@{viewModel.isEmailPhoneError}"
                         app:errorText="@{viewModel.emailPhoneError}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"
-                        android:id="@+id/til_forgot_pw_email">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtDescription">
 
                     <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtTxtMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:theme="@style/textViewStyleSmall"
-                            android:text="@{viewModel.liveEmailOrPhone}"
                             android:hint="Email or Phone Number"
                             android:inputType="textEmailAddress"
-                            android:id="@+id/edtTxtMessage"/>
+                            android:text="@{viewModel.liveEmailOrPhone}"
+                            android:theme="@style/textViewStyleSmall" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <Button
-                        android:text="@string/btn_name_invite"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:id="@+id/btnSelfInvite"
-                        android:layout_marginTop="16dp"
                         style="@style/AppTheme.ButtonBlue"
-                        app:layout_constraintTop_toBottomOf="@+id/til_forgot_pw_email"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:enabled="true"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="16dp"/>
-
-                <ImageView android:id="@+id/imgPlayStore"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="16dp"
-                           android:src="@drawable/ic_google_play"
-                           app:layout_constraintTop_toBottomOf="@id/btnSelfInvite"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintEnd_toStartOf="@id/imgAppStore"/>
-
-                <ImageView android:id="@+id/imgAppStore"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="16dp"
-                           android:src="@drawable/ic_app_store"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintTop_toBottomOf="@id/btnSelfInvite"
-                           app:layout_constraintStart_toEndOf="@id/imgPlayStore"/>
-
-                <Button android:id="@+id/linkLoyal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textAllCaps="false"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        style="@style/AppTheme.ButtonGray"
-                        android:text="@string/link_www_loyal_pet"
+                        android:layout_marginEnd="16dp"
+                        android:enabled="true"
+                        android:text="@string/btn_name_invite"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/imgAppStore"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til_forgot_pw_email" />
+
+                <ImageView
+                        android:id="@+id/imgPlayStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_google_play"
+                        app:layout_constraintEnd_toStartOf="@id/imgAppStore"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
+
+                <ImageView
+                        android:id="@+id/imgAppStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_app_store"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imgPlayStore"
+                        app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
+
+                <Button
+                        android:id="@+id/linkLoyal"
+                        style="@style/AppTheme.ButtonGray"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/link_www_loyal_pet"
+                        android:textAllCaps="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imgAppStore" />
 
                 <ProgressBar
+                        android:id="@+id/progressBar"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progressBar"
                         android:visibility="gone"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -182,25 +187,28 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <ImageView android:id="@+id/imgLogoContainer"
-                   android:layout_width="80dp"
-                   android:layout_height="80dp"
-                   android:layout_marginTop="60dp"
-                   android:elevation="3dp"
-                   android:outlineProvider="none"
-                   android:src="@drawable/oval"
-                   app:layout_constraintTop_toTopOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:id="@+id/imgLogoContainer"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="32dp"
+                android:elevation="3dp"
+                android:outlineProvider="none"
+                android:src="@drawable/oval"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:elevation="3dp"
-                   android:outlineProvider="none"
-                   android:src="@drawable/ic_logo"
-                   app:layout_constraintTop_toTopOf="@id/imgLogoContainer"
-                   app:layout_constraintStart_toStartOf="@id/imgLogoContainer"
-                   app:layout_constraintEnd_toEndOf="@id/imgLogoContainer"
-                   app:layout_constraintBottom_toBottomOf="@id/imgLogoContainer"/>
+        <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:outlineProvider="none"
+                android:src="@drawable/ic_logo"
+                app:layout_constraintBottom_toBottomOf="@id/imgLogoContainer"
+                app:layout_constraintEnd_toEndOf="@id/imgLogoContainer"
+                app:layout_constraintStart_toStartOf="@id/imgLogoContainer"
+                app:layout_constraintTop_toTopOf="@id/imgLogoContainer" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
