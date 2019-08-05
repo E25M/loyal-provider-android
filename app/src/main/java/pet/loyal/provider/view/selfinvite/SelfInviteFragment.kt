@@ -190,8 +190,7 @@ class SelfInviteFragment : Fragment() {
     }
 
     private fun redirectToLogin() {
-        //Todo:
-//        preferenceManager.deleteSession()
+        preferenceManager.deleteSession()
         showToast(context!!, getString(R.string.txt_logged_out))
         startActivity(Intent(activity, LoginActivity::class.java))
         activity?.finish()
