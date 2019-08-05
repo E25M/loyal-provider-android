@@ -45,7 +45,7 @@ class PatientCardsViewModel : ViewModel() {
         val filtersArray = JSONArray(filters)
         dataJson.put("facilityId", facilityId)
         dataJson.put("search", keyword)
-        dataJson.put("filters", filtersArray)
+        dataJson.put("filter", filtersArray)
         dataJson.put("sort", sort)
         dataJson.put("sortBy", sortBy)
         val requestBody =

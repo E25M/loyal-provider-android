@@ -25,6 +25,12 @@ class PatientCardsPhaseAdapter(
         return PhaseViewHolder(view)
     }
 
+    fun updateList(newPhaseList : ArrayList<Phase>){
+        this.phaseList.clear()
+        this.phaseList.addAll(newPhaseList)
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return phaseList.size
     }
