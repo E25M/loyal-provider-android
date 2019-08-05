@@ -71,7 +71,7 @@ class HomeScreen : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(
             R.id.constraint_layout_container_main,
             fragment
-        ).commit()
+        ).addToBackStack(type.toString()).commit()
     }
 
     private fun getFragment(type: Int): Fragment {
