@@ -78,15 +78,14 @@ class Constants {
         const val folder_loyal = "/Loyal"
         const val captured_pic_name = "captured_pic_name"
 
+        const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
+        const val url_cloudinary_pet_profile = "https://res.cloudinary.com/dktj00acj/image/upload/pet/profile/"
 
         //        pet cards sort types
         const val sort_type_parent = "parent"
         const val sort_type_patient = "patient"
         const val sort_ascending = 1
         const val sort_descending = -1
-
-        const val url_cloudinary_news_feed =
-            "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
 
         const val intent_type_parent_sign_up = 0
         const val intent_type_patient_cards = 1

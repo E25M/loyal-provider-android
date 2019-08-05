@@ -325,6 +325,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             if (appointment != null){
                 val phases = petCardDataResponse.phases
                 viewModel.livePetName.value = appointment.petName + ", " + appointment.parentLastName
+                viewModel.livePetImage.value = appointment.petImage
                 viewModel.liveBreedSpecies.value = appointment.petBreed +
                         ", " + appointment.petSpecies + "\n" + appointment.petGender
 //                viewModel.liveGendar.value = appointment.petGender

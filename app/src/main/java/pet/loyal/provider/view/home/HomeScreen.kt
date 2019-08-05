@@ -63,7 +63,7 @@ class HomeScreen : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(
             R.id.constraint_layout_container_main,
             getFragment(type)
-        ).commit()
+        ).addToBackStack(type.toString()).commit()
     }
 
     fun changeFragment(fragment: Fragment, type: Int) {
@@ -99,6 +99,13 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 0){
+            finishAffinity()
+        }else{
+            supportFragmentManager.popBackStack()
+        }
+    }
     private fun showHideToolBar(type: Int) {
         when (type) {
             Constants.fragment_type_home -> {
