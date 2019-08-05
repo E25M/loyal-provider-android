@@ -24,6 +24,8 @@ import pet.loyal.provider.util.Constants
 import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.util.isConnected
 import pet.loyal.provider.util.showToast
+import pet.loyal.provider.view.editpetcard.EditPetCardFragment
+import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.patient.card.OnPetCardClickListener
 import pet.loyal.provider.view.patient.card.PatientCardsAdapter
 import java.net.ConnectException
@@ -216,6 +218,14 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     override fun onPerCardClick(card: PetTrackingAppointment, position: Int) {
         // navigate the user to the pet card section
+        val activity = activity as HomeScreen
+
+        val editPetCardFragment = EditPetCardFragment()
+        val bundle = Bundle()
+        bundle.putString(Constants.extra_appointment_id, card.id)
+        editPetCardFragment.arguments = bundle
+
+        activity.changeFragment(editPetCardFragment, 5)
     }
 
 

@@ -40,7 +40,7 @@ class MainMenuFragment : Fragment() {
             changeFragment(Constants.fragment_type_settings)
         }
         img_main_menu_parent_sign_up.setOnClickListener {
-
+            changeFragment(Constants.fragment_type_parent_sign_up)
         }
         img_main_menu_support.setOnClickListener {
 
@@ -57,7 +57,7 @@ class MainMenuFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    private fun changeFragment(type : Int) {
+    private fun changeFragment(type: Int) {
         val activity = activity as HomeScreen
         activity.changeFragment(type)
     }

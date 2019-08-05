@@ -3,6 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="310dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,7 +13,7 @@
 
         <View
                 android:id="@+id/view_colored_header"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/colorPrimaryDarkBlue"
@@ -96,15 +98,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_pet_"
                 tools:listitem="@layout/list_item_pet_card_messages" />
 
-        <Button
-                android:id="@+id/btn_phase_list_item_pet_card"
-                style="?android:attr/buttonBarButtonStyle"
+<!--        <Button-->
+<!--                android:id="@+id/btn_phase_list_item_pet_card"-->
+<!--                style="?android:attr/buttonBarButtonStyle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="19dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:clickable="false"-->
+<!--                android:focusable="false"-->
+<!--                android:background="?selectableItemBackground"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/img_pet_"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/txt_date_time_lis_item_pet_card" />-->
+
+
+        <TextView
+                android:id="@+id/txt_phase_list_item_pet_card"
+                style="@style/AppointmentTypeWellnessVisit"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:clickable="false"
-                android:focusable="false"
-                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
                 app:layout_constraintStart_toEndOf="@+id/img_pet_"
                 app:layout_constraintTop_toBottomOf="@+id/txt_date_time_lis_item_pet_card" />
 
