@@ -39,6 +39,12 @@ class PatientCardsAdapter(
         return cardsList.size
     }
 
+    fun updateList(arrayList: ArrayList<PetTrackingAppointment>) {
+        this.cardsList.clear()
+        this.cardsList.addAll(arrayList)
+        notifyDataSetChanged()
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: PetCardViewHolder, position: Int) {
 //        holder.bindData(cardsList[position], position, onPetCardClickListener , context)
@@ -62,6 +68,11 @@ class PatientCardsAdapter(
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         val adapter = PTBSentMessagesAdapter(context, card.ptbSentMessages)
         holder.itemView.recyclerViewMessages.adapter = adapter
+        holder.itemView.setOnClickListener {
+            if (onPetCardClickListener!= null){
+                onPetCardClickListener.onPerCardClick(card, position)
+            }
+        }
 
     }
 

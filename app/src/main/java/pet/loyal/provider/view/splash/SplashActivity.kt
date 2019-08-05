@@ -57,7 +57,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         initDataBinding()
-
         setObservers()
         splashViewModel.getAppVersion()
     }
@@ -71,7 +70,6 @@ class SplashActivity : AppCompatActivity() {
         preferenceManager = PreferenceManager(this)
         activitySplashBinding.lifecycleOwner = this
         activitySplashBinding.viewModel = splashViewModel
-
         Fabric.with(this, Crashlytics())
     }
 

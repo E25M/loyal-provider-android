@@ -34,13 +34,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="SelfInviteTextView">=======
-data class Phase (
-    @SerializedName("id") val id : String,
-    @SerializedName("name") val name : String
-)
-
->>>>>>> 6667cdcae32d3877062103eab9f878a7154462dc
+    <style name="SelfInviteTextView">
         <item name="android:textColor">@color/font_color_dark</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textStyle">bold</item>
@@ -58,6 +52,13 @@ data class Phase (
         <item name="android:textColorHint">@color/font_color_light_grey</item>
         <item name="android:textColor">@color/font_color_view_header</item>
         <item name="hintTextAppearance">@style/TextInputLayoutTextAppearance</item>
+    </style>
+
+    <style name="boxedTextFieldGrey.WhiteBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/font_color_light_grey</item>
+        <item name="android:colorControlActivated">@color/font_color_light_grey</item>
+        <item name="android:textColorHint">@color/font_color_light_grey</item>
+        <item name="boxBackgroundColor">@android:color/white</item>
     </style>
 
     <style name="TextInputLayoutTextAppearance" parent="TextAppearance.AppCompat">
@@ -184,6 +185,14 @@ data class Phase (
     <style name="TextViewStyleBlue">
         <item name="android:textColor">@color/font_color_blue</item>
         <item name="android:textSize">@dimen/font_size_extra_small</item>
+  </style>
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/btn_color_blue</item>
     </style>
 <!--    <style name="ButtonStyleCard" parent="Widget.MaterialComponents.Button">-->
 <!--        <item name="android:textColor">@android:color/white</item>-->
