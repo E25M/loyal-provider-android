@@ -65,6 +65,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView android:id="@+id/txtAddCustomMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextViewStyleBlue"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:text="@string/text_add_custom_message"
+                    app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
+                    app:layout_constraintBottom_toBottomOf="@id/chkBoxTicketMessage"
+                    app:layout_constraintTop_toTopOf="@id/chkBoxTicketMessage"/>
+
 <!--            <ImageButton android:id="@+id/btnDropDown"-->
 <!--                    android:layout_width="wrap_content"-->
 <!--                    android:layout_height="wrap_content"-->

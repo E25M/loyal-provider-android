@@ -24,11 +24,11 @@ class Constants {
 
         // url endpoints
         const val url_apk = "tablet/"
-
         const val url_init = "init"
         const val url_invite = "invite"
         const val url_login = "login"
         const val url_appointment_by_id = "ptb/appointment/"
+        const val url_change_phase = "ptb/change-phrase"
         const val url_save_ptb_messages = "ptb/save/"
         const val url_get_ptb = "ptb/appointments"
         const val url_get_facility_list = "facility-list"
@@ -46,6 +46,9 @@ class Constants {
         const val extra_url_apk = "extra.url.apk"
         const val extra_download_apk_status = "extra.download.apk.status"
         const val extra_phase_list = "extra.phase.list"
+        const val extra_phase_id = "extra.phase.id"
+        const val extra_appointment_id = "extra.appointment.id"
+        const val extra_pet_name = "extra.pet.name"
 
         const val action_download_apk = "pet.loyal.provider.download.apk"
 
@@ -90,7 +93,6 @@ class Constants {
         const val intent_type_support = 2
         const val intent_type_settings = 3
 
-
         // phases
         const val phase_expected = "Expected"
         const val phase_check_in = "Check-In"
@@ -104,6 +106,12 @@ class Constants {
         const val phase_boarding = "Boarding"
         const val phase_discharge = "Discharge"
         const val phase_complete = "Complete"
+
+        //phase change error message codes
+        const val pet_is_not_active = "pet_is_not_active"
+        const val parent_is_not_active = "parent_is_not_active"
+        const val there_are_another_ongoing_appointments_for_this_pet =
+            "there_are_another_ongoing_appointments_for_this_pet"
 
         // fragment types. this is used to identify the fragments that are needed
         const val fragment_type_home = 0

@@ -3,7 +3,6 @@ package pet.loyal.provider.api.repository
 import androidx.lifecycle.LiveData
 import okhttp3.RequestBody
 import pet.loyal.provider.api.responses.*
-import pet.loyal.provider.model.Appointment
 
 interface ProviderRepository {
 
@@ -20,9 +19,12 @@ interface ProviderRepository {
     fun savePTBMessage(requestBody: RequestBody , token: String ) :
             LiveData<SavePTBMessageBaseResponse>
 
+    fun changePhase(requestBody: RequestBody , token: String ) :LiveData<PhaseChangeBaseResponse>
+
 
     fun getPetTrackingBoard(requestBody: RequestBody, token: String):
             LiveData<PetTrackingBoardBaseResponse>
 
     fun getFacilityList(token: String) : LiveData<GetFacilityBaseResponse>
+
 }
