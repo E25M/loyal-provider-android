@@ -12,9 +12,10 @@ interface ProviderAPIService {
     fun getVersion(): Call<AppVersionResponse>
 
     @GET(Constants.url_appointment_by_id + "{appointmentId}")
-    fun getPetCardById(@HeaderMap hashMap: HashMap<String, String>,
-                       @Path("appointmentId") appointmentId: String):
-            Call<PetCardResponse>
+    fun getPetCardById(
+        @HeaderMap hashMap: HashMap<String, String>,
+        @Path("appointmentId") appointmentId: String
+    ): Call<PetCardResponse>
 
     @POST(Constants.url_invite)
     fun selfInvite(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
@@ -31,4 +32,14 @@ interface ProviderAPIService {
     @POST(Constants.url_change_phase)
     fun changePhase(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
             Call<PhaseChangeResponse>
+
+    @POST(Constants.url_get_ptb)
+    fun getPetTrackingBoard(
+        @HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody
+    ): Call<PetTrackingBoardResponse>
+
+    @GET(Constants.url_get_facility_list)
+    fun getfacilityList(
+       @HeaderMap hashMap: HashMap<String, String>
+    ): Call<GetFacilityResponse>
 }

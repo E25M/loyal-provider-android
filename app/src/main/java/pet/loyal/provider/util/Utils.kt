@@ -80,7 +80,8 @@ fun showToast(context: Context, message: String) {
 fun isConnected(context: Context): Boolean {
     var connected = false
     return try {
-        val cm = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val nInfo = cm.activeNetworkInfo
         connected = nInfo != null && nInfo.isAvailable && nInfo.isConnected
         connected
@@ -242,5 +243,14 @@ fun getCurrentTimeString(): String {
 //    }
 
     return sendFormat.format(calendar.time)
+}
+
+fun formatDate(defaultDateString: String, preferredFormat: SimpleDateFormat): String {
+    val defaultFormat = SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+        Locale.getDefault()
+    )
+    val date = defaultFormat.parse(defaultDateString)
+    return preferredFormat.format(date)
 }
 
