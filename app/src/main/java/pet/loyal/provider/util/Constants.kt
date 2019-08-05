@@ -78,6 +78,7 @@ class Constants {
         const val captured_pic_name = "captured_pic_name"
 
         const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
+        const val url_cloudinary_pet_profile = "https://res.cloudinary.com/dktj00acj/image/upload/pet/profile/"
 
         const val intent_type_parent_sign_up  = 0
         const val intent_type_patient_cards = 1

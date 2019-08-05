@@ -34,13 +34,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="SelfInviteTextView">=======
-data class Phase (
-    @SerializedName("id") val id : String,
-    @SerializedName("name") val name : String
-)
-
->>>>>>> 6667cdcae32d3877062103eab9f878a7154462dc
+    <style name="SelfInviteTextView">
         <item name="android:textColor">@color/font_color_dark</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textStyle">bold</item>
