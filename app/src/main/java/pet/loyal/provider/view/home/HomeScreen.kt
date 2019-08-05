@@ -71,7 +71,7 @@ class HomeScreen : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(
             R.id.constraint_layout_container_main,
             fragment
-        ).commit()
+        ).addToBackStack(type.toString()).commit()
     }
 
     private fun getFragment(type: Int): Fragment {
@@ -100,12 +100,17 @@ class HomeScreen : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0){
+        if (supportFragmentManager.backStackEntryCount == 0) {
             finishAffinity()
-        }else{
+        } else {
             supportFragmentManager.popBackStack()
+            val fragment =  supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
+            if (fragment != null && fragment.isVisible) {
+                viewModel.toolbarVisibility.value = View.GONE
+            }
         }
     }
+
     private fun showHideToolBar(type: Int) {
         when (type) {
             Constants.fragment_type_home -> {

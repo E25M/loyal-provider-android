@@ -65,11 +65,11 @@ class PreferenceManager(context: Context) {
     }
 
     fun getFacilityPhone(): String{
-        return sharedPreferences.getString(Constants.data_facility_phone, "4565475")
+        return sharedPreferences.getString(Constants.data_facility_phone, "")
     }
 
     fun getFacilityName(): String{
-        return sharedPreferences.getString(Constants.data_facility_name, "Name")
+        return sharedPreferences.getString(Constants.data_facility_name, "")
     }
 
     fun saveFacility(facility: Facility){
@@ -80,6 +80,10 @@ class PreferenceManager(context: Context) {
 
     fun getFacilityId() : String {
         return sharedPreferences.getString(Constants.data_facility_id , "default")
+    }
+
+    fun getUserType() : String {
+        return sharedPreferences.getString(Constants.data_user_type , "default")
     }
 
     fun deleteSession() {

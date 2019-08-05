@@ -105,6 +105,16 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             }
             loadData()
         }
+
+        img_patient_cards_logout.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.onLogout(img_patient_cards_logout)
+        }
+
+        img_patient_cards_home.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.navigateToHome(img_patient_cards_logout)
+        }
     }
 
     override fun onStart() {
