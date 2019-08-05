@@ -1,5 +1,6 @@
 package pet.loyal.provider.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import pet.loyal.provider.R
 import pet.loyal.provider.util.Constants
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
 import pet.loyal.provider.util.PreferenceManager
+import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.mainmenu.MainMenuFragment
 import pet.loyal.provider.view.patient.PatientCardsFragment
 import pet.loyal.provider.view.selfinvite.SelfInviteFragment
@@ -47,7 +49,9 @@ class HomeScreen : AppCompatActivity() {
 
 
     fun onLogout(view: View) {
-
+        preferenceManager.deleteSession()
+        this.finish()
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     fun navigateToHome(view: View) {
