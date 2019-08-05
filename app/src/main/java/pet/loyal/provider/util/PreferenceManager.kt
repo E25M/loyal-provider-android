@@ -3,6 +3,7 @@ package pet.loyal.provider.util
 import android.content.Context
 import android.content.SharedPreferences
 import pet.loyal.provider.R
+import pet.loyal.provider.model.Facility
 import pet.loyal.provider.model.LoginUser
 import java.nio.file.attribute.UserDefinedFileAttributeView
 
@@ -69,5 +70,15 @@ class PreferenceManager(context: Context) {
 
     fun getFacilityName(): String{
         return sharedPreferences.getString(Constants.data_facility_name, "Name")
+    }
+
+    fun saveFacility(facility: Facility){
+        editor.putString(Constants.data_facility_id, facility.id)
+        editor.putString(Constants.data_facility_name, facility.name)
+        editor.putString(Constants.data_facility_phone, facility.admin).commit()
+    }
+
+    fun getFacilityId() : String {
+        return sharedPreferences.getString(Constants.data_facility_id , "default")
     }
 }

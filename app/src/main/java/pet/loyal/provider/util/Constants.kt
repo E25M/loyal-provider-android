@@ -2,7 +2,7 @@ package pet.loyal.provider.util
 
 class Constants {
 
-    companion object{
+    companion object {
 
         //static parameters
         const val data_push_token = "push_token"
@@ -20,6 +20,7 @@ class Constants {
 
         const val data_facility_phone = "user_facility_phone"
         const val data_facility_name = "user_facility_name"
+        const val data_facility_id = "user_facility_id"
 
         // url endpoints
         const val url_apk = "tablet/"
@@ -37,7 +38,7 @@ class Constants {
 
         // Login fail scenarios
         const val error_invalid_credentials = "invalid_credentials"
-        const val error_user_deactivated  = "user_deactivated"
+        const val error_user_deactivated = "user_deactivated"
         const val error_unauthorized_device_for_user = "unauthorized_device_for_user"
         const val error_invalid_password = "invalid_password"
         const val error_user_not_found = "user_not_found"
@@ -74,12 +75,20 @@ class Constants {
         const val folder_loyal = "/Loyal"
         const val captured_pic_name = "captured_pic_name"
 
-        const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
 
-        const val intent_type_parent_sign_up  = 0
+        //        pet cards sort types
+        const val sort_type_parent = "parent"
+        const val sort_type_patient = "patient"
+        const val sort_ascending = 1
+        const val sort_descending = -1
+
+        const val url_cloudinary_news_feed =
+            "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
+
+        const val intent_type_parent_sign_up = 0
         const val intent_type_patient_cards = 1
-        const val intent_type_support  = 2
-        const val intent_type_settings  = 3
+        const val intent_type_support = 2
+        const val intent_type_settings = 3
 
 
         // phases
@@ -95,6 +104,11 @@ class Constants {
         const val phase_boarding = "Boarding"
         const val phase_discharge = "Discharge"
         const val phase_complete = "Complete"
+
+        // fragment types. this is used to identify the fragments that are needed
+        const val fragment_type_home = 0
+        const val fragment_type_pet_cards = 1
+        const val fragment_type_settings = 2
 
     }
 }

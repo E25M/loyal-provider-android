@@ -60,6 +60,13 @@ data class Phase (
         <item name="hintTextAppearance">@style/TextInputLayoutTextAppearance</item>
     </style>
 
+    <style name="boxedTextFieldGrey.WhiteBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/font_color_light_grey</item>
+        <item name="android:colorControlActivated">@color/font_color_light_grey</item>
+        <item name="android:textColorHint">@color/font_color_light_grey</item>
+        <item name="boxBackgroundColor">@android:color/white</item>
+    </style>
+
     <style name="TextInputLayoutTextAppearance" parent="TextAppearance.AppCompat">
         <!-- Floating label appearance here -->
         <item name="android:textColor">@color/font_color_light_grey</item>
@@ -179,6 +186,15 @@ data class Phase (
         <item name="android:backgroundTint">@color/font_color_white</item>
         <item name="android:colorButtonNormal">@color/font_color_white</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/btn_color_blue</item>
     </style>
 <!--    <style name="ButtonStyleCard" parent="Widget.MaterialComponents.Button">-->
 <!--        <item name="android:textColor">@android:color/white</item>-->
