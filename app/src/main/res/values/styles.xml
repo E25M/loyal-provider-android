@@ -180,6 +180,11 @@ data class Phase (
         <item name="android:colorButtonNormal">@color/font_color_white</item>
         <item name="android:textAllCaps">true</item>
     </style>
+
+    <style name="TextViewStyleBlue">
+        <item name="android:textColor">@color/font_color_blue</item>
+        <item name="android:textSize">@dimen/font_size_extra_small</item>
+    </style>
 <!--    <style name="ButtonStyleCard" parent="Widget.MaterialComponents.Button">-->
 <!--        <item name="android:textColor">@android:color/white</item>-->
 <!--        <item name="android:textSize">@dimen/font_size_super_small</item>-->

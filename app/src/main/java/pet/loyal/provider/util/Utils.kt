@@ -8,12 +8,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.HashMap
 import androidx.annotation.RequiresApi
 import android.view.animation.DecelerateInterpolator
 import android.animation.ValueAnimator
 import android.view.View
 import pet.loyal.provider.R
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun getRequestHeaders(token: String): HashMap<String, String> {
     val hashMap = hashMapOf<String, String>()
@@ -158,5 +160,87 @@ fun collapse(v: View, duration: Int, targetHeight: Int) {
     valueAnimator.interpolator = DecelerateInterpolator()
     valueAnimator.duration = duration.toLong()
     valueAnimator.start()
+}
+
+fun getDateString(dateAndTime: String): String {
+
+    // Create a DateFormatter object for displaying date in specified format.
+    val receivedFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val sendFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+
+    receivedFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+    // Create a calendar object that will convert the date and time value in milliseconds to date.
+    val calendar = Calendar.getInstance()
+    try {
+        calendar.time = receivedFormat.parse(dateAndTime)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    val sendDate = sendFormat.format(calendar.time)
+//    val relativeTime = DateUtils.getRelativeTimeSpanString(calendar.timeInMillis)
+//    val sendFormatter = SimpleDateFormat(dateFormat, Locale.getDefault())
+    return sendDate.toString()
+}
+
+fun getTimeString(dateAndTime: String): String {
+
+    // Create a DateFormatter object for displaying date in specified format.
+    val receivedFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val sendFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//    val sendFormatDay = SimpleDateFormat("EEEE", Locale.getDefault())
+
+    receivedFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+    // Create a calendar object that will convert the date and time value in milliseconds to date.
+    val calendar = Calendar.getInstance()
+    try {
+        calendar.time = receivedFormat.parse(dateAndTime)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+
+    return sendFormat.format(calendar.time)
+}
+
+fun getCurrentDateString(): String {
+
+    // Create a DateFormatter object for displaying date in specified format.
+//    val receivedFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val sendFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+
+//    receivedFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+    // Create a calendar object that will convert the date and time value in milliseconds to date.
+    val calendar = Calendar.getInstance()
+//    try {
+//        calendar.time = receivedFormat.parse(dateAndTime)
+//    } catch (e: ParseException) {
+//        e.printStackTrace()
+//    }
+    val sendDate = sendFormat.format(calendar.time)
+//    val relativeTime = DateUtils.getRelativeTimeSpanString(calendar.timeInMillis)
+//    val sendFormatter = SimpleDateFormat(dateFormat, Locale.getDefault())
+    return sendDate.toString()
+}
+
+fun getCurrentTimeString(): String {
+
+    // Create a DateFormatter object for displaying date in specified format.
+//    val receivedFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val sendFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+//    val sendFormatDay = SimpleDateFormat("EEEE", Locale.getDefault())
+
+//    receivedFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+    // Create a calendar object that will convert the date and time value in milliseconds to date.
+    val calendar = Calendar.getInstance()
+//    try {
+//        calendar.time = receivedFormat.parse(dateAndTime)
+//    } catch (e: ParseException) {
+//        e.printStackTrace()
+//    }
+
+    return sendFormat.format(calendar.time)
 }
 

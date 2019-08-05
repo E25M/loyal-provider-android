@@ -7,7 +7,7 @@
             android:id="@+id/mainContainer"
             android:orientation="vertical"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/font_color_white"
+            app:cardBackgroundColor="@color/bg_color_gray_1"
             app:cardUseCompatPadding="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

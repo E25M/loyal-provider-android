@@ -1,6 +1,5 @@
 package pet.loyal.provider.view.editpetcard
 
-import android.graphics.Color
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pet.loyal.provider.R
@@ -18,9 +16,7 @@ import pet.loyal.provider.databinding.LayoutEditPatientCardCustomItemBinding
 import pet.loyal.provider.databinding.LayoutEditPatientCardItemBinding
 import pet.loyal.provider.databinding.LayoutEditPatientCardSentItemBinding
 import pet.loyal.provider.model.PhaseMessage
-import pet.loyal.provider.util.Constants
-import pet.loyal.provider.util.collapse
-import pet.loyal.provider.util.expand
+import pet.loyal.provider.util.*
 
 class PhaseMessageRecyclerViewAdapter(
     private val phaseMessagesList: List<PhaseMessage>,
@@ -34,6 +30,7 @@ class PhaseMessageRecyclerViewAdapter(
         fun onClickImage(position: Int, positionImage: Int, messageId: String)
         fun onClickTick(isChecked: Boolean, position: Int, messageId: String)
         fun onEditMessage(message: String, position: Int, messageId: String)
+        fun onAddCustomMessage(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -83,8 +80,8 @@ class PhaseMessageRecyclerViewAdapter(
             PhaseMessage.Type.SENT_MESSAGE -> {
                 val viewPhaseMessage = (viewHolder as PhaseMessageSentViewHolder).itemBinding
                 viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
-                viewPhaseMessage.txtDateTime.text = itemPhaseMessage.dateTime
-                viewPhaseMessage.btnDropDown.setOnClickListener {
+                viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
+                viewPhaseMessage.mainContainer.setOnClickListener {
                     if (viewHolder.itemBinding.mainContainer.height == 100) {
                         expandView(viewPhaseMessage, viewHolder)
                     }else{
@@ -92,7 +89,15 @@ class PhaseMessageRecyclerViewAdapter(
                     }
                 }
 
+                if (itemPhaseMessage.imageGallery != null
+                            && itemPhaseMessage.imageGallery!!.size > 0){
+                    viewPhaseMessage.btnDropDown.visibility = View.VISIBLE
+                }else{
+                    viewPhaseMessage.btnDropDown.visibility = View.INVISIBLE
+                }
+
                 val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
+                    Constants.view_type_sent_message,
                     itemPhaseMessage._id,
                     position,
                     itemPhaseMessage.imageGallery,
@@ -132,7 +137,7 @@ class PhaseMessageRecyclerViewAdapter(
                     phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto, position,
                         itemPhaseMessage._id)
                 }
-                viewPhaseMessage.btnDropDown.setOnClickListener {
+                viewPhaseMessage.mainContainer.setOnClickListener {
                     if (viewPhaseMessage.mainContainer.height == 120) {
                         expandView(viewPhaseMessage, viewHolder)
                     }else{
@@ -157,6 +162,7 @@ class PhaseMessageRecyclerViewAdapter(
                 }
 
                 val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
+                    Constants.view_type_template_message,
                     itemPhaseMessage._id,
                     position,
                     itemPhaseMessage.imageGallery,
@@ -192,8 +198,53 @@ class PhaseMessageRecyclerViewAdapter(
                     ) {}
                 })
 
+                if ((itemPhaseMessage.imageGallery != null
+                            && itemPhaseMessage.imageGallery!!.size > 0)
+                    || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                    showCheckedCustomMessage(viewPhaseMessage)
+                }else{
+                    showUncheckedCustomMessage(viewPhaseMessage)
+                }
+
+                viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener { _, isChecked ->
+
+                    if (position == phaseMessagesList.size - 1) {
+                        if (isChecked) {
+                            showCheckedCustomMessage(viewPhaseMessage)
+                        } else {
+                            showUncheckedCustomMessage(viewPhaseMessage)
+                        }
+                    }
+                    phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
+                }
+
+                if (position != phaseMessagesList.size - 1){
+                    showCheckedCustomMessage(viewPhaseMessage)
+                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
+                    viewPhaseMessage.chkBoxTicketMessage.isChecked = false
+                }else{
+                    if(((itemPhaseMessage.imageGallery != null
+                        && itemPhaseMessage.imageGallery!!.size > 0)
+                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty())){
+                    showCheckedCustomMessage(viewPhaseMessage)
+                    viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                    viewPhaseMessage.chkBoxTicketMessage.isChecked = true
+                    }else{
+                        showUncheckedCustomMessage(viewPhaseMessage)
+                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                        viewPhaseMessage.chkBoxTicketMessage.isChecked = false
+                    }
+                }
+
+                viewPhaseMessage.btnAddMessage.setOnClickListener {
+                    if (!viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                        phaseMessageItemListener.onAddCustomMessage(position)
+                        notifyDataSetChanged()
+                    }
+                }
 
                 val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
+                    Constants.view_type_custom_message,
                     itemPhaseMessage._id,
                     position,
                     itemPhaseMessage.imageGallery,
@@ -208,12 +259,26 @@ class PhaseMessageRecyclerViewAdapter(
         }
     }
 
+    private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
+        viewPhaseMessage.txtAddCustomMessage.visibility = View.GONE
+        viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
+        viewPhaseMessage.layoutMessage.visibility = View.VISIBLE
+        viewPhaseMessage.recyclerViewImageGallery.visibility = View.VISIBLE
+    }
+
+    private fun showUncheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
+        viewPhaseMessage.txtAddCustomMessage.visibility = View.VISIBLE
+        viewPhaseMessage.btnAddPhoto.visibility = View.GONE
+        viewPhaseMessage.layoutMessage.visibility = View.GONE
+        viewPhaseMessage.recyclerViewImageGallery.visibility = View.GONE
+    }
+
     private fun updateCountValue(message: String, countView: TextView){
         var messageTextCounter:String = ""
         when {
             Constants.custom_message_character_limit - message.length == 1 ->
                 messageTextCounter = "${Constants.custom_message_character_limit - message.length} " +
-                        "character remaining"
+                        countView.resources.getString(R.string.text_character_remaining)
             Constants.custom_message_character_limit - message.length < 0 -> {
 
             }

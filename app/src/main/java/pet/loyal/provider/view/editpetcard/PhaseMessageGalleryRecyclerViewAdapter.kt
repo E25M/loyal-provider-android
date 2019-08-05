@@ -2,12 +2,15 @@ package pet.loyal.provider.view.editpetcard
 
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import pet.loyal.provider.databinding.LayoutPhotoGalleryItemBinding
+import pet.loyal.provider.util.Constants
 
 class PhaseMessageGalleryRecyclerViewAdapter(
+    private val type:Int,
     private val messageId: String,
     private val position: Int,
     private val imageList: ArrayList<Uri>?,
@@ -40,6 +43,12 @@ class PhaseMessageGalleryRecyclerViewAdapter(
         if (image != null) {
             val imageView = viewHolder.itemBinding
             Picasso.get().load(image).into(imageView.imgSource)
+
+            if (type == Constants.view_type_sent_message){
+                imageView.btnDelete.visibility = View.INVISIBLE
+            }else{
+                imageView.btnDelete.visibility = View.VISIBLE
+            }
 
             imageView.imgSource.setOnClickListener {
                 imageItemListener.onClickImage(position, this.position, messageId)

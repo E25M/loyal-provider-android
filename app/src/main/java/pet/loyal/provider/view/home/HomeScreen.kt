@@ -12,7 +12,7 @@ class HomeScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_home_screen)
 
-//        loadSelfInviteFragment()
+        loadSelfInviteFragment()
     }
 
     private fun loadSelfInviteFragment() {

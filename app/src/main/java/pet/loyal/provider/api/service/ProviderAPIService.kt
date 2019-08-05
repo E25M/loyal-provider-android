@@ -27,4 +27,8 @@ interface ProviderAPIService {
     @POST(Constants.url_save_ptb_messages)
     fun savePTBMessage(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
             Call<SavePTBMessageResponse>
+
+    @POST(Constants.url_change_phase)
+    fun changePhase(@HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody):
+            Call<PhaseChangeResponse>
 }

@@ -162,11 +162,6 @@ class ProviderRepositoryImpl : ProviderRepository {
                 } else {
                     baseResponse.throwable = Throwable(response.errorBody()?.string())
                 }
-//                else {
-//                    val resetPasswordResponse = Gson().fromJson(
-//                        response.errorBody()!!.string(), SelfInviteResponse::class.java)
-//                    baseResponse.selfInviteResponse = resetPasswordResponse
-//                }
 
                 savePTBMessageLiveData.value = baseResponse
             }
@@ -178,5 +173,36 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
 
         return savePTBMessageLiveData
+    }
+
+    override fun changePhase(
+        requestBody: RequestBody,
+        token: String
+    ): LiveData<PhaseChangeBaseResponse> {
+        val phaseChangeLiveData: MutableLiveData<PhaseChangeBaseResponse> = MutableLiveData()
+        val call: Call<PhaseChangeResponse> =
+            apiService.changePhase(getRequestHeaders(token), requestBody)
+        val baseResponse = PhaseChangeBaseResponse()
+        call.enqueue(object : Callback<PhaseChangeResponse> {
+            override fun onResponse(
+                call: Call<PhaseChangeResponse>,
+                response: Response<PhaseChangeResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.phaseChangeResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                phaseChangeLiveData.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<PhaseChangeResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                phaseChangeLiveData.value = baseResponse
+            }
+        })
+
+        return phaseChangeLiveData
     }
 }

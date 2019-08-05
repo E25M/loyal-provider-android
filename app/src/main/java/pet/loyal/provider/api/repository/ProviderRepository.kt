@@ -18,4 +18,6 @@ interface ProviderRepository {
 
     fun savePTBMessage(requestBody: RequestBody , token: String ) :
             LiveData<SavePTBMessageBaseResponse>
+
+    fun changePhase(requestBody: RequestBody , token: String ) :LiveData<PhaseChangeBaseResponse>
 }

@@ -28,6 +28,7 @@ class Constants {
         const val url_login = "tablet/login"
         const val url_appointment_by_id = "tablet/ptb/appointment/"
         const val url_save_ptb_messages = "tablet/ptb/save/"
+        const val url_change_phase = "tablet/ptb/change-phrase/"
         const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"
@@ -42,6 +43,9 @@ class Constants {
         const val extra_url_apk = "extra.url.apk"
         const val extra_download_apk_status = "extra.download.apk.status"
         const val extra_phase_list = "extra.phase.list"
+        const val extra_phase_id = "extra.phase.id"
+        const val extra_appointment_id = "extra.appointment.id"
+        const val extra_pet_name = "extra.pet.name"
 
         const val action_download_apk = "pet.loyal.provider.download.apk"
 
