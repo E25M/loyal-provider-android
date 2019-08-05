@@ -26,6 +26,7 @@ import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_edit_patiant_card.*
+import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
 import pet.loyal.client.api.response.PetCardDataResponse
 import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.R
@@ -69,6 +70,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private var uploadingMessageIdPosition = 0
 
     private var customMessageId = 0
+    private lateinit var appointmentId: String
 
     companion object {
         fun newInstance() = EditPetCardFragment()
@@ -166,6 +168,10 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .inflate(inflater, container, false)
         initDataBinding()
 
+        if (arguments != null){
+            appointmentId = arguments!!.getString(Constants.extra_appointment_id, "")
+        }
+
         setObservers()
         loadAppointment()
 
@@ -222,7 +228,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun loadAppointment(){
         refreshAll()
-        viewModel.getPetCardById("5d36a5a2239176001ee19285", preferenceManager.getLoginToken())
+        if (appointmentId != null && appointmentId.isNotEmpty()) {
+            viewModel.getPetCardById(appointmentId, preferenceManager.getLoginToken())
+        }
     }
 
     private fun savePTBMessages(){
