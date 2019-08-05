@@ -84,7 +84,6 @@ class Constants {
         const val intent_type_support  = 2
         const val intent_type_settings  = 3
 
-
         // phases
         const val phase_expected = "Expected"
         const val phase_check_in = "Check-In"
@@ -99,5 +98,10 @@ class Constants {
         const val phase_discharge = "Discharge"
         const val phase_complete = "Complete"
 
+        //phase change error message codes
+        const val pet_is_not_active = "pet_is_not_active"
+        const val parent_is_not_active = "parent_is_not_active"
+        const val there_are_another_ongoing_appointments_for_this_pet =
+            "there_are_another_ongoing_appointments_for_this_pet"
     }
 }

@@ -8,7 +8,7 @@
                 type="pet.loyal.provider.view.phasechange.PhaseListViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="348dp"
+            android:layout_width="548dp"
             android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView

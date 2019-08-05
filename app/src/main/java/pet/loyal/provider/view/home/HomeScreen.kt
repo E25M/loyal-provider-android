@@ -2,12 +2,8 @@ package pet.loyal.provider.view.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import org.json.JSONObject
 import pet.loyal.provider.R
 import pet.loyal.provider.view.editpetcard.EditPetCardFragment
-import pet.loyal.provider.view.selfinvite.SelfInviteFragment
-import java.util.*
 
 class HomeScreen : AppCompatActivity() {
 

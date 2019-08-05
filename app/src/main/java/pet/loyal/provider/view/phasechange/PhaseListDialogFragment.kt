@@ -35,6 +35,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
 
     interface PhaseListDialogFragmentListener{
         fun onPhaseChangeSuccess()
+        fun onPhaseChangeFailed(errorMessage: String)
     }
 
     private fun initDataBind(){
@@ -51,6 +52,16 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
         initDataBind()
 
         return layoutPhaseChangeSelectorBinding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog
+        if (dialog != null) {
+            val width = ViewGroup.LayoutParams.WRAP_CONTENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
+            dialog.window!!.setLayout(400, height)
+        }
     }
 
     // load the image once the image is created
@@ -98,21 +109,17 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
                             )
                             if (signInResponse.statusCode == 401) {
                                 redirectToLogin()
-                            } else if (signInResponse.statusCode == 400
-                                && signInResponse.errorMessage == Constants.self_invite_parent_already_exist_inactive
-                            ) {
-                                showPopup(activity!!, getString(R.string.msg_parent_inactive),
-                                    getString(R.string.text_info)
-                                )
+                            } else if (signInResponse.statusCode == 400 ) {
+                                (targetFragment as EditPetCardFragment).onPhaseChangeFailed(signInResponse.errorMessage!!)
                             } else {
                                 showPopup(
                                     activity!!, phaseChangeResponse.throwable?.message!!,
-                                    getString(R.string.text_info)
+                                    getString(R.string.text_error)
                                 )
                             }
                         } else {
                             showPopup(activity!!, phaseChangeResponse.throwable?.message!!,
-                                getString(R.string.text_info)
+                               getString(R.string.text_error)
                             )
                         }
                     } else if (phaseChangeResponse.phaseChangeResponse != null) {

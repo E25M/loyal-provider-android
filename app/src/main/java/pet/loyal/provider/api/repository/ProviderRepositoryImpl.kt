@@ -195,6 +195,7 @@ class ProviderRepositoryImpl : ProviderRepository {
                 } else {
                     baseResponse.throwable = Throwable(response.errorBody()?.string())
                 }
+                phaseChangeLiveData.value = baseResponse
             }
 
             override fun onFailure(call: Call<PhaseChangeResponse>, t: Throwable) {

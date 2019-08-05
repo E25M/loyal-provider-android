@@ -302,7 +302,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                         }
                     }else{
-
                         loadAppointment()
                     }
                 }
@@ -583,6 +582,24 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         showPopup(activity!!, "Update sent to ${petCardDataResponse?.appointment?.petName}"
                 + "'s support network ${getCurrentDateString()} ${getCurrentTimeString()}",
             getString(R.string.text_info))
+    }
+
+    override fun onPhaseChangeFailed(errorMessage: String) {
+        showPopup(activity!!, getPhaseChangeError(errorMessage), getString(R.string.text_error))
+    }
+
+    private fun getPhaseChangeError(errorMessage: String): String {
+        return when(errorMessage){
+            Constants.pet_is_not_active -> "${petCardDataResponse?.appointment?.petName} " +
+                    getString(R.string.text_please_active_pet)
+            Constants.parent_is_not_active -> "${petCardDataResponse?.appointment?.parentFirstName}" +
+                    " ${petCardDataResponse?.appointment?.parentLastName} " +
+                    getString(R.string.text_please_active_parent)
+            Constants.there_are_another_ongoing_appointments_for_this_pet ->
+                "${petCardDataResponse?.appointment?.petName} " +
+                        getString(R.string.text_please_complete_ongoing_appointment)
+            else -> getString(R.string.text_phase_change_failed)
+        }
     }
 
     override fun onAddCustomMessage(position: Int) {
