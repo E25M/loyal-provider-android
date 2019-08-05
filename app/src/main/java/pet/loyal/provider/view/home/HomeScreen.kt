@@ -50,7 +50,7 @@ class HomeScreen : AppCompatActivity() {
     }
 
     fun navigateToHome(view: View) {
-
+        changeFragment(Constants.fragment_type_home)
     }
 
 
@@ -58,7 +58,7 @@ class HomeScreen : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(
             R.id.constraint_layout_container_main,
             getFragment(type)
-        ).commit()
+        ).addToBackStack(type.toString()).commit()
     }
 
     private fun getFragment(type: Int): Fragment {
@@ -83,8 +83,11 @@ class HomeScreen : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finishAffinity()
-
+        if (supportFragmentManager.backStackEntryCount == 0){
+            finishAffinity()
+        }else{
+            supportFragmentManager.popBackStack()
+        }
     }
 
 }

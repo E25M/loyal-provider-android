@@ -110,4 +110,7 @@ dependencies {
 
     // segmented button
     implementation 'com.github.ceryle:SegmentedButton:v2.0.2'
+
+    implementation "com.helpscout:beacon-core:$beaconVersion"
+    implementation "com.helpscout:beacon-ui:$beaconVersion"
 }

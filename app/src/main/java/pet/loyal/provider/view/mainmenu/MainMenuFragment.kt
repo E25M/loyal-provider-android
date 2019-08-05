@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.helpscout.beacon.ui.BeaconActivity
 import kotlinx.android.synthetic.main.main_menu_fragment.*
 
 import pet.loyal.provider.R
@@ -43,7 +44,7 @@ class MainMenuFragment : Fragment() {
 
         }
         img_main_menu_support.setOnClickListener {
-
+            BeaconActivity.open(activity!!)
         }
     }
 
