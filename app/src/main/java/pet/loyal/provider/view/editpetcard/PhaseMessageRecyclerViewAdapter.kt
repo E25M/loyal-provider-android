@@ -83,7 +83,9 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
                 viewPhaseMessage.mainContainer.setOnClickListener {
                     if (viewHolder.itemBinding.mainContainer.height == 100) {
-                        expandView(viewPhaseMessage, viewHolder)
+                        if (itemPhaseMessage.imageGallery != null && itemPhaseMessage.imageGallery!!.size > 0) {
+                            expandView(viewPhaseMessage, viewHolder)
+                        }
                     }else{
                         collapseView(viewPhaseMessage, viewHolder)
                     }

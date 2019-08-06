@@ -570,7 +570,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             if (!imageGalleryList.containsKey(selectedMessageId)){
                 imageGalleryList[selectedMessageId] = ArrayList<Uri>()
             }
-            imageGalleryList[selectedMessageId]?.add(0, uri)
+            if (imageGalleryList[selectedMessageId]?.size!! < 10) {
+                imageGalleryList[selectedMessageId]?.add(0, uri)
+            }else{
+                showToast(activity!!, "You can add only 10 photos..")
+            }
         }
     }
 
