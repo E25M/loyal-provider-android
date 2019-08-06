@@ -36,6 +36,7 @@ import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.model.RequestPTBMessage
 import pet.loyal.provider.util.*
+import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.phasechange.PhaseListDialogFragment
 import java.io.File
@@ -43,7 +44,23 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMessageItemListener, PhaseListDialogFragment.PhaseListDialogFragmentListener {
+class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMessageItemListener,
+    PhaseListDialogFragment.PhaseListDialogFragmentListener, EditPetCardPermissionListener {
+
+    override fun onPermissionGranted(granted: Boolean, requestCode: Int, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSION_REQUEST_WRITE_STORAGE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                captureImage()
+            }
+            PERMISSION_REQUEST_READ_STORAGE -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery()
+            }
+        }
+    }
+
+    override fun onActivityResultListener(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    }
 
     private val CONTEXT_MENU_TAKE_A_PHOTO = 1
     private val CONTEXT_MENU_SELECT_A_PHOTO = 2
@@ -219,6 +236,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 showToast(activity!!, "This is the earliest phase..")
             }
         }
+
+        (activity as HomeScreen).setEditCardPermissionListener(this)
 
         return fragmentEditPatiantCardBinding.root
     }
