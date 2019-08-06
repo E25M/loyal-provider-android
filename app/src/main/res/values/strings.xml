@@ -97,4 +97,5 @@
 
     <!--helpscout-->
     <string name="help_scout_beacon_id">70c6d9e2-fdab-4049-8f1a-7ee15d60e478</string>
+    <string name="text_10_photos_limit">You can add only 10 photos..</string>
 </resources>
