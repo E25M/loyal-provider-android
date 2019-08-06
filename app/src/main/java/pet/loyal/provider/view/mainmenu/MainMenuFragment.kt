@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.helpscout.beacon.ui.BeaconActivity
 import kotlinx.android.synthetic.main.main_menu_fragment.*
 import pet.loyal.provider.databinding.MainMenuFragmentBinding
 import pet.loyal.provider.util.Constants
