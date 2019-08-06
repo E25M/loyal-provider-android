@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
+import pet.loyal.provider.util.EditPetCardPermissionListener
 import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.mainmenu.MainMenuFragment
@@ -19,15 +20,22 @@ import pet.loyal.provider.view.selfinvite.SelfInviteFragment
 import pet.loyal.provider.view.settings.SettingsFragment
 
 class HomeScreen : AppCompatActivity() {
+    private val PERMISSION_REQUEST_WRITE_STORAGE = 103
+    private val PERMISSION_REQUEST_READ_STORAGE = 104
 
     lateinit var layoutBinding: LayoutHomeScreenBinding
     lateinit var viewModel: HomeScreenViewModel
     lateinit var preferenceManager: PreferenceManager
+    var editPetCardPermissionListener: EditPetCardPermissionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
         loadHomeFragment(Constants.fragment_type_home)
+    }
+
+    fun setEditCardPermissionListener(editPetCardPermissionListener: EditPetCardPermissionListener){
+        this.editPetCardPermissionListener = editPetCardPermissionListener
     }
 
     private fun initDataBinding() {
@@ -133,5 +141,14 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_REQUEST_READ_STORAGE || requestCode == PERMISSION_REQUEST_WRITE_STORAGE) {
+            editPetCardPermissionListener?.onPermissionGranted(true, requestCode, grantResults)
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 }
