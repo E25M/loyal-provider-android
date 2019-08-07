@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_phase.view.*
+import kotlinx.android.synthetic.main.list_item_toggle_phase.view.*
 import pet.loyal.provider.R
 import pet.loyal.provider.model.Phase
 
@@ -20,7 +21,7 @@ class PatientCardsPhaseAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhaseViewHolder {
         val view =
             LayoutInflater.from(this.context).inflate(
-                R.layout.list_item_phase, parent, false
+                R.layout.list_item_toggle_phase, parent, false
             )
         return PhaseViewHolder(view)
     }
@@ -42,7 +43,9 @@ class PatientCardsPhaseAdapter(
 
     class PhaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(phase: Phase, position: Int, onPhaseClickListener: OnPhaseClickListener) {
-            itemView.btn_list_item_phase_name.text = phase.name
+            itemView.btn_list_item_toggle_phase_name.text = phase.name
+            itemView.btn_list_item_toggle_phase_name.textOff = phase.name
+            itemView.btn_list_item_toggle_phase_name.textOn = phase.name
             itemView.setOnClickListener {
                 onPhaseClickListener.onPhaseClick(position, phase)
             }

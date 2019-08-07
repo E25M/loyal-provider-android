@@ -43,11 +43,11 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
             itemView.txt_date_time_list_item_sent_message.text =
                 formatTime(message.dateTime) + " " + formatDate(message.dateTime)
 
-            if (position % 2 == 0) {
+            if (position % 2 != 0) {
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.bg_color_gray_1
+                        R.color.bg_color_gray_3
                     )
                 )
             }
