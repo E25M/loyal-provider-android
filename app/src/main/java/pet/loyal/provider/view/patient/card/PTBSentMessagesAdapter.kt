@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_pet_card_messages.view.*
 import pet.loyal.provider.R
@@ -27,7 +28,7 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.bindData(messageList[position], position)
+        holder.bindData(messageList[position], position, context)
     }
 
 
@@ -37,10 +38,19 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
         val displayFormat = SimpleDateFormat("MM/dd/yyyy")
         val timeDisplayFormat = SimpleDateFormat("HH:MM Z")
 
-        fun bindData(message: SentMessage, position: Int) {
+        fun bindData(message: SentMessage, position: Int, context: Context) {
             itemView.txt_msg_list_item_sent_message.text = message.message
             itemView.txt_date_time_list_item_sent_message.text =
                 formatTime(message.dateTime) + " " + formatDate(message.dateTime)
+
+            if (position % 2 != 0) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.bg_color_gray_3
+                    )
+                )
+            }
         }
 
         fun formatDate(dateString: String): String {

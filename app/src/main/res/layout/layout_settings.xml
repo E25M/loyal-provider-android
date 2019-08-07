@@ -81,6 +81,7 @@
                             android:layout_height="wrap_content"
                             android:clickable="true"
                             android:focusable="false"
+                            android:text="@{viewModel.selectedFacility}"
                             android:hint="@string/txt_select_facility" />
                 </com.google.android.material.textfield.TextInputLayout>
 

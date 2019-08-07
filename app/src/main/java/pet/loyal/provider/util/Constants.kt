@@ -118,5 +118,11 @@ class Constants {
         const val fragment_type_settings = 2
         const val fragment_type_parent_sign_up = 3
 
+        // user types
+        const val user_type_client= "client"
+        const val user_type_staff = "staff"
+        const val user_type_admin = "admin"
+        const val user_type_super_admin = "super_admin"
+
     }
 }

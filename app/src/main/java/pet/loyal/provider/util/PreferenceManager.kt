@@ -65,11 +65,11 @@ class PreferenceManager(context: Context) {
     }
 
     fun getFacilityPhone(): String{
-        return sharedPreferences.getString(Constants.data_facility_phone, "4565475")
+        return sharedPreferences.getString(Constants.data_facility_phone, "")
     }
 
     fun getFacilityName(): String{
-        return sharedPreferences.getString(Constants.data_facility_name, "Name")
+        return sharedPreferences.getString(Constants.data_facility_name, "")
     }
 
     fun saveFacility(facility: Facility){
@@ -82,6 +82,10 @@ class PreferenceManager(context: Context) {
         return sharedPreferences.getString(Constants.data_facility_id , "default")
     }
 
+    fun getUserType() : String {
+        return sharedPreferences.getString(Constants.data_user_type , "default")
+    }
+
     fun deleteSession() {
         editor.remove(Constants.data_user_id)
             .remove(Constants.data_login_token)
@@ -92,9 +96,6 @@ class PreferenceManager(context: Context) {
             .remove(Constants.data_user_phone)
             .remove(Constants.data_user_email)
             .remove(Constants.data_user_avatar)
-            .remove(Constants.data_facility_id)
-            .remove(Constants.data_facility_name)
-            .remove(Constants.data_facility_phone)
             .commit()
     }
 }
