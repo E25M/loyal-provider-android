@@ -113,10 +113,14 @@ class HomeScreen : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0){
+        if (supportFragmentManager.backStackEntryCount == 0) {
             finishAffinity()
-        }else{
+        } else {
             supportFragmentManager.popBackStack()
+            val fragment =  supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
+            if (fragment != null && fragment.isVisible) {
+                viewModel.toolbarVisibility.value = View.GONE
+            }
         }
     }
 

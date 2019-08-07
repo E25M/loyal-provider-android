@@ -106,6 +106,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             loadData()
         }
 
+
         drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0){
@@ -116,6 +117,15 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                 collapse(filterPanel, 200, 0)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_drop_down_filter)
             }
+
+        img_patient_cards_logout.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.onLogout(img_patient_cards_logout)
+        }
+
+        img_patient_cards_home.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.navigateToHome(img_patient_cards_logout)
         }
     }
 

@@ -13,12 +13,14 @@ class SettingsViewModel : ViewModel() {
     var facilityListResponse: MediatorLiveData<GetFacilityBaseResponse>
     var providerRepository : ProviderRepository
     var applyButtonEnabled = MutableLiveData<Boolean>()
+    var selectedFacility = MutableLiveData<String>()
 
     init {
         progressBarVisibility.value = View.GONE
         facilityListResponse = MediatorLiveData()
         providerRepository = RepositoryProvider.provideProviderRepository()
         applyButtonEnabled.value = false
+        selectedFacility.value = ""
     }
 
 

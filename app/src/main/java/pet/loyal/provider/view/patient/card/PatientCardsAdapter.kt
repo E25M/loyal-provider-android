@@ -3,21 +3,21 @@ package pet.loyal.provider.view.patient.card
 import android.content.Context
 import android.graphics.LightingColorFilter
 import android.os.Build
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_edit_patiant_card.view.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_pet_card.view.*
-import kotlinx.android.synthetic.main.list_item_phase.view.*
 import pet.loyal.provider.R
 import pet.loyal.provider.model.PetTrackingAppointment
+import pet.loyal.provider.util.Constants
 import pet.loyal.provider.util.formatDate
 import pet.loyal.provider.util.getPhaseColors
 import pet.loyal.provider.util.getPhaseColorsOld
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 
 class PatientCardsAdapter(
@@ -56,11 +56,19 @@ class PatientCardsAdapter(
         holder.itemView.txt_first_name_list_item_pet_card.text =
             card.parentFirstName
 
-        holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " +card.petSpecies
+        holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
         holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
             formatDate(card.dateTime, SimpleDateFormat("MM/dd/yyyy ',' HH:mm 'Z'"))
+
+        if (card.petImage != null) {
+            if (!TextUtils.isEmpty(card.petImage)) {
+                Picasso.get().load(Constants.url_cloudinary_pet_profile + card.petImage)
+                    .error(R.drawable.img_pet_sample)
+                    .placeholder(R.drawable.img_pet_sample).into(holder.itemView.img_pet_)
+            }
+        }
 //        holder.itemView.btn_list_item_phase_name.text = card.type
 //        holder.itemView.btn_list_item_phase_name.setBackgroundColor(
 //            getPhaseColors(

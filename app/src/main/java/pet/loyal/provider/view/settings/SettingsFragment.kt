@@ -2,6 +2,7 @@ package pet.loyal.provider.view.settings
 
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,6 +120,9 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
 
 
     private fun loadFacilityList(token: String) {
+        if (!TextUtils.isEmpty(preferenceManager.getFacilityName())){
+            viewModel.selectedFacility.value = preferenceManager.getFacilityName()
+        }
         viewModel.getFacilityList(preferenceManager.getLoginToken())
     }
 
@@ -158,6 +162,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         viewModel.applyButtonEnabled.value = !selectedId.equals(facility.id, true)
         selected = facility
         selectedId = facility.id
+        viewModel.selectedFacility.value = facility.displayName
     }
 
 
