@@ -14,74 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <SearchView
-                        android:id="@+id/serachview_patient_cards_keyword"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="32dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="100dp"
-                        android:layout_height="32dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_home"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/facility_logo_sample" />
-
-                <ImageView
-                        android:id="@+id/img_patient_cards_logout"
-                        android:layout_width="32dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="24dp"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:scaleType="centerInside"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_logout" />
-
-                <ImageView
-                        android:id="@+id/img_patient_cards_home"
-                        android:layout_width="32dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="35dp"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:scaleType="centerInside"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_logout"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_home" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_patient_cards"
                 android:layout_width="match_parent"
@@ -100,14 +32,82 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/filterPanel"
                     android:background="@color/bg_color_gray_2"
                     android:layout_width="match_parent"
-                    android:layout_height="115dp">
+                    android:layout_height="160dp">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="?attr/actionBarTheme"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetStart="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <SearchView
+                                android:id="@+id/serachview_patient_cards_keyword"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="32dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="100dp"
+                                android:layout_height="32dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_home"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/facility_logo_sample" />
+
+                        <ImageView
+                                android:id="@+id/img_patient_cards_logout"
+                                android:layout_width="32dp"
+                                android:layout_height="0dp"
+                                android:layout_marginEnd="24dp"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:scaleType="centerInside"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_logout" />
+
+                        <ImageView
+                                android:id="@+id/img_patient_cards_home"
+                                android:layout_width="32dp"
+                                android:layout_height="0dp"
+                                android:layout_marginEnd="35dp"
+                                android:background="?selectableItemBackgroundBorderless"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:scaleType="centerInside"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_logout"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_home" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.appcompat.widget.Toolbar>
 
                 <TextView
                         android:id="@+id/textView19"
@@ -119,7 +119,7 @@
                         android:textColor="@color/font_color_black"
                         android:text="@string/txt_sort_pet_cards"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
                 <ImageView
                         android:id="@+id/img_patient_cards_sort_by"
@@ -132,7 +132,7 @@
                         android:focusable="true"
                         android:background="?selectableItemBackgroundBorderless"
                         app:layout_constraintStart_toEndOf="@+id/textView19"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toolbar"
                         app:srcCompat="@drawable/ic_sort_by" />
 
                 <com.google.android.material.tabs.TabLayout
@@ -143,7 +143,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@android:color/transparent"
                         app:layout_constraintStart_toEndOf="@+id/img_patient_cards_sort_by"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toolbar"
                         app:tabBackground="@color/colorPrimary"
                         app:tabIndicatorColor="@android:color/transparent">
 

@@ -109,7 +109,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0){
-                expand(filterPanel, 200, 155)
+                expand(filterPanel, 200, 200)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_drop_up_filter)
                 loadData()
             }else{
