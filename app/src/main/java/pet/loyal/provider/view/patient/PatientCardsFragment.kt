@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,16 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.layout_login.view.*
 import kotlinx.android.synthetic.main.layout_patient_cards.*
+import kotlinx.android.synthetic.main.layout_photo_gallery_item.view.*
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.PetTrackingBoardDataResponse
 import pet.loyal.provider.databinding.LayoutPatientCardsBinding
 import pet.loyal.provider.model.PetTrackingAppointment
 import pet.loyal.provider.model.Phase
-import pet.loyal.provider.util.Constants
-import pet.loyal.provider.util.PreferenceManager
-import pet.loyal.provider.util.isConnected
-import pet.loyal.provider.util.showToast
+import pet.loyal.provider.util.*
 import pet.loyal.provider.view.editpetcard.EditPetCardFragment
 import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.patient.card.OnPetCardClickListener
@@ -106,6 +106,18 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             loadData()
         }
 
+
+        drpDwnFilterArea.alpha = 0.5f
+        drpDwnFilterArea.setOnClickListener {
+            if (filterPanel.height == 0){
+                expand(filterPanel, 200, 155)
+                drpDwnFilterArea.setImageResource(R.drawable.ic_drop_up_filter)
+                loadData()
+            }else{
+                collapse(filterPanel, 200, 0)
+                drpDwnFilterArea.setImageResource(R.drawable.ic_drop_down_filter)
+            }
+
         img_patient_cards_logout.setOnClickListener {
             val activity = activity as HomeScreen
             activity.onLogout(img_patient_cards_logout)
@@ -129,6 +141,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         preferenceManager = PreferenceManager(context!!)
         facilityId = preferenceManager.getFacilityId()
     }
+
 
 
     private fun setUpLayoutManager() {
@@ -199,7 +212,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
 
         var errorMessage = context?.getString(R.string.error_common)
-        if (!isConnected) {
+        if (isConnected) {
             errorMessage = context?.getString(R.string.error_no_connection)
         } else {
             when (throwable) {

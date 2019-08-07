@@ -91,6 +91,16 @@ class PhaseMessageRecyclerViewAdapter(
                     }
                 }
 
+                viewPhaseMessage.btnDropDown.setOnClickListener {
+                    if (viewHolder.itemBinding.mainContainer.height == 100) {
+                        if (itemPhaseMessage.imageGallery != null && itemPhaseMessage.imageGallery!!.size > 0) {
+                            expandView(viewPhaseMessage, viewHolder)
+                        }
+                    }else{
+                        collapseView(viewPhaseMessage, viewHolder)
+                    }
+                }
+
                 if (itemPhaseMessage.imageGallery != null
                             && itemPhaseMessage.imageGallery!!.size > 0){
                     viewPhaseMessage.btnDropDown.visibility = View.VISIBLE
@@ -133,6 +143,14 @@ class PhaseMessageRecyclerViewAdapter(
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
                     viewPhaseMessage.layoutMessage.visibility = View.INVISIBLE
                     viewPhaseMessage.txtMessage.visibility = View.VISIBLE
+                }
+
+                viewPhaseMessage.btnDropDown.setOnClickListener {
+                    if (viewPhaseMessage.mainContainer.height == 120) {
+                        expandView(viewPhaseMessage, viewHolder)
+                    }else{
+                        collapseView(viewPhaseMessage, viewHolder)
+                    }
                 }
 
                 viewPhaseMessage.btnAddPhoto.setOnClickListener {

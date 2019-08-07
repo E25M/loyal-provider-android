@@ -518,7 +518,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
                 override fun onError(requestId: String?, error: ErrorInfo?) {
                     viewModel.liveProgressDialog.value = View.GONE
-                    showPopup(activity!!, getString(R.string.error_upload_failed), "Error")
+                    showPopup(activity!!, getString(R.string.error_upload_failed), getString(R.string.text_error))
                 }
 
                 override fun onStart(requestId: String?) {}
@@ -573,7 +573,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             if (imageGalleryList[selectedMessageId]?.size!! < 10) {
                 imageGalleryList[selectedMessageId]?.add(0, uri)
             }else{
-                showToast(activity!!, "You can add only 10 photos..")
+                showToast(activity!!, getString(R.string.text_10_photos_limit))
             }
         }
     }
