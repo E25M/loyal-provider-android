@@ -109,151 +109,152 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
         drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
-            if (filterPanel.height == 0){
-                expand(filterPanel, 200, 200)
+            if (filterPanel.height == 0) {
+                expand(filterPanel, 200, 240)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_drop_up_filter)
                 loadData()
-            }else{
+            } else {
                 collapse(filterPanel, 200, 0)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_drop_down_filter)
             }
 
-        img_patient_cards_logout.setOnClickListener {
-            val activity = activity as HomeScreen
-            activity.onLogout(img_patient_cards_logout)
-        }
-
-        img_patient_cards_home.setOnClickListener {
-            val activity = activity as HomeScreen
-            activity.navigateToHome(img_patient_cards_logout)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        loadData()
-    }
-
-    private fun initDataBinding() {
-        viewModel = ViewModelProviders.of(this).get(PatientCardsViewModel::class.java)
-        layoutBinding.viewModel = viewModel
-        layoutBinding.lifecycleOwner = this
-        preferenceManager = PreferenceManager(context!!)
-        facilityId = preferenceManager.getFacilityId()
-    }
-
-
-
-    private fun setUpLayoutManager() {
-        recyclerview_patient_cards.layoutManager =
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerview_phases.layoutManager =
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-    }
-
-
-    private fun loadData() {
-        if (isConnected(context!!)) {
-            if (!facilityId.equals("default", true)) {
-                viewModel.getCards(
-                    sort,
-                    sortBy,
-                    keyWord,
-                    preferenceManager.getLoginToken(),
-                    facilityId
-                )
-            } else {
-                // no facility selected. select a facility
-                showToast(context!!, getString(R.string.msg_no_facility_selected))
+            img_patient_cards_logout.setOnClickListener {
+                val activity = activity as HomeScreen
+                activity.onLogout(img_patient_cards_logout)
             }
-        } else {
-            handleError(Throwable(getString(R.string.error_no_connection)), false)
-        }
-    }
 
-    private fun setUpObservers() {
-        viewModel.petTrackingBoardResponse.observe(this, Observer { response ->
-            if (response.throwable != null) {
-                handleError(response.throwable!!, false)
-            } else {
-                if (response.petTrackingBoardResponse != null) {
-                    refreshData(response.petTrackingBoardResponse?.data)
-                } else {
-                    handleError(Throwable(getString(R.string.error_no_connection)), true)
-                }
-            }
-        })
-    }
-
-    private fun refreshData(data: PetTrackingBoardDataResponse?) {
-        if (data != null) {
-            if (recyclerview_patient_cards.adapter != null) {
-                val cardsAdapter = recyclerview_patient_cards.adapter as PatientCardsAdapter
-                cardsAdapter.updateList(data.appointments)
-            } else {
-                recyclerview_patient_cards.adapter =
-                    PatientCardsAdapter(context!!, data.appointments, this)
-            }
-            if (recyclerview_phases.adapter != null) {
-                val phaseAdapter = recyclerview_phases.adapter as PatientCardsPhaseAdapter
-                phaseAdapter.updateList(data.phases)
-            } else {
-                recyclerview_phases.adapter =
-                    PatientCardsPhaseAdapter(context!!, data.phases, this)
-            }
-            viewModel.progressBarVisibility.value = View.GONE
-        } else {
-            handleError(Throwable(getString(R.string.error_no_connection)), true)
-        }
-    }
-
-
-    private fun handleError(throwable: Throwable, isConnected: Boolean) {
-
-
-        var errorMessage = context?.getString(R.string.error_common)
-        if (isConnected) {
-            errorMessage = context?.getString(R.string.error_no_connection)
-        } else {
-            when (throwable) {
-                is ConnectException -> {
-                    errorMessage = context?.getString(R.string.error_failed_to_connect_to_server)
-                }
-                is TimeoutException -> {
-                    errorMessage = context?.getString(R.string.error_timeout)
-                }
-                is SocketTimeoutException -> {
-                    errorMessage = context?.getString(R.string.error_timeout)
-                }
+            img_patient_cards_home.setOnClickListener {
+                val activity = activity as HomeScreen
+                activity.navigateToHome(img_patient_cards_logout)
             }
         }
+    }
 
-        viewModel.progressBarVisibility.value = View.GONE
-
-        val snackBar =
-            Snackbar.make(conteinerView, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction("RETRY") {
+        override fun onStart() {
+            super.onStart()
             loadData()
         }
-        snackBar.show()
 
-    }
-
-    override fun onPerCardClick(card: PetTrackingAppointment, position: Int) {
-        // navigate the user to the pet card section
-        val activity = activity as HomeScreen
-
-        val editPetCardFragment = EditPetCardFragment()
-        val bundle = Bundle()
-        bundle.putString(Constants.extra_appointment_id, card.id)
-        editPetCardFragment.arguments = bundle
-
-        activity.changeFragment(editPetCardFragment, 5)
-    }
+        private fun initDataBinding() {
+            viewModel = ViewModelProviders.of(this).get(PatientCardsViewModel::class.java)
+            layoutBinding.viewModel = viewModel
+            layoutBinding.lifecycleOwner = this
+            preferenceManager = PreferenceManager(context!!)
+            facilityId = preferenceManager.getFacilityId()
+        }
 
 
-    override fun onPhaseClick(position: Int, phase: Phase) {
-        viewModel.modifyFilters(phase.id)
-        loadData()
-    }
+        private fun setUpLayoutManager() {
+            recyclerview_patient_cards.layoutManager =
+                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            recyclerview_phases.layoutManager =
+                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
+
+
+        private fun loadData() {
+            if (isConnected(context!!)) {
+                if (!facilityId.equals("default", true)) {
+                    viewModel.getCards(
+                        sort,
+                        sortBy,
+                        keyWord,
+                        preferenceManager.getLoginToken(),
+                        facilityId
+                    )
+                } else {
+                    // no facility selected. select a facility
+                    showToast(context!!, getString(R.string.msg_no_facility_selected))
+                }
+            } else {
+                handleError(Throwable(getString(R.string.error_no_connection)), false)
+            }
+        }
+
+        private fun setUpObservers() {
+            viewModel.petTrackingBoardResponse.observe(this, Observer { response ->
+                if (response.throwable != null) {
+                    handleError(response.throwable!!, false)
+                } else {
+                    if (response.petTrackingBoardResponse != null) {
+                        refreshData(response.petTrackingBoardResponse?.data)
+                    } else {
+                        handleError(Throwable(getString(R.string.error_no_connection)), true)
+                    }
+                }
+            })
+        }
+
+        private fun refreshData(data: PetTrackingBoardDataResponse?) {
+            if (data != null) {
+                if (recyclerview_patient_cards.adapter != null) {
+                    val cardsAdapter = recyclerview_patient_cards.adapter as PatientCardsAdapter
+                    cardsAdapter.updateList(data.appointments)
+                } else {
+                    recyclerview_patient_cards.adapter =
+                        PatientCardsAdapter(context!!, data.appointments, this)
+                }
+                if (recyclerview_phases.adapter != null) {
+                    val phaseAdapter = recyclerview_phases.adapter as PatientCardsPhaseAdapter
+                    phaseAdapter.updateList(data.phases)
+                } else {
+                    recyclerview_phases.adapter =
+                        PatientCardsPhaseAdapter(context!!, data.phases, this)
+                }
+                viewModel.progressBarVisibility.value = View.GONE
+            } else {
+                handleError(Throwable(getString(R.string.error_no_connection)), true)
+            }
+        }
+
+
+        private fun handleError(throwable: Throwable, isConnected: Boolean) {
+
+
+            var errorMessage = context?.getString(R.string.error_common)
+            if (isConnected) {
+                errorMessage = context?.getString(R.string.error_no_connection)
+            } else {
+                when (throwable) {
+                    is ConnectException -> {
+                        errorMessage =
+                            context?.getString(R.string.error_failed_to_connect_to_server)
+                    }
+                    is TimeoutException -> {
+                        errorMessage = context?.getString(R.string.error_timeout)
+                    }
+                    is SocketTimeoutException -> {
+                        errorMessage = context?.getString(R.string.error_timeout)
+                    }
+                }
+            }
+
+            viewModel.progressBarVisibility.value = View.GONE
+
+            val snackBar =
+                Snackbar.make(conteinerView, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
+            snackBar.setAction("RETRY") {
+                loadData()
+            }
+            snackBar.show()
+
+        }
+
+        override fun onPerCardClick(card: PetTrackingAppointment, position: Int) {
+            // navigate the user to the pet card section
+            val activity = activity as HomeScreen
+
+            val editPetCardFragment = EditPetCardFragment()
+            val bundle = Bundle()
+            bundle.putString(Constants.extra_appointment_id, card.id)
+            editPetCardFragment.arguments = bundle
+
+            activity.changeFragment(editPetCardFragment, 5)
+        }
+
+
+        override fun onPhaseClick(position: Int, phase: Phase) {
+            viewModel.modifyFilters(phase.id)
+            loadData()
+        }
 }
