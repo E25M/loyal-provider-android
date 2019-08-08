@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.helpscout.beacon.Beacon
 import com.helpscout.beacon.ui.BeaconActivity
 import kotlinx.android.synthetic.main.main_menu_fragment.*
 import pet.loyal.provider.databinding.MainMenuFragmentBinding
@@ -48,6 +49,7 @@ class MainMenuFragment : Fragment() {
         }
         img_main_menu_support.setOnClickListener {
             if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
+
                 BeaconActivity.open(activity!!)
             }
         }
