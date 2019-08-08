@@ -60,7 +60,7 @@ class PatientCardsAdapter(
         holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
-            formatDate(card.dateTime, SimpleDateFormat("MM/dd/yyyy ',' HH:mm 'Z'"))
+            formatDate(card.dateTime, SimpleDateFormat("MM/dd/yyyy ',' HH:mm a"))
 
         if (card.petImage != null) {
             if (!TextUtils.isEmpty(card.petImage)) {

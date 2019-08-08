@@ -2,8 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
+<data>
         <variable
                 name="viewModel"
                 type="pet.loyal.provider.view.patient.PatientCardsViewModel" />
@@ -210,4 +209,5 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    
 </layout>

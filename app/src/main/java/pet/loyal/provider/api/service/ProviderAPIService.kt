@@ -42,4 +42,9 @@ interface ProviderAPIService {
     fun getfacilityList(
        @HeaderMap hashMap: HashMap<String, String>
     ): Call<GetFacilityResponse>
+
+    @GET(Constants.url_get_phases)
+    fun getPhases(
+        @HeaderMap hashMap: HashMap<String, String>
+    ): Call<GetPhaseListResponse>
 }

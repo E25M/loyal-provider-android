@@ -27,4 +27,6 @@ interface ProviderRepository {
 
     fun getFacilityList(token: String) : LiveData<GetFacilityBaseResponse>
 
+    fun getPhaseList(token: String) : LiveData<GetPhaseListBaseResponse>
+
 }

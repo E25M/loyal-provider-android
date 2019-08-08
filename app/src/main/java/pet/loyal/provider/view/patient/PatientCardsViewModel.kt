@@ -11,6 +11,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import pet.loyal.provider.api.repository.ProviderRepository
 import pet.loyal.provider.api.repository.RepositoryProvider
+import pet.loyal.provider.api.responses.GetPhaseListBaseResponse
 import pet.loyal.provider.api.responses.PetTrackingBoardBaseResponse
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,13 +21,32 @@ class PatientCardsViewModel : ViewModel() {
     private var repository: ProviderRepository
     var progressBarVisibility = MutableLiveData<Int>()
     var petTrackingBoardResponse: MediatorLiveData<PetTrackingBoardBaseResponse>
+    var phaseListResponse : MediatorLiveData<GetPhaseListBaseResponse>
     lateinit var filters: ArrayList<Int>
 
     init {
         repository = RepositoryProvider.provideProviderRepository()
         progressBarVisibility.value = View.GONE
         petTrackingBoardResponse = MediatorLiveData()
+        phaseListResponse = MediatorLiveData()
         filters = arrayListOf()
+    }
+
+
+    fun getPhases(token : String) : LiveData<GetPhaseListBaseResponse>{
+
+        progressBarVisibility.value = View.VISIBLE
+
+        val dataSource  = repository.getPhaseList(token)
+        phaseListResponse.addSource(dataSource){
+            listResponse ->
+            if (phaseListResponse.hasActiveObservers()){
+                phaseListResponse.removeSource(dataSource)
+            }
+            phaseListResponse.value = listResponse
+        }
+
+        return phaseListResponse
     }
 
     fun getCards(
