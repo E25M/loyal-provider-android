@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
-<data>
+
+    <data>
+
         <variable
                 name="viewModel"
                 type="pet.loyal.provider.view.patient.PatientCardsViewModel" />
@@ -30,15 +32,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/filterPanel"
-                    android:background="@color/bg_color_gray_2"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp">
+                    android:layout_height="180dp"
+                    android:background="@color/bg_color_gray_2">
 
                 <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -57,16 +59,46 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                        <SearchView
-                                android:id="@+id/serachview_patient_cards_keyword"
+                        <!--                        <EditText-->
+                        <!--                                android:id="@+id/serachview_patient_cards_keyword"-->
+                        <!--                                android:layout_width="0dp"-->
+                        <!--                                android:layout_height="match_parent"-->
+                        <!--                                android:layout_marginStart="16dp"-->
+                        <!--                                android:layout_marginEnd="32dp"-->
+                        <!--                                android:textColorHint="@color/bg_color_gray_3"-->
+                        <!--                                android:textColor="@color/bg_color_gray_3"-->
+                        <!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+                        <!--                                app:layout_constraintEnd_toStartOf="@+id/imageView2"-->
+                        <!--                                app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                                app:layout_constraintTop_toTopOf="parent" />-->
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayout3"
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginEnd="32dp"
+                                android:layout_marginEnd="16dp"
+                                style="@style/TextFieldGrey"
+                                app:hintEnabled="false"
+                                app:hintAnimationEnabled="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/serachview_patient_cards_keyword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/hint_search_facility"
+                                    android:imeOptions="actionSearch"
+                                    android:inputType="text"
+                                    android:lines="1"
+                                    android:drawableStart="@android:drawable/ic_menu_search"
+                                    android:textColor="@color/bg_color_gray_3"
+                                    android:textColorHint="@color/bg_color_gray_3" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <ImageView
                                 android:id="@+id/imageView2"
@@ -114,9 +146,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="35dp"
                         android:layout_marginTop="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/font_color_black"
                         android:text="@string/txt_sort_pet_cards"
+                        android:textColor="@color/font_color_black"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
@@ -126,10 +158,10 @@
                         android:layout_height="24dp"
                         android:layout_marginStart="13dp"
                         android:layout_marginTop="16dp"
-                        android:scaleType="centerInside"
+                        android:background="?selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?selectableItemBackgroundBorderless"
+                        android:scaleType="centerInside"
                         app:layout_constraintStart_toEndOf="@+id/textView19"
                         app:layout_constraintTop_toBottomOf="@id/toolbar"
                         app:srcCompat="@drawable/ic_sort_by" />
@@ -163,12 +195,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="35dp"
+                        android:text="@string/txt_filter_pet_cards"
                         android:textColor="@color/font_color_black"
                         android:textStyle="bold"
-                        android:text="@string/txt_filter_pet_cards"
-                        app:layout_constraintTop_toTopOf="@id/recyclerview_phases"
                         app:layout_constraintBottom_toBottomOf="@id/recyclerview_phases"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/recyclerview_phases" />
 
                 <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_phases"
@@ -187,27 +219,28 @@
 
         </LinearLayout>
 
-        <ImageButton android:id="@+id/drpDwnFilterArea"
+        <ImageButton
+                android:id="@+id/drpDwnFilterArea"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_drop_up_filter"
                 android:layout_gravity="center_horizontal"
                 android:background="@android:color/transparent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_drop_up_filter"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/recyclerview_patient_cards"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/recyclerview_patient_cards" />
 
         <ProgressBar
                 android:id="@+id/progressBar3"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{viewModel.progressBarVisibility}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="@{viewModel.progressBarVisibility}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    
+
 </layout>
