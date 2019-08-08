@@ -45,7 +45,7 @@ import kotlinx.android.synthetic.main.layout_settings.*
  */
 class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickListener {
 
-    lateinit var layoutBinding: LayoutPatientCardsBinding
+   lateinit var layoutBinding: LayoutPatientCardsBinding
     lateinit var viewModel: PatientCardsViewModel
     lateinit var preferenceManager: PreferenceManager
     lateinit var conteinerView: View
@@ -144,7 +144,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0) {
-                expand(filterPanel, 200, 155)
+                  expand(filterPanel, 200, 240)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_drop_up_filter)
                 loadPhases()
             } else {
@@ -327,4 +327,5 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         viewModel.modifyFilters(phase.id)
         loadData()
     }
+
 }
