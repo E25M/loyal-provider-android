@@ -31,7 +31,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <SearchView
+<!--                <SearchView-->
+<!--                        android:id="@+id/serachview_patient_cards_keyword"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="16dp"-->
+<!--                        android:layout_marginEnd="32dp"-->
+<!--                        android:queryHint="@string/hint_search_facility"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toStartOf="@+id/imageView2"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+                <EditText
                         android:id="@+id/serachview_patient_cards_keyword"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -40,7 +52,14 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageView2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:hint="@string/hint_search_facility"
+                        android:textColorHint="@color/bg_color_gray_3"
+                        android:textColor="@color/bg_color_gray_3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
 
                 <ImageView
                         android:id="@+id/imageView2"

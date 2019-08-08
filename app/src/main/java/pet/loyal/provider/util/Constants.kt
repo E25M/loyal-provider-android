@@ -32,6 +32,7 @@ class Constants {
         const val url_save_ptb_messages = "ptb/save/"
         const val url_get_ptb = "ptb/appointments"
         const val url_get_facility_list = "facility-list"
+        const val url_get_phases = "ptb/phases"
         const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"

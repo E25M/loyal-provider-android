@@ -36,12 +36,12 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
 
         val defaultFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val displayFormat = SimpleDateFormat("MM/dd/yyyy")
-        val timeDisplayFormat = SimpleDateFormat("HH:MM Z")
+        val timeDisplayFormat = SimpleDateFormat("HH:MM a")
 
         fun bindData(message: SentMessage, position: Int, context: Context) {
             itemView.txt_msg_list_item_sent_message.text = message.message
             itemView.txt_date_time_list_item_sent_message.text =
-                formatTime(message.dateTime) + " " + formatDate(message.dateTime)
+                formatTime(message.dateTime) + " , " + formatDate(message.dateTime)
 
             if (position % 2 != 0) {
                 itemView.setBackgroundColor(

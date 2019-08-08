@@ -2,7 +2,6 @@ package pet.loyal.provider.api.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import okhttp3.RequestBody
 import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.api.responses.*
@@ -213,7 +212,7 @@ class ProviderRepositoryImpl : ProviderRepository {
     ): LiveData<PetTrackingBoardBaseResponse> {
         val petTrackingBoardResponse = MutableLiveData<PetTrackingBoardBaseResponse>()
         val call = apiService.getPetTrackingBoard(getRequestHeaders(token), requestBody)
-        var baseResponse = PetTrackingBoardBaseResponse()
+        val baseResponse = PetTrackingBoardBaseResponse()
 
         call.enqueue(object : Callback<PetTrackingBoardResponse> {
 
@@ -266,5 +265,34 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
 
         return facilityListResponse
+    }
+
+
+    override fun getPhaseList(token: String): LiveData<GetPhaseListBaseResponse> {
+        val phaseListResponse  = MutableLiveData<GetPhaseListBaseResponse>()
+        val call = apiService.getPhases(getRequestHeaders(token))
+
+        val baseResponse = GetPhaseListBaseResponse()
+
+        call.enqueue(object : Callback<GetPhaseListResponse>{
+            override fun onResponse(
+                call: Call<GetPhaseListResponse>,
+                response: Response<GetPhaseListResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.phaseListResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                phaseListResponse.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<GetPhaseListResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                phaseListResponse.value = baseResponse
+            }
+        })
+        return phaseListResponse
     }
 }
