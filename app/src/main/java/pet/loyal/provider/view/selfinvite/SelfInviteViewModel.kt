@@ -22,7 +22,7 @@ class SelfInviteViewModel: ViewModel() {
     val emailPhoneError = MutableLiveData<String>()
 
     fun selfInvite(token: String, firstName:String, lastName: String, confirm: Boolean,
-                   emailOrPhone: String): LiveData<SelfInviteBaseResponse> {
+                   emailOrPhone: String, facilityId:String): LiveData<SelfInviteBaseResponse> {
 
         dialogStatus.value = View.VISIBLE
 
@@ -31,6 +31,7 @@ class SelfInviteViewModel: ViewModel() {
         jsonObject.put("lastName", lastName)
         jsonObject.put("phoneEmail", emailOrPhone)
         jsonObject.put("addToCurrentAccount", confirm)
+        jsonObject.put("facility", facilityId)
 
         val requestBody = RequestBody.create(MediaType.parse("application/json"),
             jsonObject.toString())

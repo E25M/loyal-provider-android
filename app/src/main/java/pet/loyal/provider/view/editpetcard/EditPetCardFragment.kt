@@ -262,7 +262,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun savePTBMessages(){
         viewModel.savePTMMessages(getSelectedMessages(), preferenceManager.getLoginToken(),
-                petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!)
+                petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
+            preferenceManager.getFacilityId())
     }
 
     private fun getSelectedMessages() :ArrayList<RequestPTBMessage>{
@@ -353,8 +354,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 val phases = petCardDataResponse.phases
                 viewModel.livePetName.value = appointment.petName + ", " + appointment.parentLastName
                 viewModel.livePetImage.value = appointment.petImage
-                viewModel.liveBreedSpecies.value = appointment.petBreed +
-                        ", " + appointment.petSpecies + "\n" + appointment.petGender
+
+                if (appointment.petBreed != null) {
+                    viewModel.liveBreedSpecies.value = appointment.petBreed +
+                            ", " + appointment.petSpecies + "\n" + appointment.petGender
+                }else{
+                    viewModel.liveBreedSpecies.value = appointment.petSpecies + "\n" + appointment.petGender
+                }
 //                viewModel.liveGendar.value = appointment.petGender
                 phases.iterator().forEach {
                     if (it.id == appointment.phase){

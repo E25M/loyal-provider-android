@@ -55,7 +55,7 @@ class EditPetCardViewModel : ViewModel() {
     }
 
     fun savePTMMessages(ptbMessageList: ArrayList<RequestPTBMessage>, token: String, phaseId: Int,
-                        appointmentId: String) :
+                        appointmentId: String, facilityId:String) :
             MutableLiveData<SavePTBMessageBaseResponse>{
 
         liveProgressDialog.value = View.VISIBLE
@@ -80,6 +80,7 @@ class EditPetCardViewModel : ViewModel() {
         jsonObjectMain.put("messages", jsonArray)
         jsonObjectMain.put("phaseId", phaseId)
         jsonObjectMain.put("appointmentId", appointmentId)
+        jsonObjectMain.put("facility", facilityId)
 
         val requestBody = RequestBody.create(MediaType.parse("application/json"),
             jsonObjectMain.toString())

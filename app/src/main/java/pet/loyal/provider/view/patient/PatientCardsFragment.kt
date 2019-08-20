@@ -111,6 +111,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                 }
             }
         )
+
         tablayout_patient_cards_sort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -141,7 +142,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         }
 
 
-        drpDwnFilterArea.alpha = 0.5f
+//        drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0) {
                   expand(filterPanel, 200, 240)

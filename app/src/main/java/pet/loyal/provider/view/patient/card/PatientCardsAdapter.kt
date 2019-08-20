@@ -56,7 +56,12 @@ class PatientCardsAdapter(
         holder.itemView.txt_first_name_list_item_pet_card.text =
             card.parentFirstName
 
-        holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
+        if (card.petBreed != null){
+            holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
+        }else{
+            holder.itemView.txt_breed_list_item_pet_card.text = card.petSpecies
+        }
+
         holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
@@ -76,7 +81,6 @@ class PatientCardsAdapter(
 //                context
 //            )
 //        )
-
 
         holder.itemView.txt_phase_list_item_pet_card.text = card.type
         val bgColor: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

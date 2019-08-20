@@ -19,8 +19,6 @@
                 android:id="@+id/recyclerview_patient_cards"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:paddingStart="16dp"
-                android:paddingLeft="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +79,7 @@
                                 android:layout_marginEnd="16dp"
                                 style="@style/TextFieldGrey"
                                 app:hintEnabled="false"
+                                app:hintTextAppearance="@style/TextFieldGrey"
                                 app:hintAnimationEnabled="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -98,6 +97,7 @@
                                     android:drawableStart="@android:drawable/ic_menu_search"
                                     android:textColor="@color/bg_color_gray_3"
                                     android:textColorHint="@color/bg_color_gray_3" />
+
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <ImageView
@@ -136,6 +136,16 @@
                                 app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_logout"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:srcCompat="@drawable/ic_home" />
+
+                        <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_marginBottom="@dimen/margin_8"
+                                android:background="@color/font_color_white"
+                                app:layout_constraintStart_toStartOf="@id/textInputLayout3"
+                                app:layout_constraintBottom_toBottomOf="@id/textInputLayout3"
+                                app:layout_constraintEnd_toEndOf="@id/textInputLayout3"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.Toolbar>
@@ -221,11 +231,11 @@
 
         <ImageButton
                 android:id="@+id/drpDwnFilterArea"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="25dp"
+                android:layout_height="20dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_drop_up_filter"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/recyclerview_patient_cards" />
