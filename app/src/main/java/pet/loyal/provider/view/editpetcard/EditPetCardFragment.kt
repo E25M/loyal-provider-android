@@ -201,7 +201,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     savePTBMessages()
                 }
             }else{
-                showToast(activity!!, getString(R.string.error_no_selected_ptb_message))
+                showToast(context!!, getString(R.string.error_no_selected_ptb_message))
             }
         }
 
