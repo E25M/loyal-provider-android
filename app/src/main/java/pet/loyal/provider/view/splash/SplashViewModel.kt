@@ -1,5 +1,6 @@
 package pet.loyal.provider.view.splash
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,10 @@ class SplashViewModel: ViewModel() {
     var appVersionResponse: MediatorLiveData<AppVersionBaseResponse> = MediatorLiveData()
 
     var liveDownloadStatus = MutableLiveData<String>()
+
+    init {
+        dialogStatus.value = View.GONE
+    }
 
     fun getAppVersion(): LiveData<AppVersionBaseResponse>{
 

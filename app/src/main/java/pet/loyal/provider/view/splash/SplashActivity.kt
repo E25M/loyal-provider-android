@@ -87,7 +87,7 @@ class SplashActivity : AppCompatActivity() {
                     } else {
                         showPopupWithFinish(
                             this, appVersionResponse.throwable?.message!!,
-                            "Info"
+                            getString(R.string.text_info)
                         )
                     }
                 } else {
@@ -261,7 +261,7 @@ class SplashActivity : AppCompatActivity() {
                     showPopupWithFinish(
                         this@SplashActivity,
                         getString(R.string.msg_download_failed),
-                        "Error"
+                        getString(R.string.text_error)
                     )
                     Log.d(TAG, "DOWNLOAD ERROR - - ID: $id - - EX: ${ex.message.toString()}")
                 }

@@ -111,6 +111,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                 }
             }
         )
+
         tablayout_patient_cards_sort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

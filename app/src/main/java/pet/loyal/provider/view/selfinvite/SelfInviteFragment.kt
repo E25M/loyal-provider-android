@@ -138,7 +138,8 @@ class SelfInviteFragment : Fragment() {
                         Constants.sample_first_name,
                         Constants.sample_last_name,
                         addToCurrentAccount,
-                        edtTxtMessage.text.toString()
+                        edtTxtMessage.text.toString(),
+                        preferenceManager.getFacilityId()
                     )
                 }
             }
