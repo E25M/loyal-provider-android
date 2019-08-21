@@ -92,7 +92,7 @@
 
    <!--    patient cards screen -->
     <string name="msg_no_facility_selected">No facility selected</string>
-    <string name="txt_filter_pet_cards">Filter by stage</string>
+    <string name="txt_filter_pet_cards">Filter by phase</string>
     <string name="txt_sort_pet_cards">Sort by</string>
 
     <!--helpscout-->

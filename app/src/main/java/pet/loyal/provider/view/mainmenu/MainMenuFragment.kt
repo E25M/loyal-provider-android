@@ -32,6 +32,13 @@ class MainMenuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (preferenceManager.getUserType() == Constants.user_type_super_admin) {
+            viewModel.disableAlpha.value = 0.2f
+            viewModel.enableAlpha.value = 1f
+        }else{
+            viewModel.disableAlpha.value = 1f
+            viewModel.enableAlpha.value = 0.2f
+        }
         img_main_menu_patient_cards.setOnClickListener {
             if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
                 changeFragment(Constants.fragment_type_pet_cards)

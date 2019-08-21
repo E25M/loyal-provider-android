@@ -56,16 +56,21 @@ class PatientCardsAdapter(
         holder.itemView.txt_first_name_list_item_pet_card.text =
             card.parentFirstName
 
-        if (card.petBreed != null){
-            holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
-        }else{
-            holder.itemView.txt_breed_list_item_pet_card.text = card.petSpecies
-        }
+// <<<<<<< AR-SP9-TSK-LOYAL-PROVIDER-APP_SELF_INVITE
+//         if (card.petBreed != null){
+//             holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
+//         }else{
+//             holder.itemView.txt_breed_list_item_pet_card.text = card.petSpecies
+//         }
 
-        holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
+//         holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
+// =======
+// //        holder.itemView.txt_breed_list_item_pet_card.text = card.petBreed + " " + card.petSpecies
+// //        holder.itemView.txt_gender_list_item_pet_card.text = card.petGender
+// >>>>>>> NV-SP9-TSK-LOYAL_2738
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
-            formatDate(card.dateTime, SimpleDateFormat("MM/dd/yyyy ',' HH:mm a"))
+            formatDate(card.dateTime, SimpleDateFormat("HH:mm a"))
 
         if (card.petImage != null) {
             if (!TextUtils.isEmpty(card.petImage)) {
@@ -101,6 +106,11 @@ class PatientCardsAdapter(
         val adapter = PTBSentMessagesAdapter(context, card.ptbSentMessages)
         holder.itemView.reyclerview_cards_list_item_pet_cards.adapter = adapter
         holder.itemView.setOnClickListener {
+            if (onPetCardClickListener != null) {
+                onPetCardClickListener.onPerCardClick(card, position)
+            }
+        }
+        holder.itemView.reyclerview_cards_list_item_pet_cards.setOnClickListener {
             if (onPetCardClickListener != null) {
                 onPetCardClickListener.onPerCardClick(card, position)
             }
