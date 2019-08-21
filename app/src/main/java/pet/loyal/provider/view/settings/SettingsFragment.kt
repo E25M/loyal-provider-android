@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import pet.loyal.provider.databinding.LayoutSettingsBinding
 import pet.loyal.provider.model.Facility
 import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.util.isConnected
+import pet.loyal.provider.util.showToast
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
@@ -55,7 +57,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         setUpObservers()
         btn_apply_settings.setOnClickListener {
             if (selected != null) {
-                showApplyConfirmation(selected!!, fragmentManager!!)
+                showApplyConfirmation(selected!!)
             }
         }
         search_view_facility.setOnClickListener {
@@ -83,7 +85,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         if (isConnected(context!!)) {
             loadFacilityList(preferenceManager.getLoginToken())
         } else {
-            handleError(Throwable(getString(R.string.error_no_connection)), false)
+            handleError(Throwable(getString(R.string.error_no_connection)), false, true)
         }
     }
 
@@ -91,7 +93,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         viewModel.facilityListResponse.observe(this, Observer { response ->
             if (response.throwable != null) {
 //                 api call failed. handle the error
-                handleError(response.throwable!!, true)
+                handleError(response.throwable!!, true, true)
             } else {
                 if (response.facilityResponse?.data != null) {
                     facilityList.clear()
@@ -100,7 +102,26 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
                     viewModel.progressBarVisibility.value = View.GONE
                 } else {
 //                  response is empty . handle the error
-                    handleError(Throwable(getString(R.string.error_no_connection)), true)
+                    handleError(Throwable(getString(R.string.error_no_connection)), true, true)
+                }
+            }
+        })
+
+        viewModel.saveFacilityResponse.observe(this, Observer { response ->
+            if (response.throwable != null) {
+//                 api call failed. handle the error
+                handleError(response.throwable!!, true, false)
+            } else {
+                if (response.commonResponse?.data != null) {
+                    viewModel.progressBarVisibility.value = View.GONE
+                    if (selected != null) {
+                        preferenceManager.saveFacility(selected!!)
+                        showToast(context!!, getString(R.string.msg_setup_facility_complete))
+                        fragmentManager?.popBackStackImmediate()
+                    }
+                } else {
+//                  response is empty . handle the error
+                    handleError(Throwable(getString(R.string.error_no_connection)), true, false)
                 }
             }
         })
@@ -127,7 +148,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         viewModel.getFacilityList(preferenceManager.getLoginToken())
     }
 
-    private fun handleError(throwable: Throwable, isConnected: Boolean) {
+    private fun handleError(throwable: Throwable, isConnected: Boolean, isDataLoading: Boolean) {
 
 
         var errorMessage = context?.getString(R.string.error_common)
@@ -151,8 +172,10 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
 
         val snackBar =
             Snackbar.make(containerview, errorMessage.toString(), Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction("RETRY") {
-            loadFacilityList(preferenceManager.getLoginToken())
+        if (isDataLoading) {
+            snackBar.setAction("RETRY") {
+                loadFacilityList(preferenceManager.getLoginToken())
+            }
         }
         snackBar.show()
 
@@ -167,15 +190,18 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
     }
 
 
-    fun showApplyConfirmation(facility: Facility, fragmentManager: FragmentManager) {
+    fun showApplyConfirmation(facility: Facility) {
         val builder = AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-        builder.setMessage(getString(R.string.txt_confirm_application) + " " + facility.displayName)
+        builder.setMessage(getString(R.string.txt_confirm_application) + " " + facility.displayName + " ?")
         builder.setPositiveButton(
             getString(R.string.btn_name_ok)
         ) { dialogInterface, _ ->
-            preferenceManager.saveFacility(facility)
             dialogInterface.dismiss()
-            fragmentManager.popBackStackImmediate()
+            viewModel.saveDeviceFacility(
+                preferenceManager.getLoginToken(),
+                preferenceManager.getDeviceId(),
+                preferenceManager.getFacilityId()
+            )
         }
         builder.create().show()
     }
