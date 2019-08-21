@@ -200,7 +200,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
             viewModel.saveDeviceFacility(
                 preferenceManager.getLoginToken(),
                 preferenceManager.getDeviceId(),
-                preferenceManager.getFacilityId()
+                selectedId
             )
         }
         builder.create().show()

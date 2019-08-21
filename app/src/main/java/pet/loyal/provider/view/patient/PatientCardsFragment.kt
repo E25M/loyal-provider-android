@@ -50,6 +50,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     lateinit var preferenceManager: PreferenceManager
     lateinit var conteinerView: View
     lateinit var edittext: EditText
+    var phasesLoaded = false
 
 
     lateinit var phasesList: ArrayList<Phase>
@@ -142,7 +143,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         }
 
         img_scroll_left_pet_cards.setOnClickListener {
-//            if (recyclerview_phases.layoutManager. < (recyclerview_phases.adapter?.itemCount - 1)) {
+            //            if (recyclerview_phases.layoutManager. < (recyclerview_phases.adapter?.itemCount - 1)) {
 //                recyclerview_phases.layoutManager?.scrollToPosition(recyclerview_phases.layoutManager.findLastCompletelyVisibleItemPosition() + 1)
 //            }
         }
@@ -161,23 +162,24 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 //                drpDwnFilterArea.setImageResource(R.drawable.ic_up_nav)
             }
 
-            img_patient_cards_logout.setOnClickListener {
-                val activity = activity as HomeScreen
-                activity.onLogout(img_patient_cards_logout)
-            }
 
-            img_patient_cards_home.setOnClickListener {
-                val activity = activity as HomeScreen
-                activity.navigateToHome(img_patient_cards_logout)
-            }
         }
+        img_patient_cards_logout.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.onLogout(img_patient_cards_logout)
+        }
+
+        img_patient_cards_home.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.navigateToHome(img_patient_cards_logout)
+        }
+
 
         img_expand_cards_view.setOnClickListener {
             expand(filterPanel, 200, 240)
             viewModel.collapseIconVisibility.value = View.VISIBLE
             viewModel.expandIconVisibility.value = View.GONE
             loadPhases()
-
         }
     }
 
@@ -342,6 +344,16 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     override fun onPhaseClick(position: Int, phase: Phase) {
         viewModel.modifyFilters(phase.id)
+        loadData()
+    }
+
+    override fun onPhaseTurnedOff(position: Int, phase: Phase) {
+        viewModel.removeFromFilters(phase.id)
+        loadData()
+    }
+
+    override fun onPhaseTurnedOn(position: Int, phase: Phase) {
+        viewModel.addToFilters(phase.id)
         loadData()
     }
 
