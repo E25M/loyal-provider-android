@@ -97,7 +97,7 @@ class Constants {
         const val phase_expected = "Expected"
         const val phase_check_in = "Check-In"
         const val phase_diagnostics = "Diagnostics"
-        const val phase_preperation = "Preparation"
+        const val phase_preperation = "Pre-op"
         const val phase_procedure = "Procedure "
         const val phase_dental = "Dental "
         const val phase_surgery = "Surgery"

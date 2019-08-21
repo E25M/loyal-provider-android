@@ -141,6 +141,12 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             loadData()
         }
 
+        img_scroll_left_pet_cards.setOnClickListener {
+//            if (recyclerview_phases.layoutManager. < (recyclerview_phases.adapter?.itemCount - 1)) {
+//                recyclerview_phases.layoutManager?.scrollToPosition(recyclerview_phases.layoutManager.findLastCompletelyVisibleItemPosition() + 1)
+//            }
+        }
+
 
 //        drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {

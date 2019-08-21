@@ -33,15 +33,35 @@ class MainMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (preferenceManager.getUserType() == Constants.user_type_super_admin) {
-            viewModel.disableAlpha.value = 0.2f
-            viewModel.enableAlpha.value = 1f
-        }else{
-            viewModel.disableAlpha.value = 1f
-            viewModel.enableAlpha.value = 0.2f
+            if (preferenceManager.facilitySelected()) {
+                viewModel.disableAlpha.value = 1f
+                viewModel.enableAlpha.value = 1f
+            } else {
+                viewModel.disableAlpha.value = 0.2f
+                viewModel.enableAlpha.value = 1f
+            }
+        } else {
+            if (preferenceManager.facilitySelected()) {
+                viewModel.disableAlpha.value = 1f
+                viewModel.enableAlpha.value = 0.2f
+            } else {
+                viewModel.disableAlpha.value = 0.2f
+                viewModel.enableAlpha.value = 0.2f
+            }
         }
+
+//        if (preferenceManager.getUserType() == Constants.user_type_super_admin) {
+//            viewModel.disableAlpha.value = 0.2f
+//            viewModel.enableAlpha.value = 1f
+//        } else {
+//            viewModel.disableAlpha.value = 1f
+//            viewModel.enableAlpha.value = 0.2f
+//        }
         img_main_menu_patient_cards.setOnClickListener {
-            if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
+            if (preferenceManager.facilitySelected()) {
+//                if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
                 changeFragment(Constants.fragment_type_pet_cards)
+//                }
             }
         }
         img_main_menu_settings.setOnClickListener {
@@ -50,14 +70,17 @@ class MainMenuFragment : Fragment() {
             }
         }
         img_main_menu_parent_sign_up.setOnClickListener {
-            if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
+            if (preferenceManager.facilitySelected()) {
+//                if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
                 changeFragment(Constants.fragment_type_parent_sign_up)
+//                }
             }
         }
         img_main_menu_support.setOnClickListener {
-            if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
-
+            if (preferenceManager.facilitySelected()) {
+//                if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
                 BeaconActivity.open(activity!!)
+//                }
             }
         }
     }

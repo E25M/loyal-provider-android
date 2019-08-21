@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +55,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         setUpObservers()
         btn_apply_settings.setOnClickListener {
             if (selected != null) {
-                showApplyConfirmation(selected!!)
+                showApplyConfirmation(selected!!, fragmentManager!!)
             }
         }
         search_view_facility.setOnClickListener {
@@ -120,7 +121,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
 
 
     private fun loadFacilityList(token: String) {
-        if (!TextUtils.isEmpty(preferenceManager.getFacilityName())){
+        if (!TextUtils.isEmpty(preferenceManager.getFacilityName())) {
             viewModel.selectedFacility.value = preferenceManager.getFacilityName()
         }
         viewModel.getFacilityList(preferenceManager.getLoginToken())
@@ -166,7 +167,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
     }
 
 
-    fun showApplyConfirmation(facility: Facility) {
+    fun showApplyConfirmation(facility: Facility, fragmentManager: FragmentManager) {
         val builder = AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
         builder.setMessage(getString(R.string.txt_confirm_application) + " " + facility.displayName)
         builder.setPositiveButton(
@@ -174,6 +175,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         ) { dialogInterface, _ ->
             preferenceManager.saveFacility(facility)
             dialogInterface.dismiss()
+            fragmentManager.popBackStackImmediate()
         }
         builder.create().show()
     }

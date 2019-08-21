@@ -135,6 +135,24 @@ fun getPhaseColorsOld(phaseId: Int, context: Context): Int {
     }
 }
 
+//fun getPhaseName(phaseId: Int, context: Context): String {
+//    return when (phaseId) {
+//        1 -> Constants.phase_expected
+//        2 -> Constants.phase_check_in
+//        3 -> Constants.phase_diagnostics
+//        4 -> Constants.phase_preperation
+//        5 -> context.resources.getColor(R.color.phase_color_procedure)
+//        6 -> context.resources.getColor(R.color.phase_color_dental)
+//        7 -> context.resources.getColor(R.color.phase_color_surgery)
+//        8 -> context.resources.getColor(R.color.phase_color_recovery)
+//        9 -> context.resources.getColor(R.color.phase_color_hospitalized)
+//        10 -> context.resources.getColor(R.color.phase_color_boarding)
+//        11 -> context.resources.getColor(R.color.phase_color_discharge)
+//        12 -> context.resources.getColor(R.color.phase_color_completed)
+//        else -> Constants.phase_expected
+//    }
+//}
+
 fun expand(v: View, duration: Int, targetHeight: Int) {
 
     val prevHeight = v.height
