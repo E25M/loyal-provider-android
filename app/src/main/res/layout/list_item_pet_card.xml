@@ -8,6 +8,7 @@
         android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_pet_card_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -15,75 +16,76 @@
                 android:id="@+id/view_colored_header"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/colorPrimaryDarkBlue"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <cn.carbs.android.avatarimageview.library.AvatarImageView
                 android:id="@+id/img_pet_"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:src="@drawable/ic_logo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_colored_header"
-                android:src="@drawable/ic_logo" />
+                app:layout_constraintTop_toBottomOf="@+id/view_colored_header" />
 
         <TextView
                 android:id="@+id/txt_last_name_list_item_pet_card"
+                style="@style/textFieldBlack.extraSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="19dp"
                 android:text="TextView"
-                style="@style/textFieldBlack.medium"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/img_pet_"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/txt_first_name_list_item_pet_card"
+                style="@style/textFieldBlack.extraSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="19dp"
                 android:text="TextView"
-                style="@style/textFieldBlack.medium"
                 app:layout_constraintStart_toEndOf="@+id/txt_last_name_list_item_pet_card"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/txt_breed_list_item_pet_card"
+                style="@style/textFieldBlack.superSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="3dp"
                 android:text="TextView"
                 android:textStyle="bold"
-                style="@style/textFieldBlack.superSmall"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/img_pet_"
                 app:layout_constraintTop_toBottomOf="@+id/txt_last_name_list_item_pet_card" />
 
         <TextView
                 android:id="@+id/txt_gender_list_item_pet_card"
+                style="@style/textFieldLightGrey.superSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="3dp"
                 android:text="TextView"
-                style="@style/textFieldLightGrey.superSmall"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/txt_breed_list_item_pet_card"
                 app:layout_constraintTop_toBottomOf="@+id/txt_first_name_list_item_pet_card" />
 
         <TextView
                 android:id="@+id/txt_date_time_lis_item_pet_card"
+                style="@style/textFieldLightGrey.superSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="3dp"
-                style="@style/textFieldLightGrey.superSmall"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/img_pet_"
                 app:layout_constraintTop_toBottomOf="@+id/txt_gender_list_item_pet_card" />
 
@@ -92,23 +94,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
+                android:fadeScrollbars="false"
+                android:scrollbarSize="2dp"
+                android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/img_pet_"
                 tools:listitem="@layout/list_item_pet_card_messages" />
 
-<!--        <Button-->
-<!--                android:id="@+id/btn_phase_list_item_pet_card"-->
-<!--                style="?android:attr/buttonBarButtonStyle"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="19dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:clickable="false"-->
-<!--                android:focusable="false"-->
-<!--                android:background="?selectableItemBackground"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/img_pet_"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/txt_date_time_lis_item_pet_card" />-->
+        <!--        <Button-->
+        <!--                android:id="@+id/btn_phase_list_item_pet_card"-->
+        <!--                style="?android:attr/buttonBarButtonStyle"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="19dp"-->
+        <!--                android:layout_marginStart="8dp"-->
+        <!--                android:clickable="false"-->
+        <!--                android:focusable="false"-->
+        <!--                android:background="?selectableItemBackground"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/img_pet_"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/txt_date_time_lis_item_pet_card" />-->
 
 
         <TextView
@@ -122,8 +127,8 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
-                app:layout_constraintStart_toEndOf="@+id/img_pet_"
-                app:layout_constraintTop_toBottomOf="@+id/txt_date_time_lis_item_pet_card" />
+                app:layout_constraintStart_toEndOf="@+id/txt_date_time_lis_item_pet_card"
+                app:layout_constraintTop_toBottomOf="@+id/txt_first_name_list_item_pet_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

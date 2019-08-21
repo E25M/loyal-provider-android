@@ -9,11 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_pet_card_messages.view.*
 import pet.loyal.provider.R
 import pet.loyal.provider.model.SentMessage
+import pet.loyal.provider.util.formatDate
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<SentMessage>) :
+class PTBSentMessagesAdapter(
+    val context: Context
+    , var messageList: ArrayList<SentMessage>
+    , val parentPosition: Int
+    , val messagesClickListener: OnMessagesClickListener
+) :
     RecyclerView.Adapter<PTBSentMessagesAdapter.MessageViewHolder>() {
 
 
@@ -28,7 +34,13 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.bindData(messageList[position], position, context)
+        holder.bindData(
+            messageList[position],
+            position,
+            context,
+            messagesClickListener,
+            parentPosition
+        )
     }
 
 
@@ -38,10 +50,16 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
         val displayFormat = SimpleDateFormat("MM/dd/yyyy")
         val timeDisplayFormat = SimpleDateFormat("HH:MM a")
 
-        fun bindData(message: SentMessage, position: Int, context: Context) {
+        fun bindData(
+            message: SentMessage,
+            position: Int,
+            context: Context,
+            onMessagesClickListener: OnMessagesClickListener,
+            parentPosition: Int
+        ) {
             itemView.txt_msg_list_item_sent_message.text = message.message
             itemView.txt_date_time_list_item_sent_message.text =
-                formatTime(message.dateTime) + " , " + formatDate(message.dateTime)
+                formatDate(message.dateTime, SimpleDateFormat("HH:mm a"))
 
             if (position % 2 != 0) {
                 itemView.setBackgroundColor(
@@ -51,22 +69,26 @@ class PTBSentMessagesAdapter(val context: Context, var messageList: ArrayList<Se
                     )
                 )
             }
+
+            itemView.setOnClickListener {
+                onMessagesClickListener?.onMessageClick(parentPosition)
+            }
         }
 
-        fun formatDate(dateString: String): String {
-            val date = defaultFormat.parse(dateString)
-            return displayFormat.format(date)
-        }
+//        fun formatDate(dateString: String): String {
+//            val date = defaultFormat.parse(dateString)
+//            return displayFormat.format(date)
+//        }
 
-        fun reFormatDate(dateString: String): String {
-            val date = displayFormat.parse(dateString)
-            return defaultFormat.format(date)
-        }
-
-        fun formatTime(dateString: String): String {
-            val date = defaultFormat.parse(dateString)
-            return timeDisplayFormat.format(date)
-        }
+//        fun reFormatDate(dateString: String): String {
+//            val date = displayFormat.parse(dateString)
+//            return defaultFormat.format(date)
+//        }
+//
+//        fun formatTime(dateString: String): String {
+//            val date = defaultFormat.parse(dateString)
+//            return timeDisplayFormat.format(date)
+//        }
 
     }
 

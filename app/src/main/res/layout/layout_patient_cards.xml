@@ -22,8 +22,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterPanelLinear"
-                tools:listitem="@layout/list_item_pet_card" />
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="horizontal"
+                android:scrollbarSize="6dp"
+                android:fadeScrollbars="false"
+                android:scrollIndicators="bottom"
+                android:scrollbarThumbHorizontal="@drawable/srollbar_thumb_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/filterPanelLinear" />
 
         <LinearLayout
                 android:id="@+id/filterPanelLinear"
@@ -37,8 +42,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/filterPanel"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:background="@color/bg_color_gray_2">
+                    android:layout_height="180dp">
 
                 <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -73,14 +77,14 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textInputLayout3"
+                                style="@style/TextFieldGrey"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
-                                style="@style/TextFieldGrey"
+                                android:layout_marginEnd="24dp"
+                                app:hintAnimationEnabled="false"
                                 app:hintEnabled="false"
                                 app:hintTextAppearance="@style/TextFieldGrey"
-                                app:hintAnimationEnabled="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -90,11 +94,11 @@
                                     android:id="@+id/serachview_patient_cards_keyword"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:drawableStart="@android:drawable/ic_menu_search"
                                     android:hint="@string/hint_search_facility"
                                     android:imeOptions="actionSearch"
                                     android:inputType="text"
                                     android:lines="1"
-                                    android:drawableStart="@android:drawable/ic_menu_search"
                                     android:textColor="@color/bg_color_gray_3"
                                     android:textColorHint="@color/bg_color_gray_3" />
 
@@ -104,6 +108,7 @@
                                 android:id="@+id/imageView2"
                                 android:layout_width="100dp"
                                 android:layout_height="32dp"
+                                android:layout_marginEnd="32dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_home"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -216,29 +221,51 @@
                         android:id="@+id/recyclerview_phases"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="19dp"
+                        android:layout_marginTop="8dp"
                         android:orientation="horizontal"
                         android:paddingEnd="8dp"
                         android:paddingRight="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView20"
+                        app:layout_constraintEnd_toStartOf="@+id/img_scroll_right_pet_cards"
+                        app:layout_constraintStart_toEndOf="@+id/img_scroll_left_pet_cards"
                         app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort" />
+
+                <ImageView
+                        android:id="@+id/img_scroll_left_pet_cards"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="18dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        app:layout_constraintStart_toEndOf="@+id/textView20"
+                        app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
+                        app:srcCompat="@drawable/ic_left_arrow" />
+
+                <ImageView
+                        android:id="@+id/img_scroll_right_pet_cards"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
+                        app:srcCompat="@drawable/ic_right_arrow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
-        <ImageButton
+        <ImageView
                 android:id="@+id/drpDwnFilterArea"
-                android:layout_width="25dp"
-                android:layout_height="20dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_drop_up_filter"
-                android:scaleType="fitXY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="39dp"
+                android:layout_marginEnd="115dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:visibility="@{viewModel.collapseIconVisibility}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/recyclerview_patient_cards" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_up_nav" />
 
         <ProgressBar
                 android:id="@+id/progressBar3"
@@ -250,6 +277,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+                android:id="@+id/img_expand_cards_view"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="123dp"
+                android:scaleType="centerCrop"
+                android:visibility="@{viewModel.expandIconVisibility}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_dropdown_blue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

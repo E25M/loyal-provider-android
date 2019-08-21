@@ -82,17 +82,18 @@
     <string name="hint_search_facility">Search facility…</string>
     <string name="txt_select_facility">Select Your Facility</string>
     <string name="btn_name_apply">Apply</string>
-    <string name="txt_confirm_application">Are you sure you want confirm setting
+    <string name="txt_confirm_application">Are you sure you want to confirm setting
         up Loyal Tablet Application for</string>
     <string name="text_error">Error</string>
     <string name="text_please_active_pet">is inactive. Please activate pet to update the procedure.</string>
     <string name="text_please_active_parent">is inactive. Please activate parent to update the procedure.</string>
     <string name="text_please_complete_ongoing_appointment">has an ongoing procedure. Please complete the ongoing procedure before starting a new procedure.</string>
     <string name="text_phase_change_failed">Phase change failed</string>
+    <string name="msg_setup_facility_complete">Setup successful</string>
 
    <!--    patient cards screen -->
     <string name="msg_no_facility_selected">No facility selected</string>
-    <string name="txt_filter_pet_cards">Filter by stage</string>
+    <string name="txt_filter_pet_cards">Filter by phase</string>
     <string name="txt_sort_pet_cards">Sort by</string>
 
     <!--helpscout-->

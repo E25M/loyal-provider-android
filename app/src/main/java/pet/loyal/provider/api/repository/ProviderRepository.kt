@@ -29,4 +29,6 @@ interface ProviderRepository {
 
     fun getPhaseList(token: String) : LiveData<GetPhaseListBaseResponse>
 
+    fun saveDeviceFacility(requestBody: RequestBody , token: String) : LiveData<CommonBaseResponse>
+
 }

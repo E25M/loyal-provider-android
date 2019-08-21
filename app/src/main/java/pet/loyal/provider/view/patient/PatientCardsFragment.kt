@@ -45,11 +45,12 @@ import kotlinx.android.synthetic.main.layout_settings.*
  */
 class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickListener {
 
-   lateinit var layoutBinding: LayoutPatientCardsBinding
+    lateinit var layoutBinding: LayoutPatientCardsBinding
     lateinit var viewModel: PatientCardsViewModel
     lateinit var preferenceManager: PreferenceManager
     lateinit var conteinerView: View
     lateinit var edittext: EditText
+    var phasesLoaded = false
 
 
     lateinit var phasesList: ArrayList<Phase>
@@ -141,27 +142,44 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             loadData()
         }
 
+        img_scroll_left_pet_cards.setOnClickListener {
+            //            if (recyclerview_phases.layoutManager. < (recyclerview_phases.adapter?.itemCount - 1)) {
+//                recyclerview_phases.layoutManager?.scrollToPosition(recyclerview_phases.layoutManager.findLastCompletelyVisibleItemPosition() + 1)
+//            }
+        }
+
 
 //        drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0) {
-                  expand(filterPanel, 200, 240)
-                drpDwnFilterArea.setImageResource(R.drawable.ic_drop_up_filter)
+                expand(filterPanel, 200, 240)
+                drpDwnFilterArea.setImageResource(R.drawable.ic_up_nav)
                 loadPhases()
             } else {
                 collapse(filterPanel, 200, 0)
-                drpDwnFilterArea.setImageResource(R.drawable.ic_drop_down_filter)
+                viewModel.collapseIconVisibility.value = View.GONE
+                viewModel.expandIconVisibility.value = View.VISIBLE
+//                drpDwnFilterArea.setImageResource(R.drawable.ic_up_nav)
             }
 
-            img_patient_cards_logout.setOnClickListener {
-                val activity = activity as HomeScreen
-                activity.onLogout(img_patient_cards_logout)
-            }
 
-            img_patient_cards_home.setOnClickListener {
-                val activity = activity as HomeScreen
-                activity.navigateToHome(img_patient_cards_logout)
-            }
+        }
+        img_patient_cards_logout.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.onLogout(img_patient_cards_logout)
+        }
+
+        img_patient_cards_home.setOnClickListener {
+            val activity = activity as HomeScreen
+            activity.navigateToHome(img_patient_cards_logout)
+        }
+
+
+        img_expand_cards_view.setOnClickListener {
+            expand(filterPanel, 200, 240)
+            viewModel.collapseIconVisibility.value = View.VISIBLE
+            viewModel.expandIconVisibility.value = View.GONE
+            loadPhases()
         }
     }
 
@@ -326,6 +344,16 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     override fun onPhaseClick(position: Int, phase: Phase) {
         viewModel.modifyFilters(phase.id)
+        loadData()
+    }
+
+    override fun onPhaseTurnedOff(position: Int, phase: Phase) {
+        viewModel.removeFromFilters(phase.id)
+        loadData()
+    }
+
+    override fun onPhaseTurnedOn(position: Int, phase: Phase) {
+        viewModel.addToFilters(phase.id)
         loadData()
     }
 

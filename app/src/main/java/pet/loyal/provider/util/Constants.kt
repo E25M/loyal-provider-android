@@ -33,6 +33,7 @@ class Constants {
         const val url_get_ptb = "ptb/appointments"
         const val url_get_facility_list = "facility-list"
         const val url_get_phases = "ptb/phases"
+        const val url_save_facility = "device-facility"
         const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"
@@ -102,10 +103,10 @@ class Constants {
         const val phase_dental = "Dental "
         const val phase_surgery = "Surgery"
         const val phase_recovery = "Recovery"
-        const val phase_hospital = "Hospital"
+        const val phase_hospital = "Hospitalized"
         const val phase_boarding = "Boarding"
         const val phase_discharge = "Discharge"
-        const val phase_complete = "Complete"
+        const val phase_complete = "Completed"
 
         //phase change error message codes
         const val pet_is_not_active = "pet_is_not_active"

@@ -40,11 +40,16 @@ interface ProviderAPIService {
 
     @GET(Constants.url_get_facility_list)
     fun getfacilityList(
-       @HeaderMap hashMap: HashMap<String, String>
+        @HeaderMap hashMap: HashMap<String, String>
     ): Call<GetFacilityResponse>
 
     @GET(Constants.url_get_phases)
     fun getPhases(
         @HeaderMap hashMap: HashMap<String, String>
     ): Call<GetPhaseListResponse>
+
+    @POST(Constants.url_save_facility)
+    fun saveFacility(
+        @HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody
+    ): Call<CommonResponse>
 }
