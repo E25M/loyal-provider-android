@@ -201,7 +201,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     savePTBMessages()
                 }
             }else{
-                showToast(activity!!, getString(R.string.error_no_selected_ptb_message))
+                showToast(context!!, getString(R.string.error_no_selected_ptb_message))
             }
         }
 
@@ -489,47 +489,52 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         val imageUri = imageGalleryList[imageGalleryList.keys
             .elementAt(uploadingMessageIdPosition)]?.get(uploadingImagePosition)!!
 
-        MediaManager.get().upload(imageUri)
-            .option("public_id", publicId)
-            .option("folder", "newsfeed/")
-            .unsigned(Constants.upload_preset)
-            .callback(object : UploadCallback {
+        try {
+            MediaManager.get().upload(imageUri)
+                .option("public_id", publicId)
+                .option("folder", "newsfeed/")
+                .unsigned(Constants.upload_preset)
+                .callback(object : UploadCallback {
 
-                override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
-                    val messageId =  imageGalleryList.keys.elementAt(uploadingMessageIdPosition)
+                    override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                        val messageId =  imageGalleryList.keys.elementAt(uploadingMessageIdPosition)
 
-                    if (!imageIdsList.containsKey(messageId)){
-                        imageIdsList[messageId] = arrayListOf()
-                    }
-                    imageIdsList[messageId]?.add(publicId)
-
-                    if (uploadingMessageIdPosition + 1 == imageGalleryList.keys.size
-                        && uploadingImagePosition + 1 == imageGalleryList[messageId]?.size){
-
-                        savePTBMessages()
-                    }else{
-                        if (imageGalleryList[messageId]?.size == uploadingImagePosition + 1){
-                            uploadingMessageIdPosition ++
-                            uploadingImagePosition = 0
+                        if (!imageIdsList.containsKey(messageId)){
+                            imageIdsList[messageId] = arrayListOf()
                         }
-                        uploadingImagePosition ++
+                        imageIdsList[messageId]?.add(publicId)
 
-                        uploadPhoto()
+                        if (uploadingMessageIdPosition + 1 == imageGalleryList.keys.size
+                            && uploadingImagePosition + 1 == imageGalleryList[messageId]?.size){
+
+                            savePTBMessages()
+                        }else{
+                            if (imageGalleryList[messageId]?.size == uploadingImagePosition + 1){
+                                uploadingMessageIdPosition ++
+                                uploadingImagePosition = 0
+                            }
+                            uploadingImagePosition ++
+
+                            uploadPhoto()
+                        }
                     }
-                }
 
-                override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {}
+                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {}
 
-                override fun onReschedule(requestId: String?, error: ErrorInfo?) {}
+                    override fun onReschedule(requestId: String?, error: ErrorInfo?) {}
 
-                override fun onError(requestId: String?, error: ErrorInfo?) {
-                    viewModel.liveProgressDialog.value = View.GONE
-                    showPopup(activity!!, getString(R.string.error_upload_failed), getString(R.string.text_error))
-                }
+                    override fun onError(requestId: String?, error: ErrorInfo?) {
+                        viewModel.liveProgressDialog.value = View.GONE
+                        showPopup(activity!!, getString(R.string.error_upload_failed), getString(R.string.text_error))
+                    }
 
-                override fun onStart(requestId: String?) {}
+                    override fun onStart(requestId: String?) {}
 
-            }).dispatch()
+                }).dispatch()
+        }catch (e:OutOfMemoryError){
+            showPopup(activity!!, getString(R.string.error_upload_failed), getString(R.string.text_error))
+        }
+        
     }
 
     private fun redirectToLogin() {

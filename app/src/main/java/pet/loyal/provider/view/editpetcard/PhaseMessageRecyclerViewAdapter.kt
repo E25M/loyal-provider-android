@@ -315,7 +315,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_up_black, null)
         )
-        expand(viewPhaseMessage.mainContainer, 500, 270)
+        expand(viewPhaseMessage.mainContainer, 500, 250)
     }
 
     private fun expandView(
@@ -326,7 +326,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_up_white, null)
         )
-        expand(viewHolder.itemBinding.mainContainer, 500, 270)
+        expand(viewHolder.itemBinding.mainContainer, 500, 240)
     }
 
     private fun collapseView(

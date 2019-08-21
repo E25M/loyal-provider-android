@@ -49,9 +49,9 @@ class PatientCardsAdapter(
 
         val card = cardsList[position]
         holder.itemView.txt_last_name_list_item_pet_card.text =
-            card.parentLastName + ", "
+            card.petName + ", "
         holder.itemView.txt_first_name_list_item_pet_card.text =
-            card.parentFirstName
+            card.parentLastName
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
             formatDate(card.dateTime, SimpleDateFormat("HH:mm a"))
@@ -59,8 +59,8 @@ class PatientCardsAdapter(
         if (card.petImage != null) {
             if (!TextUtils.isEmpty(card.petImage)) {
                 Picasso.get().load(Constants.url_cloudinary_pet_profile + card.petImage)
-                    .error(R.drawable.img_pet_sample)
-                    .placeholder(R.drawable.img_pet_sample).into(holder.itemView.img_pet_)
+                    .error(R.drawable.ic_logo)
+                    .placeholder(R.drawable.ic_logo).into(holder.itemView.img_pet_)
             }
         }
 
@@ -77,7 +77,6 @@ class PatientCardsAdapter(
         holder.itemView.txt_phase_list_item_pet_card.background = drawableBgType
         holder.itemView.view_colored_header.setBackgroundColor(bgColor)
 
-
         holder.itemView.reyclerview_cards_list_item_pet_cards.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         val adapter = PTBSentMessagesAdapter(
@@ -86,14 +85,17 @@ class PatientCardsAdapter(
             , position
             , this
         )
-        holder.itemView.reyclerview_cards_list_item_pet_cards.adapter = adapter
+        if (card.ptbSentMessages.size > 0) {
+            holder.itemView.reyclerview_cards_list_item_pet_cards.adapter = adapter
+        }else{
+            holder.itemView.reyclerview_cards_list_item_pet_cards.visibility = View.GONE
+        }
         holder.itemView.constraint_layout_pet_card_container.setOnClickListener {
             onPetCardClickListener?.onPerCardClick(card, position)
         }
         holder.itemView.reyclerview_cards_list_item_pet_cards.setOnClickListener {
             onPetCardClickListener?.onPerCardClick(card, position)
         }
-
     }
 
 
