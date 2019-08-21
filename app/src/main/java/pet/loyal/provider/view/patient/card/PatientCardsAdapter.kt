@@ -14,10 +14,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_pet_card.view.*
 import pet.loyal.provider.R
 import pet.loyal.provider.model.PetTrackingAppointment
-import pet.loyal.provider.util.Constants
-import pet.loyal.provider.util.formatDate
-import pet.loyal.provider.util.getPhaseColors
-import pet.loyal.provider.util.getPhaseColorsOld
+import pet.loyal.provider.util.*
 import java.text.SimpleDateFormat
 
 class PatientCardsAdapter(
@@ -67,7 +64,7 @@ class PatientCardsAdapter(
             }
         }
 
-        holder.itemView.txt_phase_list_item_pet_card.text = card.type
+        holder.itemView.txt_phase_list_item_pet_card.text = getPhaseName(card.phase)
         val bgColor: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPhaseColors(card.phase, context!!)
         } else {

@@ -97,15 +97,15 @@ class Constants {
         const val phase_expected = "Expected"
         const val phase_check_in = "Check-In"
         const val phase_diagnostics = "Diagnostics"
-        const val phase_preperation = "Pre-op"
+        const val phase_preperation = "Preparation"
         const val phase_procedure = "Procedure "
         const val phase_dental = "Dental "
         const val phase_surgery = "Surgery"
         const val phase_recovery = "Recovery"
-        const val phase_hospital = "Hospital"
+        const val phase_hospital = "Hospitalized"
         const val phase_boarding = "Boarding"
         const val phase_discharge = "Discharge"
-        const val phase_complete = "Complete"
+        const val phase_complete = "Completed"
 
         //phase change error message codes
         const val pet_is_not_active = "pet_is_not_active"
