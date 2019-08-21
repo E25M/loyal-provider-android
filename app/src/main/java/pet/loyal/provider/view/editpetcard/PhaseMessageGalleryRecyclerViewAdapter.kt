@@ -42,7 +42,7 @@ class PhaseMessageGalleryRecyclerViewAdapter(
         var image = imageList?.get(position)
         if (image != null) {
             val imageView = viewHolder.itemBinding
-            Picasso.get().load(image).into(imageView.imgSource)
+            Picasso.get().load(image).resize(150, 100).centerCrop().into(imageView.imgSource)
 
             if (type == Constants.view_type_sent_message){
                 imageView.btnDelete.visibility = View.INVISIBLE

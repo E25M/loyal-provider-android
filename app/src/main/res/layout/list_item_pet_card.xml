@@ -9,6 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_pet_card_container"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

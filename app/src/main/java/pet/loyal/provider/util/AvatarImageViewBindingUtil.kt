@@ -19,7 +19,8 @@ object AvatarImageViewBindingUtil {
     @JvmStatic
     @BindingAdapter("app:setPetImage")
     fun setPetImage(view: AvatarImageView, url: String?) {
-        Picasso.get().load(Constants.url_cloudinary_pet_profile + url).placeholder(R.drawable.img_pet_sample).into(view)
+        Picasso.get().load(Constants.url_cloudinary_pet_profile + url)
+            .placeholder(R.drawable.ic_logo).into(view)
     }
 
     @JvmStatic
