@@ -144,7 +144,7 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
         return petCardLiveData
     }
-  
+
     override fun savePTBMessage(
         requestBody: RequestBody,
         token: String
@@ -269,12 +269,12 @@ class ProviderRepositoryImpl : ProviderRepository {
 
 
     override fun getPhaseList(token: String): LiveData<GetPhaseListBaseResponse> {
-        val phaseListResponse  = MutableLiveData<GetPhaseListBaseResponse>()
+        val phaseListResponse = MutableLiveData<GetPhaseListBaseResponse>()
         val call = apiService.getPhases(getRequestHeaders(token))
 
         val baseResponse = GetPhaseListBaseResponse()
 
-        call.enqueue(object : Callback<GetPhaseListResponse>{
+        call.enqueue(object : Callback<GetPhaseListResponse> {
             override fun onResponse(
                 call: Call<GetPhaseListResponse>,
                 response: Response<GetPhaseListResponse>
@@ -294,5 +294,36 @@ class ProviderRepositoryImpl : ProviderRepository {
             }
         })
         return phaseListResponse
+    }
+
+    override fun saveDeviceFacility(
+        requestBody: RequestBody,
+        token: String
+    ): LiveData<CommonBaseResponse> {
+        val saveFacilityResponse = MutableLiveData<CommonBaseResponse>()
+        val call = apiService.saveFacility(getRequestHeaders(token), requestBody)
+
+        val baseResponse = CommonBaseResponse()
+
+        call.enqueue(object : Callback<CommonResponse> {
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.commonResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                saveFacilityResponse.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                saveFacilityResponse.value = baseResponse
+            }
+        })
+        return saveFacilityResponse
     }
 }

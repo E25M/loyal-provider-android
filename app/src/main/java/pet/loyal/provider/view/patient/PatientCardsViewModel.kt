@@ -21,9 +21,9 @@ class PatientCardsViewModel : ViewModel() {
     private var repository: ProviderRepository
     var progressBarVisibility = MutableLiveData<Int>()
     var petTrackingBoardResponse: MediatorLiveData<PetTrackingBoardBaseResponse>
-    var phaseListResponse : MediatorLiveData<GetPhaseListBaseResponse>
-    var collapseIconVisibility : MutableLiveData<Int> = MutableLiveData()
-    var expandIconVisibility : MutableLiveData<Int> = MutableLiveData()
+    var phaseListResponse: MediatorLiveData<GetPhaseListBaseResponse>
+    var collapseIconVisibility: MutableLiveData<Int> = MutableLiveData()
+    var expandIconVisibility: MutableLiveData<Int> = MutableLiveData()
     lateinit var filters: ArrayList<Int>
 
     init {
@@ -37,14 +37,13 @@ class PatientCardsViewModel : ViewModel() {
     }
 
 
-    fun getPhases(token : String) : LiveData<GetPhaseListBaseResponse>{
+    fun getPhases(token: String): LiveData<GetPhaseListBaseResponse> {
 
         progressBarVisibility.value = View.VISIBLE
 
-        val dataSource  = repository.getPhaseList(token)
-        phaseListResponse.addSource(dataSource){
-            listResponse ->
-            if (phaseListResponse.hasActiveObservers()){
+        val dataSource = repository.getPhaseList(token)
+        phaseListResponse.addSource(dataSource) { listResponse ->
+            if (phaseListResponse.hasActiveObservers()) {
                 phaseListResponse.removeSource(dataSource)
             }
             phaseListResponse.value = listResponse
@@ -54,14 +53,13 @@ class PatientCardsViewModel : ViewModel() {
     }
 
     fun getCards(
-        sort : String ,
-        sortBy : Int ,
+        sort: String,
+        sortBy: Int,
         keyword: String,
         loginToken: String,
         facilityId: String
     )
-    :LiveData<PetTrackingBoardBaseResponse>
-    {
+            : LiveData<PetTrackingBoardBaseResponse> {
 
         progressBarVisibility.value = View.VISIBLE
 
@@ -94,6 +92,16 @@ class PatientCardsViewModel : ViewModel() {
         } else {
             filters.add(phaseId)
         }
+    }
+
+    fun removeFromFilters(phaseId: Int) {
+        if (filters.contains(phaseId)) {
+            filters.remove(phaseId)
+        }
+    }
+
+    fun addToFilters(phaseId: Int) {
+        filters.add(phaseId)
     }
 
 }

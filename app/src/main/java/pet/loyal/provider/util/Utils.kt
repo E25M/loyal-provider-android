@@ -135,6 +135,24 @@ fun getPhaseColorsOld(phaseId: Int, context: Context): Int {
     }
 }
 
+fun getPhaseName(phaseId: Int): String {
+    return when (phaseId) {
+        1 -> Constants.phase_expected
+        2 -> Constants.phase_check_in
+        3 -> Constants.phase_diagnostics
+        4 -> Constants.phase_preperation
+        5 -> Constants.phase_procedure
+        6 -> Constants.phase_dental
+        7 -> Constants.phase_surgery
+        8 -> Constants.phase_recovery
+        9 -> Constants.phase_hospital
+        10 -> Constants.phase_boarding
+        11 -> Constants.phase_discharge
+        12 -> Constants.phase_complete
+        else -> Constants.phase_expected
+    }
+}
+
 fun expand(v: View, duration: Int, targetHeight: Int) {
 
     val prevHeight = v.height

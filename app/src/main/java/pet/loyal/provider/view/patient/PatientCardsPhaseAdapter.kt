@@ -5,6 +5,8 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_phase.view.*
 import kotlinx.android.synthetic.main.list_item_toggle_phase.view.*
@@ -26,7 +28,7 @@ class PatientCardsPhaseAdapter(
         return PhaseViewHolder(view)
     }
 
-    fun updateList(newPhaseList : ArrayList<Phase>){
+    fun updateList(newPhaseList: ArrayList<Phase>) {
         this.phaseList.clear()
         this.phaseList.addAll(newPhaseList)
         notifyDataSetChanged()
@@ -46,10 +48,17 @@ class PatientCardsPhaseAdapter(
             itemView.btn_list_item_toggle_phase_name.text = phase.name
             itemView.btn_list_item_toggle_phase_name.textOff = phase.name
             itemView.btn_list_item_toggle_phase_name.textOn = phase.name
-            itemView.setOnClickListener {
-                onPhaseClickListener.onPhaseClick(position, phase)
+//            itemView.setOnClickListener {
+//                onPhaseClickListener.onPhaseClick(position, phase)
+//            }
+            itemView.btn_list_item_toggle_phase_name.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    onPhaseClickListener.onPhaseTurnedOn(position, phase)
+                } else {
+                    onPhaseClickListener.onPhaseTurnedOff(position, phase)
+                }
             }
         }
-    }
 
+    }
 }

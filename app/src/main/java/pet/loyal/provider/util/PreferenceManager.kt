@@ -10,7 +10,10 @@ import java.nio.file.attribute.UserDefinedFileAttributeView
 class PreferenceManager(context: Context) {
 
     var sharedPreferences: SharedPreferences =
-        context.getSharedPreferences(context.getString(R.string.app_name) + "_data", Context.MODE_PRIVATE)
+        context.getSharedPreferences(
+            context.getString(R.string.app_name) + "_data",
+            Context.MODE_PRIVATE
+        )
     var editor: SharedPreferences.Editor
 
     init {
@@ -34,23 +37,23 @@ class PreferenceManager(context: Context) {
         return sharedPreferences.getString(Constants.data_login_token, "")
     }
 
-    fun setPushToken(pushToken : String){
+    fun setPushToken(pushToken: String) {
         editor.putString(Constants.data_push_token, pushToken).commit()
     }
 
-    fun getPushToken() : String {
+    fun getPushToken(): String {
         return sharedPreferences.getString(Constants.data_push_token, "default")
     }
 
-    fun setDeviceId(pushToken : String){
+    fun setDeviceId(pushToken: String) {
         editor.putString(Constants.data_device_id, pushToken).commit()
     }
 
-    fun getDeviceId() : String {
+    fun getDeviceId(): String {
         return sharedPreferences.getString(Constants.data_device_id, "default")
     }
 
-    fun saveUser(user: LoginUser){
+    fun saveUser(user: LoginUser) {
         editor.putString(Constants.data_user_id, user.id)
         editor.putString(Constants.data_user_type, user.type)
         editor.putString(Constants.data_user_first_name, user.firstName)
@@ -60,30 +63,35 @@ class PreferenceManager(context: Context) {
         editor.putString(Constants.data_user_avatar, user.avatar).commit()
     }
 
-    fun getUserId(): String{
+    fun getUserId(): String {
         return sharedPreferences.getString(Constants.data_device_id, "")
     }
 
-    fun getFacilityPhone(): String{
+    fun getFacilityPhone(): String {
         return sharedPreferences.getString(Constants.data_facility_phone, "")
     }
 
-    fun getFacilityName(): String{
+    fun getFacilityName(): String {
         return sharedPreferences.getString(Constants.data_facility_name, "")
     }
 
-    fun saveFacility(facility: Facility){
+    fun saveFacility(facility: Facility) {
         editor.putString(Constants.data_facility_id, facility.id)
         editor.putString(Constants.data_facility_name, facility.name)
         editor.putString(Constants.data_facility_phone, facility.admin).commit()
     }
 
-    fun getFacilityId() : String {
-        return sharedPreferences.getString(Constants.data_facility_id , "default")
+    fun getFacilityId(): String {
+        return sharedPreferences.getString(Constants.data_facility_id, "default")
     }
 
-    fun getUserType() : String {
-        return sharedPreferences.getString(Constants.data_user_type , "default")
+    fun getUserType(): String {
+        return sharedPreferences.getString(Constants.data_user_type, "default")
+    }
+
+    fun facilitySelected(): Boolean {
+        return !sharedPreferences.getString(Constants.data_facility_id, "default")
+            .equals("default", true)
     }
 
     fun deleteSession() {

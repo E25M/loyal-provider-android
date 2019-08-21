@@ -24,7 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="horizontal"
-                android:scrollbarSize="4dp"
+                android:scrollbarSize="6dp"
                 android:fadeScrollbars="false"
                 android:scrollIndicators="bottom"
                 android:scrollbarThumbHorizontal="@drawable/srollbar_thumb_vertical"
@@ -77,14 +77,14 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textInputLayout3"
+                                style="@style/TextFieldGrey"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
-                                style="@style/TextFieldGrey"
+                                android:layout_marginEnd="24dp"
+                                app:hintAnimationEnabled="false"
                                 app:hintEnabled="false"
                                 app:hintTextAppearance="@style/TextFieldGrey"
-                                app:hintAnimationEnabled="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -94,11 +94,11 @@
                                     android:id="@+id/serachview_patient_cards_keyword"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:drawableStart="@android:drawable/ic_menu_search"
                                     android:hint="@string/hint_search_facility"
                                     android:imeOptions="actionSearch"
                                     android:inputType="text"
                                     android:lines="1"
-                                    android:drawableStart="@android:drawable/ic_menu_search"
                                     android:textColor="@color/bg_color_gray_3"
                                     android:textColorHint="@color/bg_color_gray_3" />
 
@@ -108,6 +108,7 @@
                                 android:id="@+id/imageView2"
                                 android:layout_width="100dp"
                                 android:layout_height="32dp"
+                                android:layout_marginEnd="32dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/img_patient_cards_home"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -224,26 +225,28 @@
                         android:orientation="horizontal"
                         android:paddingEnd="8dp"
                         android:paddingRight="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView8"
-                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintEnd_toStartOf="@+id/img_scroll_right_pet_cards"
+                        app:layout_constraintStart_toEndOf="@+id/img_scroll_left_pet_cards"
                         app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort" />
 
                 <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/img_scroll_left_pet_cards"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="18dp"
+                        android:background="?selectableItemBackgroundBorderless"
                         app:layout_constraintStart_toEndOf="@+id/textView20"
                         app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
                         app:srcCompat="@drawable/ic_left_arrow" />
 
                 <ImageView
-                        android:id="@+id/imageView8"
+                        android:id="@+id/img_scroll_right_pet_cards"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="18dp"
                         android:layout_marginEnd="16dp"
+                        android:background="?selectableItemBackgroundBorderless"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
                         app:srcCompat="@drawable/ic_right_arrow" />
@@ -252,15 +255,13 @@
 
         </LinearLayout>
 
-       <ImageView
+        <ImageView
                 android:id="@+id/drpDwnFilterArea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="39dp"
-                android:layout_marginEnd="104dp"
-                android:background="?selectableItemBackground"
-                android:scaleType="centerCrop"
+                android:layout_marginEnd="115dp"
+                android:background="?selectableItemBackgroundBorderless"
                 android:visibility="@{viewModel.collapseIconVisibility}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -279,14 +280,14 @@
 
         <ImageView
                 android:id="@+id/img_expand_cards_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="104dp"
-                android:scaleType="centerInside"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="123dp"
+                android:scaleType="centerCrop"
                 android:visibility="@{viewModel.expandIconVisibility}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_down_arrow" />
+                app:srcCompat="@drawable/ic_dropdown_blue" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
