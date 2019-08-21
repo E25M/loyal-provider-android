@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
-    
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical">
+
     <data>
+
         <variable
                 name="viewModel"
                 type="pet.loyal.provider.view.mainmenu.MainMenuViewModel" />
+
         <import type="pet.loyal.provider.util.Constants" />
     </data>
-    
+
     <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:columnCount="2"
             android:background="@color/colorPrimaryDarkBlue"
+            app:columnCount="2"
             app:rowCount="2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:alpha="@{viewModel.disableAlpha}"
                 app:layout_column="0"
                 app:layout_columnWeight="1"
                 app:layout_row="0"
@@ -33,8 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
-                    android:textStyle="bold"
                     android:text="@string/txt_parent_sign_up"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/img_main_menu_parent_sign_up"
                     app:layout_constraintStart_toStartOf="@+id/img_main_menu_parent_sign_up" />
@@ -57,6 +60,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:alpha="@{viewModel.disableAlpha}"
                 app:layout_column="1"
                 app:layout_columnWeight="1"
                 app:layout_row="0"
@@ -68,8 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
-                    android:textStyle="bold"
                     android:text="@string/txt_patient_cards"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/img_main_menu_patient_cards"
                     app:layout_constraintStart_toStartOf="@+id/img_main_menu_patient_cards" />
@@ -80,10 +84,10 @@
                     android:layout_height="120dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginBottom="16dp"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:contentDescription="@string/app_name"
                     android:focusable="true"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/menu_main_cards"
                     app:layout_constraintBottom_toTopOf="@+id/textView8"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -92,6 +96,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:alpha="@{viewModel.disableAlpha}"
                 app:layout_column="0"
                 app:layout_columnWeight="1"
                 app:layout_row="1"
@@ -103,10 +108,10 @@
                     android:layout_height="120dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="24dp"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:contentDescription="@string/app_name"
                     android:focusable="true"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/menu_main_support"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -127,6 +132,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:alpha="@{viewModel.enableAlpha}"
                 app:layout_column="1"
                 app:layout_columnWeight="1"
                 app:layout_row="1"
@@ -150,10 +156,10 @@
                     android:layout_height="120dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:contentDescription="@string/app_name"
                     android:focusable="true"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/menu_main_setings"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -22,11 +22,15 @@ class PatientCardsViewModel : ViewModel() {
     var progressBarVisibility = MutableLiveData<Int>()
     var petTrackingBoardResponse: MediatorLiveData<PetTrackingBoardBaseResponse>
     var phaseListResponse : MediatorLiveData<GetPhaseListBaseResponse>
+    var collapseIconVisibility : MutableLiveData<Int> = MutableLiveData()
+    var expandIconVisibility : MutableLiveData<Int> = MutableLiveData()
     lateinit var filters: ArrayList<Int>
 
     init {
         repository = RepositoryProvider.provideProviderRepository()
         progressBarVisibility.value = View.GONE
+        collapseIconVisibility.value = View.VISIBLE
+        expandIconVisibility.value = View.GONE
         petTrackingBoardResponse = MediatorLiveData()
         phaseListResponse = MediatorLiveData()
         filters = arrayListOf()
