@@ -534,7 +534,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }catch (e:OutOfMemoryError){
             showPopup(activity!!, getString(R.string.error_upload_failed), getString(R.string.text_error))
         }
-        
     }
 
     private fun redirectToLogin() {
