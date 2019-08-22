@@ -332,12 +332,12 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     override fun onPerCardClick(card: PetTrackingAppointment, position: Int) {
         // navigate the user to the pet card section
         val activity = activity as HomeScreen
-
         val editPetCardFragment = EditPetCardFragment()
         val bundle = Bundle()
         bundle.putString(Constants.extra_appointment_id, card.id)
         editPetCardFragment.arguments = bundle
-
+        viewModel.expandIconVisibility.value = View.GONE
+        viewModel.collapseIconVisibility.value = View.VISIBLE
         activity.changeFragment(editPetCardFragment, 5)
     }
 
