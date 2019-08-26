@@ -16,7 +16,7 @@ data class PhaseMessage(@SerializedName("phaseMessageId") var phaseMessageId:Str
                         var type: Type,
                         var isSelected: Boolean){
 
-    enum class Type{SENT_MESSAGE, MESSAGE_TEMPLATE, CUSTOM_MESSAGE}
+    enum class Type{SENT_MESSAGE, MESSAGE_TEMPLATE, CUSTOM_MESSAGE, PHASE_CHANGE}
 
     constructor(id: String, phaseId: Int, message: String, editable: Boolean,imageGallery: ArrayList<Uri>?)
             : this(null, null,
@@ -32,6 +32,10 @@ data class PhaseMessage(@SerializedName("phaseMessageId") var phaseMessageId:Str
     constructor(id: String, phaseId: Int, appointmentId: String?) : this(null,
         null, id, phaseId, appointmentId, "", null, null,
         null, false, Type.CUSTOM_MESSAGE, false)
+
+    constructor(message: String) : this(null,
+        null, "phaseChange", 0, null, message, null, null,
+        null, false, Type.PHASE_CHANGE, false)
 
     fun getIsCustom() : Boolean{
         if (type == Type.CUSTOM_MESSAGE){

@@ -28,7 +28,7 @@ class Constants {
         const val url_invite = "invite"
         const val url_login = "login"
         const val url_appointment_by_id = "ptb/appointment/"
-        const val url_change_phase = "ptb/change-phrase"
+        const val url_change_phase = "ptb/change-phase"
         const val url_save_ptb_messages = "ptb/save/"
         const val url_get_ptb = "ptb/appointments"
         const val url_get_facility_list = "facility-list"
@@ -74,6 +74,7 @@ class Constants {
         const val view_type_sent_message = 0
         const val view_type_custom_message = 1
         const val view_type_template_message = 2
+        const val view_type_phase_change_message = 3
         const val custom_message_character_limit = 100
 
         //select image

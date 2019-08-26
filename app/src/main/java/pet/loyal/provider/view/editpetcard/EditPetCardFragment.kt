@@ -88,6 +88,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private var customMessageId = 0
     private lateinit var appointmentId: String
+    private var movingPhase = 0
 
     companion object {
         fun newInstance() = EditPetCardFragment()
@@ -263,7 +264,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun savePTBMessages(){
         viewModel.savePTMMessages(getSelectedMessages(), preferenceManager.getLoginToken(),
                 petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
-            preferenceManager.getFacilityId())
+            preferenceManager.getFacilityId(), movingPhase)
     }
 
     private fun getSelectedMessages() :ArrayList<RequestPTBMessage>{
@@ -277,11 +278,21 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         phaseMessage._id,
                         phaseMessage.message,
                         phaseMessage.getIsCustom(),
+                        false,
                         imageIdsList[phaseMessage._id]
                     )
                     requestMessageList.add(requestPTBMessage)
                 }
             }
+        }
+        val phaseChangeMessage = phaseMessages[0]
+        if (phaseChangeMessage.type == PhaseMessage.Type.PHASE_CHANGE){
+            requestMessageList.add(RequestPTBMessage(
+                customMessageId++.toString(),
+                phaseChangeMessage.message,
+                isCustom = false,
+                isPhaseChange = true
+            ))
         }
         return requestMessageList
     }
@@ -627,10 +638,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
-    override fun onPhaseChangeSuccess() {
-        showPopup(activity!!, "Update sent to ${petCardDataResponse?.appointment?.petName}"
-                + "'s support network ${getCurrentDateString()} ${getCurrentTimeString()}",
-            getString(R.string.text_info))
+    override fun onPhaseChangeSuccess(message: String, movingPhase: Int) {
+        if (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE){
+            phaseMessages.removeAt(0)
+        }
+        phaseMessages.add(0, PhaseMessage(message))
+        this.movingPhase = movingPhase
+        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
     }
 
     override fun onPhaseChangeFailed(errorMessage: String) {
@@ -660,7 +674,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setMessage(message)
             .setTitle(title)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                loadAppointment()
+//                loadAppointment()
             }
             .create()
         aDialog.show()

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pet.loyal.provider.R
 import pet.loyal.provider.databinding.LayoutEditPatientCardCustomItemBinding
 import pet.loyal.provider.databinding.LayoutEditPatientCardItemBinding
+import pet.loyal.provider.databinding.LayoutEditPatientCardPhaseChangeItemBinding
 import pet.loyal.provider.databinding.LayoutEditPatientCardSentItemBinding
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.util.*
@@ -57,6 +58,14 @@ class PhaseMessageRecyclerViewAdapter(
                     parent, false
                 )
                 return PhaseMessageTemplateViewHolder(layoutEditPatientCardItemBinding)
+            }
+            Constants.view_type_phase_change_message -> {
+                val layoutEditPatientCardItemBinding = LayoutEditPatientCardPhaseChangeItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+
+                return PhaseMessagePhaseChangeViewHolder(layoutEditPatientCardItemBinding)
             }
             else -> {
                 val layoutEditPatientCardItemBinding = LayoutEditPatientCardSentItemBinding.inflate(
@@ -276,6 +285,11 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.recyclerViewImageGallery.setHasFixedSize(true)
                 viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
             }
+            PhaseMessage.Type.PHASE_CHANGE -> {
+                val viewPhaseMessage = (viewHolder as PhaseMessagePhaseChangeViewHolder).itemBinding
+                viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
+//                viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
+            }
         }
     }
 
@@ -358,6 +372,7 @@ class PhaseMessageRecyclerViewAdapter(
                 PhaseMessage.Type.SENT_MESSAGE -> Constants.view_type_sent_message
                 PhaseMessage.Type.MESSAGE_TEMPLATE -> Constants.view_type_template_message
                 PhaseMessage.Type.CUSTOM_MESSAGE -> Constants.view_type_custom_message
+                PhaseMessage.Type.PHASE_CHANGE -> Constants.view_type_phase_change_message
             }
         }else{
             Constants.view_type_sent_message
@@ -371,6 +386,9 @@ class PhaseMessageRecyclerViewAdapter(
         RecyclerView.ViewHolder(itemBinding.root)
 
     inner class PhaseMessageCustomViewHolder(val itemBinding: LayoutEditPatientCardCustomItemBinding):
+        RecyclerView.ViewHolder(itemBinding.root)
+
+    inner class PhaseMessagePhaseChangeViewHolder(val itemBinding: LayoutEditPatientCardPhaseChangeItemBinding):
         RecyclerView.ViewHolder(itemBinding.root)
 
     override fun onClickImage(positionImage: Int, position: Int, messageId: String) {
