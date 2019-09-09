@@ -33,7 +33,7 @@ android {
         qa {
             applicationIdSuffix = ".qa"
             buildConfigField "String", 'BASE_URL', "\"http://18.216.161.214:81/v1/tablet/\""
-            versionName "0.0.4"
+            versionName "0.0.5"
             resValue "string", "app_name", "Provider QA"
         }
         dev {
@@ -57,7 +57,7 @@ android {
         demo {
             applicationIdSuffix = ".demo"
             buildConfigField "String", 'BASE_URL', "\"http://35.166.213.108:81/v1/tablet/\""
-            versionName "0.0.1"
+            versionName "0.0.2"
             resValue "string", "app_name", "Provider Demo"
         }
     }
