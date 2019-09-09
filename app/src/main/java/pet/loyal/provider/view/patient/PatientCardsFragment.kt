@@ -37,6 +37,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.layout_settings.*
 
 
@@ -80,7 +81,8 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 //        val textView = searchView.findViewById<View>(id) as TextView
 //        textView.setHintTextColor(Color.WHITE)
 //        textView.setTextColor(Color.WHITE)
-        setUpLayoutManager()
+//        setUpLayoutManager()
+        setUpGridLayoutManager()
         setUpObservers()
 //        serachview_patient_cards_keyword.setOnQueryTextListener(object :
 //            SearchView.OnQueryTextListener {
@@ -205,6 +207,13 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }
 
+
+    private fun setUpGridLayoutManager() {
+        recyclerview_patient_cards.layoutManager =
+            GridLayoutManager(context, 3 ,RecyclerView.VERTICAL, false)
+        recyclerview_phases.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+    }
 
     private fun loadData() {
         if (isConnected(context!!)) {
