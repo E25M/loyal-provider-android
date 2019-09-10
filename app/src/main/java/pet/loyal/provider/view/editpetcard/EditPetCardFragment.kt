@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Spannable
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -88,6 +90,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private var customMessageId = 0
     private lateinit var appointmentId: String
+    private var movingPhase = 0
 
     companion object {
         fun newInstance() = EditPetCardFragment()
@@ -193,16 +196,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         loadAppointment()
 
         fragmentEditPatiantCardBinding.btnUpdate.setOnClickListener {
-            val selectedPTBMessages = getSelectedMessages()
-            if (selectedPTBMessages.isNotEmpty()) {
-                if (imageGalleryList.size > 0){
-                    uploadPhoto()
-                }else{
-                    savePTBMessages()
-                }
-            }else{
-                showToast(context!!, getString(R.string.error_no_selected_ptb_message))
-            }
+            updatePhaseMessages()
         }
 
         fragmentEditPatiantCardBinding.btnCancel.setOnClickListener {
@@ -242,6 +236,26 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         return fragmentEditPatiantCardBinding.root
     }
 
+    private fun showUpdateConfirmation(){
+        showUpdateConfirmPopup(activity!!,
+            "Update sent to ${petCardDataResponse?.appointment?.petName} support network at" +
+                    "\n ${getCurrentDateString()}, ${getCurrentTimeString()}",
+            getString(R.string.text_info))
+    }
+
+    private fun updatePhaseMessages(){
+        val selectedPTBMessages = getSelectedMessages()
+        if (selectedPTBMessages.isNotEmpty()) {
+            if (imageGalleryList.size > 0){
+                uploadPhoto()
+            }else{
+                savePTBMessages()
+            }
+        }else{
+            showToast(activity!!, getString(R.string.error_no_selected_ptb_message))
+        }
+    }
+
     private fun loadPhaseChangeDialog(phaseList: ArrayList<Phase>){
         val phaseListDialogFragment = PhaseListDialogFragment()
         val bundle = Bundle()
@@ -263,7 +277,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun savePTBMessages(){
         viewModel.savePTMMessages(getSelectedMessages(), preferenceManager.getLoginToken(),
                 petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
-            preferenceManager.getFacilityId())
+            preferenceManager.getFacilityId(), movingPhase)
     }
 
     private fun getSelectedMessages() :ArrayList<RequestPTBMessage>{
@@ -273,15 +287,31 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             phaseMessage ->
             run {
                 if (phaseMessage.isSelected) {
+                    var message:String = if (phaseMessage.messageSpan != null){
+                        phaseMessage.messageSpan.toString()
+                    }else{
+                        phaseMessage.message
+                    }
                     val requestPTBMessage = RequestPTBMessage(
                         phaseMessage._id,
-                        phaseMessage.message,
+                        message,
                         phaseMessage.getIsCustom(),
+                        false,
                         imageIdsList[phaseMessage._id]
                     )
                     requestMessageList.add(requestPTBMessage)
                 }
             }
+        }
+
+        val phaseChangeMessage = phaseMessages[0]
+        if (phaseChangeMessage.type == PhaseMessage.Type.PHASE_CHANGE){
+            requestMessageList.add(RequestPTBMessage(
+                customMessageId++.toString(),
+                phaseChangeMessage.message,
+                isCustom = false,
+                isPhaseChange = true
+            ))
         }
         return requestMessageList
     }
@@ -338,7 +368,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                         }
                     }else{
-                        loadAppointment()
+                        showUpdateConfirmation()
                     }
                 }
                 viewModel.liveProgressDialog.value = View.GONE
@@ -407,7 +437,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             imageGallery = imageGalleryList[messageTemplate._id]
                         }
 
-                        var message = messageTemplate.message
+                        var message:String
+                        message = if (messageTemplate.editable && messageTemplate.controlMessage != null){
+                            messageTemplate.controlMessage
+                        }else{
+                            messageTemplate.message
+                        }
+
                         message = message.replace("PetName",
                             petCardDataResponse.appointment.petName, true)
 
@@ -428,7 +464,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         phaseMessages.add(
                             PhaseMessage(
                                 messageTemplate._id, messageTemplate.phaseId,
-                                message, messageTemplate.editable, imageGallery
+                                message, messageTemplate.editable, imageGallery,
+                                messageTemplate.control, messageTemplate.controlMessage,
+                                messageTemplate.value, messageTemplate.placeholder
                             )
                         )
                     }
@@ -461,14 +499,16 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         customMessageId++
         phaseMessages.add(
             PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
-                petCardDataResponse?.appointment?.id)
+                petCardDataResponse?.appointment?.id, false)
         )
+
     }
 
     private fun showAddedImage(){
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == selectedMessageId){
                 phaseMessage.imageGallery = imageGalleryList[selectedMessageId]
+                phaseMessage.isSelected = true
             }
         }
         notifyItemChange()
@@ -486,8 +526,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         viewModel.liveProgressDialog.value = View.VISIBLE
 
         val publicId = "${Calendar.getInstance().timeInMillis}_${preferenceManager.getUserId()}"
-        val imageUri = imageGalleryList[imageGalleryList.keys
-            .elementAt(uploadingMessageIdPosition)]?.get(uploadingImagePosition)!!
+        val imageUri = imageGalleryList[imageGalleryList.keys.elementAt(uploadingMessageIdPosition)]?.get(uploadingImagePosition)!!
 
         try {
             MediaManager.get().upload(imageUri)
@@ -546,8 +585,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     override fun onClickAddPhotos(view: View, position: Int, messageId: String) {
         selectedMessageId = messageId
         selectedMessagePosition = position
-        registerForContextMenu(view)
-        activity!!.openContextMenu(view)
+//        registerForContextMenu(view)
+//        activity!!.openContextMenu(view)
+        checkPermissions()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -571,14 +611,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             capturedImageCount ++
 //            resetOrientation(selectedPhotoFile)
         }
-
         showAddedImage()
     }
 
     private fun addImageUriToGallery(uri: Uri?){
         if (uri != null){
             if (!imageGalleryList.containsKey(selectedMessageId)){
-                imageGalleryList[selectedMessageId] = ArrayList<Uri>()
+                imageGalleryList[selectedMessageId] = ArrayList()
             }
             if (imageGalleryList[selectedMessageId]?.size!! < 10) {
                 imageGalleryList[selectedMessageId]?.add(0, uri)
@@ -617,6 +656,21 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 }
             }
         }
+        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+            run {
+                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+            }
+        }
+    }
+
+    override fun onClickTickCustom(isChecked: Boolean, position: Int, messageId: String) {
+        phaseMessages.iterator().forEach { phaseMessage ->
+            run {
+                if (phaseMessage._id == messageId) {
+                    phaseMessage.isSelected = isChecked
+                }
+            }
+        }
     }
 
     override fun onEditMessage(message: String, position: Int, messageId: String) {
@@ -625,12 +679,42 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 phaseMessage.message = message
             }
         }
+        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+            run {
+                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+            }
+        }
     }
 
-    override fun onPhaseChangeSuccess() {
-        showPopup(activity!!, "Update sent to ${petCardDataResponse?.appointment?.petName}"
-                + "'s support network ${getCurrentDateString()} ${getCurrentTimeString()}",
-            getString(R.string.text_info))
+    override fun onEditMessage(message: Spannable, position: Int, messageId: String) {
+        phaseMessages.iterator().forEach { phaseMessage ->
+            if (phaseMessage._id == messageId){
+                phaseMessage.messageSpan = message
+                phaseMessage.message = message.toString()
+            }
+        }
+        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+            run {
+                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+            }
+        }
+    }
+
+    override fun onEditMessageCustom(message: String, position: Int, messageId: String) {
+        phaseMessages.iterator().forEach { phaseMessage ->
+            if (phaseMessage._id == messageId){
+                phaseMessage.message = message
+            }
+        }
+    }
+
+    override fun onPhaseChangeSuccess(message: String, movingPhase: Int) {
+        if (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE){
+            phaseMessages.removeAt(0)
+        }
+        phaseMessages.add(0, PhaseMessage(message))
+        this.movingPhase = movingPhase
+        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
     }
 
     override fun onPhaseChangeFailed(errorMessage: String) {
@@ -660,9 +744,28 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setMessage(message)
             .setTitle(title)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                loadAppointment()
+//                loadAppointment()
             }
             .create()
         aDialog.show()
+    }
+
+    private fun showUpdateConfirmPopup(context: Context, message: String, title: String) {
+
+        val aDialog = AlertDialog.Builder(context)
+            .setMessage(message)
+            .setTitle(title)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                activity!!.onBackPressed()
+            }.create()
+        aDialog.show()
+
+        object : CountDownTimer(1500, 1500){
+            override fun onFinish() {
+                activity!!.onBackPressed()
+                aDialog.dismiss()
+            }
+            override fun onTick(millisUntilFinished: Long) {}
+        }.start()
     }
 }

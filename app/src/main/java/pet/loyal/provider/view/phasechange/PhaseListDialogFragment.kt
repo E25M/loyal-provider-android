@@ -34,7 +34,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     private var petName:String? = null
 
     interface PhaseListDialogFragmentListener{
-        fun onPhaseChangeSuccess()
+        fun onPhaseChangeSuccess(message: String, movingPhase: Int)
         fun onPhaseChangeFailed(errorMessage: String)
     }
 
@@ -111,6 +111,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
                                 redirectToLogin()
                             } else if (signInResponse.statusCode == 400 ) {
                                 (targetFragment as EditPetCardFragment).onPhaseChangeFailed(signInResponse.errorMessage!!)
+                                dismiss()
                             } else {
                                 showPopup(
                                     activity!!, phaseChangeResponse.throwable?.message!!,
@@ -132,8 +133,10 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     }
 
     private fun showPhaseChange(phaseChangeResponse: PhaseChangeResponse?){
-        if (phaseChangeResponse?.statusCode == 200){
-            (targetFragment as EditPetCardFragment).onPhaseChangeSuccess()
+        if (phaseChangeResponse?.data != null){
+            (targetFragment as EditPetCardFragment).onPhaseChangeSuccess(
+                phaseChangeResponse.data.message,
+                sendingPhaseId)
             dismiss()
         }
     }

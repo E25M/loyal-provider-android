@@ -13,12 +13,16 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
-import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.api.responses.SelfInviteDataResponse
 import pet.loyal.provider.databinding.FragmentParentSelfInviteBinding
 import pet.loyal.provider.util.*
 import pet.loyal.provider.view.login.LoginActivity
+import android.os.PowerManager
+import android.content.Context.POWER_SERVICE
+import android.annotation.SuppressLint
+import pet.loyal.provider.R
+
 
 /**
  * A simple [Fragment] subclass.
@@ -48,6 +52,7 @@ class SelfInviteFragment : Fragment() {
         return fragmentParentSelfInviteBinding.root
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,6 +60,7 @@ class SelfInviteFragment : Fragment() {
         btnSelfInvite?.setOnClickListener {
             sendSelfInvitation(false)
         }
+
     }
 
     private fun setObservers(){
@@ -73,10 +79,10 @@ class SelfInviteFragment : Fragment() {
                             showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                 getString(R.string.text_info))
                         }else{
-                            showPopup(activity!!, selfInviteResponse.throwable?.message!!, "Info")
+                            showPopup(activity!!, selfInviteResponse.throwable?.message!!, getString(R.string.text_info))
                         }
                     } else {
-                        showPopup(activity!!, selfInviteResponse.throwable?.message!!, "Info")
+                        showPopup(activity!!, selfInviteResponse.throwable?.message!!, getString(R.string.text_info))
                     }
                 }else if(selfInviteResponse.selfInviteResponse != null){
                     showSuccessPopup(selfInviteResponse.selfInviteResponse?.data)
@@ -196,4 +202,5 @@ class SelfInviteFragment : Fragment() {
         startActivity(Intent(activity, LoginActivity::class.java))
         activity?.finish()
     }
+
 }

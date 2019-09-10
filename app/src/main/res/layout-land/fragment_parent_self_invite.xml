@@ -11,55 +11,20 @@
             android:layout_height="match_parent"
             android:id="@+id/containerView">
 
-<!--        <androidx.appcompat.widget.Toolbar android:id="@+id/toolBar"-->
-<!--                                           android:layout_width="match_parent"-->
-<!--                                           android:layout_height="50dp"-->
-<!--                                           style="@style/ToolBarMain"-->
-<!--                                           app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"-->
-<!--                                                               android:layout_height="wrap_content">-->
-<!--                <ImageButton android:id="@+id/imgFacilityLogo"-->
-<!--                             android:layout_width="wrap_content"-->
-<!--                             android:layout_height="wrap_content"-->
-<!--                             android:background="@android:color/transparent"-->
-<!--                             android:src="@drawable/facility_logo_sample"-->
-<!--                             app:layout_constraintStart_toStartOf="parent"-->
-<!--                             app:layout_constraintTop_toTopOf="parent"-->
-<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-<!--                <ImageButton android:id="@+id/btnHome"-->
-<!--                             android:layout_width="wrap_content"-->
-<!--                             android:layout_height="wrap_content"-->
-<!--                             android:padding="12dp"-->
-<!--                             android:background="@android:color/transparent"-->
-<!--                             android:src="@drawable/ic_home"-->
-<!--                             app:layout_constraintEnd_toStartOf="@id/btnLogout"-->
-<!--                             app:layout_constraintTop_toTopOf="parent"-->
-<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-<!--                <ImageButton android:id="@+id/btnLogout"-->
-<!--                             android:layout_width="wrap_content"-->
-<!--                             android:layout_height="wrap_content"-->
-<!--                             android:padding="12dp"-->
-<!--                             android:background="@android:color/transparent"-->
-<!--                             android:src="@drawable/ic_logout"-->
-<!--                             app:layout_constraintEnd_toEndOf="parent"-->
-<!--                             app:layout_constraintTop_toTopOf="parent"-->
-<!--                             app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--        </androidx.appcompat.widget.Toolbar>-->
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_begin="75dp"
+                android:orientation="horizontal" />
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewMain"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView6">
+                app:layout_constraintTop_toBottomOf="@+id/guideline">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintCardView"
@@ -71,7 +36,7 @@
                         style="@style/SelfInviteTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="40dp"
                         android:layout_marginBottom="@dimen/margin_large_3"
                         android:gravity="center"
                         android:text="@string/text_sign_up_for_loyal"
@@ -162,6 +127,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/link_www_loyal_pet"
                         android:textAllCaps="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/imgAppStore" />
@@ -181,8 +147,9 @@
 
         <ImageView android:id="@+id/bgAnimals"
                    android:layout_width="0dp"
-                   android:layout_height="300dp"
+                   android:layout_height="0dp"
                    android:background="@drawable/bg_animal_decor"
+                app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"/>
