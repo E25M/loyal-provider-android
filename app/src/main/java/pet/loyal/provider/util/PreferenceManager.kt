@@ -63,6 +63,15 @@ class PreferenceManager(context: Context) {
         editor.putString(Constants.data_user_avatar, user.avatar).commit()
     }
 
+
+    fun setTimeOutType(type: String) {
+        editor.putString(Constants.data_timeout_type, type).commit()
+    }
+
+    fun getTimeOutTYpe(): String {
+        return sharedPreferences.getString(Constants.data_timeout_type, "No Auto Logout")
+    }
+
     fun getUserId(): String {
         return sharedPreferences.getString(Constants.data_device_id, "")
     }
@@ -104,6 +113,7 @@ class PreferenceManager(context: Context) {
             .remove(Constants.data_user_phone)
             .remove(Constants.data_user_email)
             .remove(Constants.data_user_avatar)
+            .remove(Constants.data_timeout_type)
             .commit()
     }
 }

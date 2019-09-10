@@ -22,6 +22,8 @@ class Constants {
         const val data_facility_name = "user_facility_name"
         const val data_facility_id = "user_facility_id"
 
+        const val data_timeout_type = "screen_timeout_type"
+
         // url endpoints
         const val url_apk = "tablet/"
         const val url_init = "init"
@@ -34,6 +36,7 @@ class Constants {
         const val url_get_facility_list = "facility-list"
         const val url_get_phases = "ptb/phases"
         const val url_save_facility = "device-facility"
+        const val url_logout = "logout"
         const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"

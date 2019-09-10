@@ -4,13 +4,11 @@ import android.view.View
 import androidx.lifecycle.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import org.json.JSONArray
 import org.json.JSONObject
 import pet.loyal.provider.api.repository.ProviderRepository
 import pet.loyal.provider.api.repository.RepositoryProvider
 import pet.loyal.provider.api.responses.CommonBaseResponse
 import pet.loyal.provider.api.responses.GetFacilityBaseResponse
-import pet.loyal.provider.api.responses.LoginBaseResponse
 
 class SettingsViewModel : ViewModel() {
 
@@ -21,6 +19,10 @@ class SettingsViewModel : ViewModel() {
     var applyButtonEnabled = MutableLiveData<Boolean>()
     var selectedFacility = MutableLiveData<String>()
 
+    var radioNoAutoLogout = MutableLiveData<Boolean>()
+    var radioTwoMins = MutableLiveData<Boolean>()
+    var radioNever = MutableLiveData<Boolean>()
+
     init {
         progressBarVisibility.value = View.GONE
         facilityListResponse = MediatorLiveData()
@@ -28,6 +30,10 @@ class SettingsViewModel : ViewModel() {
         providerRepository = RepositoryProvider.provideProviderRepository()
         applyButtonEnabled.value = false
         selectedFacility.value = ""
+
+        radioNoAutoLogout.value = true
+        radioTwoMins.value = false
+        radioNever.value = false
     }
 
 

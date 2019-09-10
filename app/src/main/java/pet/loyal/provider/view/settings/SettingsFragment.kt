@@ -78,14 +78,48 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
                 facilityListFragment.show(fragmentManager!!, "")
             }
         }
+
+        btn_apply_timeout.setOnClickListener {
+            when(radio_group_settings.checkedRadioButtonId){
+                R.id.radio_no_auto_logout -> {
+                    preferenceManager.setTimeOutType(getString(R.string.txt_screen_timeout_no_auto_logout))
+                }
+                R.id.radio_two_minutes -> {
+                    preferenceManager.setTimeOutType(getString(R.string.txt_screen_timeout_2_min))
+                }
+                R.id.radio_never -> {
+                    preferenceManager.setTimeOutType(getString(R.string.txt_screen_timeout_never))
+                }
+            }
+            showToast(context!! , "Screen timeout set successfully")
+        }
     }
 
     override fun onStart() {
         super.onStart()
         if (isConnected(context!!)) {
+            loadTimeoutPreference()
             loadFacilityList(preferenceManager.getLoginToken())
         } else {
             handleError(Throwable(getString(R.string.error_no_connection)), false, true)
+        }
+    }
+
+    private fun loadTimeoutPreference() {
+        val type = preferenceManager.getTimeOutTYpe()
+        when(type){
+            getString(R.string.txt_screen_timeout_no_auto_logout) ->{
+                radio_group_settings.check(R.id.radio_no_auto_logout)
+            }
+            getString(R.string.txt_screen_timeout_2_min) ->{
+                radio_group_settings.check(R.id.radio_two_minutes)
+            }
+            getString(R.string.txt_screen_timeout_never) ->{
+                radio_group_settings.check(R.id.radio_never)
+            }
+            else -> {
+                radio_group_settings.check(R.id.radio_no_auto_logout)
+            }
         }
     }
 
