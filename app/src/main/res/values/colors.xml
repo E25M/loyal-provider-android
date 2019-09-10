@@ -14,6 +14,7 @@
     <color name="btn_color_gray">#ffe7ebf4</color>
     <color name="bg_main_color">#e7ebf4ff</color>
     <color name="bg_state_change_button">#ff15153e</color>
+    <color name="bg_state_change_button_green">#72bb38</color>
     <color name="bg_color_black">#ff000000</color>
     <color name="bg_color_gray_1">#ffa7a8a7</color>
     <color name="bg_color_gray_2">#ffdee3ec</color>

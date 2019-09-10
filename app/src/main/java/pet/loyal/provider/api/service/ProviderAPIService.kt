@@ -52,4 +52,9 @@ interface ProviderAPIService {
     fun saveFacility(
         @HeaderMap hashMap: HashMap<String, String>, @Body requestBody: RequestBody
     ): Call<CommonResponse>
+
+    @POST(Constants.url_logout)
+    fun logOut(
+        @HeaderMap hashMap: HashMap<String, String>
+    ): Call<CommonResponse>
 }

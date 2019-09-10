@@ -27,7 +27,7 @@ class PatientCardsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetCardViewHolder {
         val view = LayoutInflater.from(context).inflate(
-            R.layout.list_item_pet_card,
+            R.layout.list_item_pet_card_new,
             parent,
             false
         )
@@ -77,25 +77,25 @@ class PatientCardsAdapter(
         holder.itemView.txt_phase_list_item_pet_card.background = drawableBgType
         holder.itemView.view_colored_header.setBackgroundColor(bgColor)
 
-        holder.itemView.reyclerview_cards_list_item_pet_cards.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val adapter = PTBSentMessagesAdapter(
-            context
-            , card.ptbSentMessages
-            , position
-            , this
-        )
-        if (card.ptbSentMessages.size > 0) {
-            holder.itemView.reyclerview_cards_list_item_pet_cards.adapter = adapter
-        }else{
-            holder.itemView.reyclerview_cards_list_item_pet_cards.visibility = View.GONE
-        }
+//        holder.itemView.reyclerview_cards_list_item_pet_cards.layoutManager =
+//            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//        val adapter = PTBSentMessagesAdapter(
+//            context
+//            , card.ptbSentMessages
+//            , position
+//            , this
+//        )
+//        if (card.ptbSentMessages.size > 0) {
+//            holder.itemView.reyclerview_cards_list_item_pet_cards.adapter = adapter
+//        }else{
+//            holder.itemView.reyclerview_cards_list_item_pet_cards.visibility = View.GONE
+//        }
         holder.itemView.constraint_layout_pet_card_container.setOnClickListener {
             onPetCardClickListener?.onPerCardClick(card, position)
         }
-        holder.itemView.reyclerview_cards_list_item_pet_cards.setOnClickListener {
-            onPetCardClickListener?.onPerCardClick(card, position)
-        }
+//        holder.itemView.reyclerview_cards_list_item_pet_cards.setOnClickListener {
+//            onPetCardClickListener?.onPerCardClick(card, position)
+//        }
     }
 
 
