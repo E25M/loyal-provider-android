@@ -222,6 +222,20 @@ fun getTimeString(dateAndTime: String): String {
     return sendFormat.format(calendar.time)
 }
 
+fun getTimeStringWithAMPM(hour:Int, minute:Int): String {
+
+    // Create a DateFormatter object for displaying date in specified format.
+    val sendFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+    // Create a calendar object that will convert the date and time value in milliseconds to date.
+    val calendar = Calendar.getInstance()
+
+    calendar.set(Calendar.HOUR_OF_DAY, hour)
+    calendar.set(Calendar.MINUTE, minute)
+
+    return sendFormat.format(calendar.time).toUpperCase()
+}
+
 fun getCurrentDateString(): String {
 
     // Create a DateFormatter object for displaying date in specified format.

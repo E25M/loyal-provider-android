@@ -1,14 +1,16 @@
 package pet.loyal.provider.view.editpetcard
 
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.TextWatcher
+import android.app.TimePickerDialog
+import android.content.Context
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pet.loyal.provider.R
@@ -18,19 +20,24 @@ import pet.loyal.provider.databinding.LayoutEditPatientCardPhaseChangeItemBindin
 import pet.loyal.provider.databinding.LayoutEditPatientCardSentItemBinding
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.util.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PhaseMessageRecyclerViewAdapter(
     private val phaseMessagesList: List<PhaseMessage>,
     private val phaseMessageItemListener: PhaseMessageItemListener
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), PhaseMessageGalleryRecyclerViewAdapter.ImageItemListener {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), PhaseMessageGalleryRecyclerViewAdapter.ImageItemListener,ViewDialog.ViewDialogListener {
 
     interface PhaseMessageItemListener {
         fun onClickAddPhotos(view: View, position: Int, messageId: String)
         fun onClickDelete(position: Int, positionImage: Int, messageId: String)
         fun onClickImage(position: Int, positionImage: Int, messageId: String)
         fun onClickTick(isChecked: Boolean, position: Int, messageId: String)
+        fun onClickTickCustom(isChecked: Boolean, position: Int, messageId: String)
         fun onEditMessage(message: String, position: Int, messageId: String)
+        fun onEditMessage(message: Spannable, position: Int, messageId: String)
+        fun onEditMessageCustom(message: String, position: Int, messageId: String)
         fun onAddCustomMessage(position: Int)
     }
 
@@ -135,23 +142,117 @@ class PhaseMessageRecyclerViewAdapter(
             PhaseMessage.Type.MESSAGE_TEMPLATE -> {
 
                 val viewPhaseMessage = (viewHolder as PhaseMessageTemplateViewHolder).itemBinding
-                if (itemPhaseMessage.editable){
-                    var message = itemPhaseMessage.message
-                    message = message.replace("<span>&lt;", "<")
-                    message = message.replace("&gt;</span>", ">")
 
-                    val spannable = SpannableStringBuilder(message)
-                    spannable.setSpan(ForegroundColorSpan(viewPhaseMessage.txtMessage.context
-                        .resources.getColor(R.color.font_color_blue)), message.indexOf("<"),
-                        message.indexOf(">") + 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                var message:String
+                if (itemPhaseMessage.messageSpan != null){
+                    viewPhaseMessage.txtMessage.text = itemPhaseMessage.messageSpan
+                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
 
-                    viewPhaseMessage.edtTxtMessage.text = spannable
-                    viewPhaseMessage.layoutMessage.visibility = View.VISIBLE
-                    viewPhaseMessage.txtMessage.visibility = View.INVISIBLE
+                }else if (itemPhaseMessage.editable && itemPhaseMessage.control != null){
+                    message = itemPhaseMessage.message
+
+                    val spannable = SpannableString(message)
+                    val indexes = getIndexes(message, itemPhaseMessage.control)
+
+                   when(itemPhaseMessage.control){
+                       "timePicker" -> {
+                           var count = 0
+                           indexes.forEach { _ ->
+                               spannable.setSpan(
+                                   object :ClickableSpan(){
+                                       override fun onClick(widget: View) {
+                                            showTimePicker(viewPhaseMessage.txtMessage.context,
+                                                message,
+                                                viewPhaseMessage.txtMessage,
+                                                itemPhaseMessage.control, itemPhaseMessage._id)
+                                       }
+                                   },
+                                   indexes[count], indexes[count] +
+                                           itemPhaseMessage.control.length,
+                                   Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                               )
+                           }
+                       }
+
+                       "dropDown" -> {
+                           val values = itemPhaseMessage.value
+                           var valueList = ArrayList<String>()
+                           if (values != null) {
+                               if (values.contains(",")) {
+                                   valueList = values.split(",") as ArrayList<String>
+                               } else {
+                                   valueList.add(values)
+                               }
+                           }
+
+                           var count = 0
+                           indexes.forEach { _ ->
+                               spannable.setSpan(
+                                   object :ClickableSpan(){
+                                       override fun onClick(widget: View) {
+                                           ViewDialog().showListDialog(widget.context,
+                                               message,
+                                               valueList,
+                                               itemPhaseMessage.control,
+                                               viewPhaseMessage.txtMessage,
+                                               this@PhaseMessageRecyclerViewAdapter, itemPhaseMessage._id, position)
+                                       }
+                                   },
+                                   indexes[count], indexes[count] +
+                                           itemPhaseMessage.control.length,
+                                   Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                               )
+                           }
+                       }
+
+                       "textField" -> {
+                           val placeHolders = itemPhaseMessage.placeholder
+                           var placeHolderList = ArrayList<String>()
+                           if (placeHolders != null) {
+                               if (placeHolders.contains(",")) {
+                                   placeHolderList = placeHolders.split(",") as ArrayList<String>
+                               } else {
+                                   placeHolderList.add(placeHolders)
+                               }
+                           }
+
+                           var count = 0
+                           val spannableList = ArrayList<pet.loyal.provider.model.Spannable>()
+                           indexes.forEach { _ ->
+                               val placeHolder = placeHolderList[count]
+                               val countLocal = count
+                               val indexStart = indexes[count]
+                               val indexEnd = indexes[count] + itemPhaseMessage.control.length
+                               val messageLocal = message
+                               val clickableSpan = object : ClickableSpan(){
+                                   override fun onClick(widget: View) {
+                                       ViewDialog().showDialog(widget.context,
+                                           messageLocal,
+                                           "",
+                                           itemPhaseMessage.control,
+                                           placeHolder,
+                                           indexStart,
+                                           viewPhaseMessage.txtMessage,
+                                           this@PhaseMessageRecyclerViewAdapter,
+                                           itemPhaseMessage._id, position, countLocal, spannableList)
+                                   }
+                               }
+
+                               spannableList.add(pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, itemPhaseMessage.control))
+                               spannable.setSpan(clickableSpan, indexStart, indexEnd,
+                                   Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                               )
+                               count++
+                           }
+                       }
+                       else -> {}
+                   }
+
+                   viewPhaseMessage.txtMessage.text = spannable
+                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
                 }else{
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
-                    viewPhaseMessage.layoutMessage.visibility = View.INVISIBLE
-                    viewPhaseMessage.txtMessage.visibility = View.VISIBLE
+//                    viewPhaseMessage.txtMessage.visibility = View.VISIBLE
                 }
 
                 viewPhaseMessage.btnDropDown.setOnClickListener {
@@ -174,17 +275,6 @@ class PhaseMessageRecyclerViewAdapter(
                     }
                 }
 
-                viewPhaseMessage.edtTxtMessage.addTextChangedListener(object : TextWatcher{
-
-                    override fun afterTextChanged(s: Editable?) {
-                        phaseMessageItemListener.onEditMessage(s.toString(), position,
-                            itemPhaseMessage._id)}
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
-                                                   after: Int){}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int,
-                                               count: Int){}
-                })
-
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener {
                         buttonView, isChecked ->
                     phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
@@ -206,6 +296,7 @@ class PhaseMessageRecyclerViewAdapter(
                 if (itemPhaseMessage.imageGallery.isNullOrEmpty()) {
                     collapseView(viewPhaseMessage, viewHolder)
                 }
+                viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
             }
             PhaseMessage.Type.CUSTOM_MESSAGE -> {
                 val viewPhaseMessage = (viewHolder as PhaseMessageCustomViewHolder).itemBinding
@@ -219,8 +310,9 @@ class PhaseMessageRecyclerViewAdapter(
 
                     override fun afterTextChanged(s: Editable?) {
                         updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
-                        phaseMessageItemListener.onEditMessage(s.toString(), position,
-                            itemPhaseMessage._id)}
+                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
+                            itemPhaseMessage._id)
+                    }
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
                                                    after: Int) {}
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int
@@ -240,11 +332,12 @@ class PhaseMessageRecyclerViewAdapter(
                     if (position == phaseMessagesList.size - 1) {
                         if (isChecked) {
                             showCheckedCustomMessage(viewPhaseMessage)
+
                         } else {
                             showUncheckedCustomMessage(viewPhaseMessage)
                         }
+                        phaseMessageItemListener.onClickTickCustom(isChecked, position, itemPhaseMessage._id)
                     }
-                    phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
                 }
 
                 if (position != phaseMessagesList.size - 1){
@@ -293,6 +386,45 @@ class PhaseMessageRecyclerViewAdapter(
         }
     }
 
+    private fun getIndexes(message: String, value: String): Array<Int>{
+        val indexes = ArrayList<Int>()
+        var index = message.indexOf(value)
+        while (index >= 0){
+            indexes.add(index)
+            index = message.indexOf(value, index + 1)
+        }
+        return indexes.toTypedArray()
+    }
+
+    private fun showTimePicker(context: Context, text: String, textView: TextView,
+                               replaceValue:String, messageId: String) {
+        var c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR)
+        val minute = c.get(Calendar.MINUTE)
+
+        val tpd = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hour, minute->
+            val message = text.replace(replaceValue, getTimeStringWithAMPM(hour, minute))
+            val spannable = SpannableString(message)
+            spannable.setSpan(
+                object :ClickableSpan(){
+                    override fun onClick(widget: View) {
+                        showTimePicker(widget.context,
+                            text,
+                            textView,
+                            replaceValue, messageId)
+                    }
+                },
+                message.indexOf(getTimeStringWithAMPM(hour, minute)), message.indexOf(getTimeStringWithAMPM(hour, minute)) +
+                        getTimeStringWithAMPM(hour, minute).length,
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            textView.text = spannable
+            phaseMessageItemListener.onEditMessage(spannable, 0,
+                            messageId)
+        }, hour, minute, false)
+        tpd.show()
+    }
+
     private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
         viewPhaseMessage.txtAddCustomMessage.visibility = View.GONE
         viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
@@ -308,7 +440,7 @@ class PhaseMessageRecyclerViewAdapter(
     }
 
     private fun updateCountValue(message: String, countView: TextView){
-        var messageTextCounter:String = ""
+        var messageTextCounter = ""
         when {
             Constants.custom_message_character_limit - message.length == 1 ->
                 messageTextCounter = "${Constants.custom_message_character_limit - message.length} " +
@@ -397,5 +529,123 @@ class PhaseMessageRecyclerViewAdapter(
 
     override fun onClickDelete(positionImage: Int, position: Int, messageId: String) {
         phaseMessageItemListener.onClickDelete(positionImage, position, messageId)
+    }
+
+    override fun onUpdateEditText(message: String, replaceValue: String, replaceOldValue: String,
+                                  placeHolder: String, index: Int, textView: TextView,
+                                  messageId: String, position: Int, no: Int,
+                                  spannableList: ArrayList<pet.loyal.provider.model.Spannable>) {
+
+        val messageSpan = message.replaceRange(index, index + replaceOldValue.length, replaceValue)
+        val spannable = SpannableString(messageSpan)
+
+        var indexChange = replaceOldValue.length - replaceValue.length
+        var count = 0
+        spannableList.iterator().forEach { spannableObject ->
+            
+            var indexStart: Int
+            var indexEnd: Int
+            when {
+                count < no -> {
+                    indexStart = spannableObject.start
+                    indexEnd = spannableObject.end
+                    val countLocal = count
+
+                    val clickableSpan = object : ClickableSpan(){
+                        override fun onClick(widget: View) {
+                            ViewDialog().showDialog(widget.context,
+                                messageSpan,
+                                "",
+                                spannableObject.replaceOldValue,
+                                placeHolder,
+                                indexStart,
+                                textView,
+                                this@PhaseMessageRecyclerViewAdapter,
+                                messageId, position, countLocal, spannableList)
+                        }
+                    }
+
+                    spannable.setSpan(
+                        clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, spannableObject.replaceOldValue)
+                }
+                count == no -> {
+                    indexStart = spannableObject.start
+                    indexEnd = spannableObject.end - indexChange
+                    val countLocal = count
+
+                    val clickableSpan = object :ClickableSpan(){
+                        override fun onClick(widget: View) {
+                            ViewDialog().showDialog(widget.context,
+                                messageSpan,
+                                "",
+                                replaceValue,
+                                placeHolder,
+                                indexStart,
+                                textView,
+                                this@PhaseMessageRecyclerViewAdapter,
+                                messageId, position, countLocal, spannableList)
+                        }
+                    }
+                    spannable.setSpan(
+                        clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, replaceValue)
+                }
+                else -> {
+                    indexStart = spannableObject.start - indexChange
+                    indexEnd = spannableObject.end - indexChange
+                    val countLocal = count
+
+                    val clickableSpan = object :ClickableSpan(){
+                        override fun onClick(widget: View) {
+                            ViewDialog().showDialog(widget.context,
+                                messageSpan,
+                                "",
+                                spannableObject.replaceOldValue,
+                                placeHolder,
+                                indexStart,
+                                textView,
+                                this@PhaseMessageRecyclerViewAdapter,
+                                messageId, position, countLocal, spannableList)
+                        }
+                    }
+                    spannable.setSpan(
+                        clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                    )
+
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, spannableObject.replaceOldValue)
+                }
+            }
+            count++
+        }
+        textView.text = spannable
+        phaseMessageItemListener.onEditMessage(spannable, position, messageId)
+    }
+
+    override fun onUpdateListView(message: String, valueList: ArrayList<String>, replaceValue: String,
+                                  replaceOldValue: String, textView: TextView, messageId: String, position: Int){
+        val messageSpan = message.replace(replaceOldValue, replaceValue)
+        val spannable = SpannableString(messageSpan)
+        spannable.setSpan(
+            object :ClickableSpan(){
+                override fun onClick(widget: View) {
+                    ViewDialog().showListDialog(widget.context,
+                        messageSpan,
+                        valueList,
+                        replaceValue,
+                        textView,
+                        this@PhaseMessageRecyclerViewAdapter, messageId, position)
+                }
+            },
+            messageSpan.indexOf(replaceValue), messageSpan.indexOf(replaceValue) +
+                    replaceValue.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        textView.text = spannable
+        phaseMessageItemListener.onEditMessage(spannable, position,
+            messageId)
     }
 }

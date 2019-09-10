@@ -19,38 +19,38 @@
             <CheckBox android:id="@+id/chkBoxTicketMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:button="@drawable/bg_checkbox"
-                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
+                    android:buttonTint="@color/btn_color_blue"
+                    app:layout_constraintTop_toTopOf="@id/txtMessage"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
+                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/boxedTextFieldGrey"
-                    app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"
-                    android:id="@+id/layoutMessage">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/boxedTextFieldGrey"-->
+<!--                    app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"-->
+<!--                    android:id="@+id/layoutMessage">-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/textViewStyleExtraSmall"
-                        android:inputType="textEmailAddress"
-                        android:id="@+id/edtTxtMessage"/>
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:theme="@style/textViewStyleExtraSmall"-->
+<!--                        android:inputType="textEmailAddress"-->
+<!--                        android:id="@+id/edtTxtMessage"/>-->
 
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <TextView android:id="@+id/txtMessage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     style="@style/textViewStyleExtraSmall"
-                    app:layout_constraintStart_toStartOf="@id/layoutMessage"
-                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
-                    app:layout_constraintEnd_toEndOf="@id/layoutMessage"
-                    app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
+                    app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"/>
 
             <ImageButton android:id="@+id/btnDropDown"
                     android:layout_width="wrap_content"
@@ -58,10 +58,10 @@
                     android:padding="@dimen/margin_8"
                     android:src="@drawable/ic_drop_down_black"
                     android:background="@android:color/transparent"
-                    app:layout_constraintStart_toEndOf="@id/layoutMessage"
-                    app:layout_constraintTop_toTopOf="@id/layoutMessage"
+                    app:layout_constraintStart_toEndOf="@id/txtMessage"
+                    app:layout_constraintTop_toTopOf="@id/txtMessage"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/layoutMessage"/>
+                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
 
             <ImageButton android:id="@+id/btnAddPhoto"
                     android:layout_width="150dp"
@@ -70,7 +70,7 @@
                     android:layout_marginTop="@dimen/margin_16"
                     android:background="@drawable/bg_add_photo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layoutMessage"/>
+                    app:layout_constraintTop_toBottomOf="@id/txtMessage"/>
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewImageGallery"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"
                     android:layout_marginTop="@dimen/margin_16"
-                    app:layout_constraintTop_toBottomOf="@id/layoutMessage"
+                    app:layout_constraintTop_toBottomOf="@id/txtMessage"
                     app:layout_constraintStart_toEndOf="@id/btnAddPhoto"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:listitem="@layout/layout_photo_gallery_item"/>
