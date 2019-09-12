@@ -10,9 +10,13 @@ class Facility(
     @SerializedName("id") var id: String,
     @SerializedName("status") var status: String,
     @SerializedName("admin") var admin: String?,
+    @SerializedName("phone") var phone: String?,
+    @SerializedName("logo") var logo: String?,
     var selected: Boolean = false
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -27,6 +31,8 @@ class Facility(
         parcel.writeString(id)
         parcel.writeString(status)
         parcel.writeString(admin)
+        parcel.writeString(phone)
+        parcel.writeString(logo)
         parcel.writeByte(if (selected) 1 else 0)
     }
 

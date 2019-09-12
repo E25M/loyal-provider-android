@@ -87,11 +87,17 @@ class PreferenceManager(context: Context) {
     fun saveFacility(facility: Facility) {
         editor.putString(Constants.data_facility_id, facility.id)
         editor.putString(Constants.data_facility_name, facility.name)
+        editor.putString(Constants.data_facility_phone, facility.phone)
+        editor.putString(Constants.data_facility_logo, facility.logo)
         editor.putString(Constants.data_facility_phone, facility.admin).commit()
     }
 
     fun getFacilityId(): String {
         return sharedPreferences.getString(Constants.data_facility_id, "default")
+    }
+
+    fun getfacilityLogo() : String {
+        return sharedPreferences.getString(Constants.data_facility_logo, "-")
     }
 
     fun getUserType(): String {

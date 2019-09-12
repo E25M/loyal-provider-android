@@ -34,6 +34,7 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
+        loadLogo()
         setUpObservers()
         loadHomeFragment(Constants.fragment_type_home)
     }
@@ -78,7 +79,7 @@ class HomeScreen : AppCompatActivity() {
     fun onLogout(view: View) {
         if (isConnected(this)) {
             viewModel.logOut(preferenceManager.getLoginToken())
-        }else{
+        } else {
             handleError(Throwable(getString(R.string.error_common)))
         }
     }
@@ -209,4 +210,23 @@ class HomeScreen : AppCompatActivity() {
         showToast(this, errorMessage)
         viewModel.progressBarVisibility.value = View.GONE
     }
+
+
+    fun loadLogo() {
+        viewModel.logo.value = preferenceManager.getfacilityLogo()
+    }
+
+    fun loadPatientCardsFragment() {
+        if (!preferenceManager.facilitySelected()) {
+            changeFragment(Constants.fragment_type_pet_cards)
+        } else {
+            showToast(this, getString(R.string.msg_no_facility_selected))
+        }
+    }
+
+
+    fun onLogoClick(view: View) {
+        loadPatientCardsFragment()
+    }
+
 }

@@ -82,6 +82,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 //        textView.setHintTextColor(Color.WHITE)
 //        textView.setTextColor(Color.WHITE)
 //        setUpLayoutManager()
+        viewModel.selectedFacilityLogo.value = preferenceManager.getfacilityLogo()
         setUpGridLayoutManager()
         setUpObservers()
 //        serachview_patient_cards_keyword.setOnQueryTextListener(object :
@@ -115,6 +116,13 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             }
         )
 
+
+        imageView2.setOnClickListener {
+            if (activity is HomeScreen) {
+                val homeScreen = activity as HomeScreen
+                homeScreen.loadPatientCardsFragment()
+            }
+        }
         tablayout_patient_cards_sort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -210,7 +218,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     private fun setUpGridLayoutManager() {
         recyclerview_patient_cards.layoutManager =
-            GridLayoutManager(context, 3 ,RecyclerView.VERTICAL, false)
+            GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
         recyclerview_phases.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }

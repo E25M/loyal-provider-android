@@ -12,6 +12,9 @@ import androidx.annotation.RequiresApi
 import android.view.animation.DecelerateInterpolator
 import android.animation.ValueAnimator
 import android.view.View
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.squareup.picasso.Picasso
 import pet.loyal.provider.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -37,6 +40,19 @@ fun isJSONValid(jsonString: String): Boolean {
         return false
     }
     return true
+}
+
+@BindingAdapter("logo")
+fun setLogo(imageView: ImageView, url: String?) {
+    if (url != null) {
+        Picasso.get()
+            .load(Constants.url_cloudinary + Constants.directory_user + url)
+            .placeholder(R.drawable.facility_logo_sample)
+            .error(R.drawable.facility_logo_sample)
+            .into(imageView)
+    } else {
+        imageView.setImageResource(R.drawable.facility_logo_sample)
+    }
 }
 
 fun showPopupWithFinish(context: Context, message: String, title: String) {
@@ -222,7 +238,7 @@ fun getTimeString(dateAndTime: String): String {
     return sendFormat.format(calendar.time)
 }
 
-fun getTimeStringWithAMPM(hour:Int, minute:Int): String {
+fun getTimeStringWithAMPM(hour: Int, minute: Int): String {
 
     // Create a DateFormatter object for displaying date in specified format.
     val sendFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
