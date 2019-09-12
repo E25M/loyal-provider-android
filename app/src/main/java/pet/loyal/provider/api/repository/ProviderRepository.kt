@@ -31,4 +31,6 @@ interface ProviderRepository {
 
     fun saveDeviceFacility(requestBody: RequestBody , token: String) : LiveData<CommonBaseResponse>
 
+    fun logOut(token: String) : LiveData<CommonBaseResponse>
+
 }

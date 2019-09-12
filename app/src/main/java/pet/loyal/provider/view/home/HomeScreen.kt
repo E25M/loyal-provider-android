@@ -3,21 +3,24 @@ package pet.loyal.provider.view.home
 import android.content.Intent
 import android.os.Bundle
 import pet.loyal.provider.R
-import pet.loyal.provider.util.Constants
 import pet.loyal.provider.view.editpetcard.EditPetCardFragment
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.gson.Gson
+import org.json.JSONException
+import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
-import pet.loyal.provider.util.EditPetCardPermissionListener
-import pet.loyal.provider.util.PreferenceManager
+import pet.loyal.provider.util.*
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.mainmenu.MainMenuFragment
 import pet.loyal.provider.view.patient.PatientCardsFragment
 import pet.loyal.provider.view.selfinvite.SelfInviteFragment
 import pet.loyal.provider.view.settings.SettingsFragment
+import java.net.ConnectException
 
 class HomeScreen : AppCompatActivity() {
     private val PERMISSION_REQUEST_WRITE_STORAGE = 103
@@ -31,11 +34,28 @@ class HomeScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
+        setUpObservers()
         loadHomeFragment(Constants.fragment_type_home)
     }
 
-    fun setEditCardPermissionListener(editPetCardPermissionListener: EditPetCardPermissionListener){
+
+    fun setEditCardPermissionListener(editPetCardPermissionListener: EditPetCardPermissionListener) {
         this.editPetCardPermissionListener = editPetCardPermissionListener
+    }
+
+    private fun setUpObservers() {
+        viewModel.logoutResponse.observe(this, Observer { logOutResponse ->
+            viewModel.progressBarVisibility.value = View.GONE
+            if (logOutResponse?.throwable != null) {
+                handleError(logOutResponse.throwable)
+            } else if (logOutResponse?.commonResponse != null) {
+                preferenceManager.deleteSession()
+                this.finish()
+                startActivity(Intent(this, LoginActivity::class.java))
+            } else {
+                handleError(Throwable(""))
+            }
+        })
     }
 
     private fun initDataBinding() {
@@ -56,9 +76,11 @@ class HomeScreen : AppCompatActivity() {
     }
 
     fun onLogout(view: View) {
-        preferenceManager.deleteSession()
-        this.finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+        if (isConnected(this)) {
+            viewModel.logOut(preferenceManager.getLoginToken())
+        }else{
+            handleError(Throwable(getString(R.string.error_common)))
+        }
     }
 
     fun navigateToHome(view: View) {
@@ -117,11 +139,12 @@ class HomeScreen : AppCompatActivity() {
             finishAffinity()
         } else {
             supportFragmentManager.popBackStackImmediate()
-            val fragment =  supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
+            val fragment =
+                supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
             if (fragment != null && fragment.isVisible) {
                 if (fragment is PatientCardsFragment) {
                     viewModel.toolbarVisibility.value = View.GONE
-                }else{
+                } else {
                     viewModel.toolbarVisibility.value = View.VISIBLE
                 }
             }
@@ -154,5 +177,36 @@ class HomeScreen : AppCompatActivity() {
             editPetCardPermissionListener?.onPermissionGranted(true, requestCode, grantResults)
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    private fun handleError(throwable: Throwable?) {
+
+        var errorMessage: String = ""
+        var errorTitle = ""
+
+        try {
+            val errorResponse =
+                Gson().fromJson(throwable?.message, CommonResponse::class.java)
+            if (throwable is ConnectException) {
+                errorMessage = getString(R.string.error_no_connection)
+            } else if (errorResponse != null) {
+
+                when (errorResponse.errorMessage) {
+                    Constants.error_user_deactivated -> {
+                        errorMessage = getString(R.string.msg_inactive_account)
+                    }
+                    else -> {
+                        errorMessage = getString(R.string.error_common)
+                    }
+                }
+            } else {
+                errorMessage = getString(R.string.error_common)
+            }
+        } catch (e: JSONException) {
+            errorMessage = getString(R.string.error_common)
+        }
+
+        showToast(this, errorMessage)
+        viewModel.progressBarVisibility.value = View.GONE
     }
 }

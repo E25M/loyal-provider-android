@@ -81,6 +81,10 @@
     <!-- settings screen -->
     <string name="hint_search_facility">Search facility…</string>
     <string name="txt_select_facility">Select Your Facility</string>
+    <string name="txt_screen_timeout">Screen Timeout</string>
+    <string name="txt_screen_timeout_no_auto_logout">No Auto Logout</string>
+    <string name="txt_screen_timeout_never">Never</string>
+    <string name="txt_screen_timeout_2_min">2 minutes</string>
     <string name="btn_name_apply">Apply</string>
     <string name="txt_confirm_application">Are you sure you want to confirm setting
         up Loyal Tablet Application for</string>

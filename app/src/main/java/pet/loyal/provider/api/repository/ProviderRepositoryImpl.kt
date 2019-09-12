@@ -326,4 +326,32 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
         return saveFacilityResponse
     }
+
+    override fun logOut(token: String): LiveData<CommonBaseResponse> {
+        val logoutResponse = MutableLiveData<CommonBaseResponse>()
+        val call = apiService.logOut(getRequestHeaders(token))
+
+        val baseResponse = CommonBaseResponse()
+
+        call.enqueue(object : Callback<CommonResponse> {
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.commonResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                logoutResponse.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                logoutResponse.value = baseResponse
+            }
+        })
+        return logoutResponse
+    }
 }
