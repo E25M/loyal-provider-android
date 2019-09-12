@@ -16,6 +16,7 @@ class HomeScreenViewModel : ViewModel() {
     var progressBarVisibility = MutableLiveData<Int>()
     var logoutResponse: MediatorLiveData<CommonBaseResponse>
     var providerRepository: ProviderRepository
+    var logo = MutableLiveData<String>()
 
     init {
         toolbarVisibility.value = View.VISIBLE

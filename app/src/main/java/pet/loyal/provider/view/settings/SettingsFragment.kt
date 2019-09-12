@@ -24,6 +24,7 @@ import pet.loyal.provider.model.Facility
 import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.util.isConnected
 import pet.loyal.provider.util.showToast
+import pet.loyal.provider.view.home.HomeScreen
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
@@ -221,6 +222,11 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
         selected = facility
         selectedId = facility.id
         viewModel.selectedFacility.value = facility.displayName
+
+        if (activity is HomeScreen){
+            val activity = activity as HomeScreen
+            activity.loadLogo()
+        }
     }
 
 

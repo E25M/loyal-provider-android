@@ -21,6 +21,7 @@ class Constants {
         const val data_facility_phone = "user_facility_phone"
         const val data_facility_name = "user_facility_name"
         const val data_facility_id = "user_facility_id"
+        const val data_facility_logo = "user_facility_logo"
 
         const val data_timeout_type = "screen_timeout_type"
 
@@ -86,7 +87,8 @@ class Constants {
 
         const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
         const val url_cloudinary_pet_profile = "https://res.cloudinary.com/dktj00acj/image/upload/pet/profile/"
-
+        const val url_cloudinary = "https://res.cloudinary.com/dktj00acj/image/upload/"
+        const val directory_user = "profile/"
         //        pet cards sort types
         const val sort_type_parent = "parent"
         const val sort_type_patient = "patient"

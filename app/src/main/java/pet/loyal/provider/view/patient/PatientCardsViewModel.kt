@@ -24,6 +24,7 @@ class PatientCardsViewModel : ViewModel() {
     var phaseListResponse: MediatorLiveData<GetPhaseListBaseResponse>
     var collapseIconVisibility: MutableLiveData<Int> = MutableLiveData()
     var expandIconVisibility: MutableLiveData<Int> = MutableLiveData()
+    var selectedFacilityLogo = MutableLiveData<String>()
     lateinit var filters: ArrayList<Int>
 
     init {
