@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import pet.loyal.provider.R
 import pet.loyal.provider.model.Facility
 import pet.loyal.provider.model.LoginUser
-import java.nio.file.attribute.UserDefinedFileAttributeView
 
 class PreferenceManager(context: Context) {
 
