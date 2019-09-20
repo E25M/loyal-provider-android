@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.layout_home_screen.*
+import kotlinx.android.synthetic.main.layout_patient_cards.*
 import org.json.JSONException
 import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
@@ -84,6 +86,27 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
+    fun expandToolbar(view: View) {
+//        expand(toolbar_home_screen, 200, 80)
+        viewModel.collapseIconVisibility.value = View.VISIBLE
+        viewModel.expandIconVisibility.value = View.GONE
+        viewModel.toolbarVisibility.value = View.VISIBLE
+    }
+
+
+    fun collapseToolbar(view: View) {
+        if (toolbar_home_screen.height == 0) {
+//            expand(toolbar_home_screen, 200, 80)
+        } else {
+//            collapse(toolbar_home_screen, 200, 0)
+            viewModel.collapseIconVisibility.value = View.GONE
+            viewModel.expandIconVisibility.value = View.VISIBLE
+
+            viewModel.toolbarVisibility.value = View.GONE
+        }
+
+    }
+
     fun navigateToHome(view: View) {
         loadHomeFragment(Constants.fragment_type_home)
     }
@@ -114,22 +137,27 @@ class HomeScreen : AppCompatActivity() {
         return when (type) {
             Constants.fragment_type_home -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
+                resetToolbar(false)
                 MainMenuFragment()
             }
             Constants.fragment_type_pet_cards -> {
                 viewModel.toolbarVisibility.value = View.GONE
+                resetToolbar(false)
                 PatientCardsFragment()
             }
             Constants.fragment_type_settings -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
+                resetToolbar(false)
                 SettingsFragment()
             }
             Constants.fragment_type_parent_sign_up -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
+                resetToolbar(true)
                 SelfInviteFragment()
             }
             else -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
+                resetToolbar(false)
                 MainMenuFragment()
             }
         }
@@ -166,6 +194,15 @@ class HomeScreen : AppCompatActivity() {
             else -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
             }
+        }
+    }
+
+    private fun resetToolbar(reset: Boolean) {
+        if (!reset) {
+            viewModel.expandIconVisibility.value = View.GONE
+            viewModel.collapseIconVisibility.value = View.GONE
+        } else {
+            viewModel.collapseIconVisibility.value = View.VISIBLE
         }
     }
 
@@ -217,7 +254,7 @@ class HomeScreen : AppCompatActivity() {
     }
 
     fun loadPatientCardsFragment() {
-        if (!preferenceManager.facilitySelected()) {
+        if (preferenceManager.facilitySelected()) {
             changeFragment(Constants.fragment_type_pet_cards)
         } else {
             showToast(this, getString(R.string.msg_no_facility_selected))

@@ -11,39 +11,40 @@
     <application
             android:name=".LoyalProviderApp"
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/ic_loyal"
             android:label="@string/app_name"
+            android:largeHeap="true"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:largeHeap="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
         <activity
                 android:name=".view.home.HomeScreen"
                 android:screenOrientation="landscape"
-                android:theme="@style/AppThemeBlue"/>
+                android:theme="@style/AppThemeBlue" />
         <activity
                 android:name=".view.login.LoginActivity"
-                android:screenOrientation="landscape"/>
+                android:screenOrientation="landscape" />
 
         <service android:name=".services.DownloadService" />
         <activity
                 android:name=".view.splash.SplashActivity"
-                android:screenOrientation="landscape"
-                android:launchMode="singleTask">
+                android:launchMode="singleTask"
+                android:screenOrientation="landscape">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
                 android:name="io.fabric.ApiKey"
-                android:value="480b731947cac89a8ce7d8a8641550cad1faecdd"/>
+                android:value="480b731947cac89a8ce7d8a8641550cad1faecdd" />
         <meta-data
                 android:name="CLOUDINARY_URL"
-                android:value="cloudinary://@dktj00acj"/>
+                android:value="cloudinary://@dktj00acj" />
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="480b731947cac89a8ce7d8a8641550cad1faecdd" />

@@ -96,7 +96,7 @@ class PreferenceManager(context: Context) {
         return sharedPreferences.getString(Constants.data_facility_id, "default")
     }
 
-    fun getfacilityLogo() : String {
+    fun getfacilityLogo(): String {
         return sharedPreferences.getString(Constants.data_facility_logo, "-")
     }
 
