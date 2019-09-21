@@ -50,7 +50,16 @@
                     style="@style/textViewStyleExtraSmall"
                     app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"/>
+                    app:layout_constraintEnd_toStartOf="@id/btnCamera"/>
+
+            <ImageView android:id="@+id/btnCamera"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_add_photo"
+                    app:layout_constraintStart_toEndOf="@id/txtMessage"
+                    app:layout_constraintTop_toTopOf="@id/txtMessage"
+                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"
+                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
 
             <ImageButton android:id="@+id/btnDropDown"
                     android:layout_width="wrap_content"
@@ -58,7 +67,7 @@
                     android:padding="@dimen/margin_8"
                     android:src="@drawable/ic_drop_down_black"
                     android:background="@android:color/transparent"
-                    app:layout_constraintStart_toEndOf="@id/txtMessage"
+                    app:layout_constraintStart_toEndOf="@id/btnCamera"
                     app:layout_constraintTop_toTopOf="@id/txtMessage"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
