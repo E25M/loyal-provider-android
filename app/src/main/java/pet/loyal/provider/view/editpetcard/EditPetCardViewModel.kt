@@ -23,6 +23,7 @@ class EditPetCardViewModel : ViewModel() {
     private var providerRepository: ProviderRepository =
         RepositoryProvider.provideProviderRepository()
     var liveProgressDialog : MutableLiveData<Int> = MutableLiveData()
+    var liveProgressPercentage : MutableLiveData<Int> = MutableLiveData()
     var petCardResponse: MediatorLiveData<PetCardBaseResponse> = MediatorLiveData()
     var savePTBMessageResponse: MediatorLiveData<SavePTBMessageBaseResponse> = MediatorLiveData()
 
@@ -33,9 +34,11 @@ class EditPetCardViewModel : ViewModel() {
     val liveColor = MutableLiveData<Drawable>()
     val livePhaseColorDrawable = MutableLiveData<Drawable>()
     val livePetImage = MutableLiveData<String>()
+    val livePercentage = MutableLiveData<String>()
 
     init {
         liveProgressDialog.value = View.GONE
+        liveProgressPercentage.value = View.GONE
     }
 
     fun getPetCardById(appointmentId: String, token: String): MutableLiveData<PetCardBaseResponse>{

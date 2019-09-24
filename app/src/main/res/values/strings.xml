@@ -1,7 +1,7 @@
-<resources>
+<resource>
 
     <string name="txt_loyal_inc">2019 Loyal Pet, Inc.</string>
-    <string name="text_sign_up_for_loyal">Sign-Up for Loyal</string>
+    <string name="text_sign_up_for_loyal">Sign-up for Loyal</string>
     <string name="text_self_invite_description">Track your pet\'s care at our hospital</string>
     <string name="btn_name_invite">Invite</string>
 
@@ -65,7 +65,7 @@
     <string name="text_take_a_photo">Take a photo</string>
     <string name="text_choose_a_photo">Choose a photo</string>
     <string name="text_add_custom_message">Add Custom Message</string>
-
+    <string name="txt_empty"></string>
 
     <string name="error_upload_failed">Upload failed</string>
     <string name="error_no_selected_ptb_message">Please select at least one message to proceed</string>
@@ -103,4 +103,4 @@
     <!--helpscout-->
     <string name="help_scout_beacon_id">70c6d9e2-fdab-4049-8f1a-7ee15d60e478</string>
     <string name="text_10_photos_limit">You can add only 10 photos..</string>
-</resources>
+</resource>

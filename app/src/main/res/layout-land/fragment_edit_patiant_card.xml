@@ -95,7 +95,7 @@
                         android:orientation="vertical"
                         android:background="@color/bg_state_change_button_green"
                         android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@id/txtHospitalType"
+                        app:layout_constraintTop_toBottomOf="@id/imgPetProfile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/layoutNext">
@@ -196,6 +196,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:visibility="@{viewModel.liveProgressDialog}"
                     app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView android:id="@+id/txtProgressPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_large"
+                    android:textColor="@color/btn_color_blue"
+                    android:text="@{viewModel.livePercentage}"
+                    android:visibility="@{viewModel.liveProgressPercentage}"
+                    app:layout_constraintTop_toBottomOf="@id/progressbar"
+                    app:layout_constraintStart_toStartOf="@id/progressbar"
+                    app:layout_constraintEnd_toEndOf="@id/progressbar"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
