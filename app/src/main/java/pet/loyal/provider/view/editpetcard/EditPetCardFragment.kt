@@ -91,6 +91,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private var customMessageId = 0
     private lateinit var appointmentId: String
     private var movingPhase = 0
+    private var uploadedImageCount = 0
 
     companion object {
         fun newInstance() = EditPetCardFragment()
@@ -256,6 +257,15 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
+    private fun getAllImageCount(): Int{
+        var count = 0
+        imageGalleryList.forEach {
+            count += it.value.size
+        }
+
+        return count
+    }
+
     private fun loadPhaseChangeDialog(phaseList: ArrayList<Phase>){
         val phaseListDialogFragment = PhaseListDialogFragment()
         val bundle = Bundle()
@@ -372,6 +382,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }
                 }
                 viewModel.liveProgressDialog.value = View.GONE
+                viewModel.liveProgressPercentage.value = View.GONE
             }
         })
     }
@@ -524,6 +535,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun uploadPhoto() {
 
         viewModel.liveProgressDialog.value = View.VISIBLE
+        viewModel.liveProgressPercentage.value = View.VISIBLE
 
         val publicId = "${Calendar.getInstance().timeInMillis}_${preferenceManager.getUserId()}"
         val imageUri = imageGalleryList[imageGalleryList.keys.elementAt(uploadingMessageIdPosition)]?.get(uploadingImagePosition)!!
@@ -556,9 +568,14 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
                             uploadPhoto()
                         }
+
+                        uploadedImageCount ++
                     }
 
-                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {}
+                    override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
+                        viewModel.livePercentage.value = ((uploadedImageCount*100/getAllImageCount())
+                                + ((bytes*(100/getAllImageCount())/totalBytes))).toString() + "%"
+                    }
 
                     override fun onReschedule(requestId: String?, error: ErrorInfo?) {}
 
@@ -752,20 +769,26 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun showUpdateConfirmPopup(context: Context, message: String, title: String) {
 
+        var timer:CountDownTimer? = null
         val aDialog = AlertDialog.Builder(context)
             .setMessage(message)
             .setTitle(title)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 activity!!.onBackPressed()
+                if (timer != null){
+                    timer!!.cancel()
+                }
             }.create()
-        aDialog.show()
 
-        object : CountDownTimer(1500, 1500){
+        timer = object : CountDownTimer(1500, 1500){
             override fun onFinish() {
                 activity!!.onBackPressed()
                 aDialog.dismiss()
             }
             override fun onTick(millisUntilFinished: Long) {}
-        }.start()
+        }
+
+        aDialog.show()
+        timer.start()
     }
 }

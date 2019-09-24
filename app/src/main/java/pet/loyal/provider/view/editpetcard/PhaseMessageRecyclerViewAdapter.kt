@@ -149,13 +149,34 @@ class PhaseMessageRecyclerViewAdapter(
                     viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
 
                 }else if (itemPhaseMessage.editable && itemPhaseMessage.control != null){
+
+                    when(itemPhaseMessage.control){
+
+                        "timePicker" -> {
+                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
+                                itemPhaseMessage.control!!, "<SELECT TIME>")
+                            itemPhaseMessage.control = "<SELECT TIME>"
+                        }
+                        "dropDown" -> {
+                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
+                                itemPhaseMessage.control!!, "<PLEASE SELECT>")
+                            itemPhaseMessage.control = "<PLEASE SELECT>"
+                        }
+                        "textField" -> {
+                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
+                                itemPhaseMessage.control!!, "<ENTER VALUE>")
+                            itemPhaseMessage.control = "<ENTER VALUE>"
+                        }
+                    }
+
                     message = itemPhaseMessage.message
 
                     val spannable = SpannableString(message)
-                    val indexes = getIndexes(message, itemPhaseMessage.control)
+                    val indexes = getIndexes(message, itemPhaseMessage.control!!)
 
                    when(itemPhaseMessage.control){
-                       "timePicker" -> {
+
+                       "<SELECT TIME>" -> {
                            var count = 0
                            indexes.forEach { _ ->
                                spannable.setSpan(
@@ -164,17 +185,17 @@ class PhaseMessageRecyclerViewAdapter(
                                             showTimePicker(viewPhaseMessage.txtMessage.context,
                                                 message,
                                                 viewPhaseMessage.txtMessage,
-                                                itemPhaseMessage.control, itemPhaseMessage._id)
+                                                itemPhaseMessage.control!!, itemPhaseMessage._id)
                                        }
                                    },
                                    indexes[count], indexes[count] +
-                                           itemPhaseMessage.control.length,
+                                           itemPhaseMessage.control!!.length,
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
                        }
 
-                       "dropDown" -> {
+                       "<PLEASE SELECT>" -> {
                            val values = itemPhaseMessage.value
                            var valueList = ArrayList<String>()
                            if (values != null) {
@@ -193,19 +214,19 @@ class PhaseMessageRecyclerViewAdapter(
                                            ViewDialog().showListDialog(widget.context,
                                                message,
                                                valueList,
-                                               itemPhaseMessage.control,
+                                               itemPhaseMessage.control!!,
                                                viewPhaseMessage.txtMessage,
                                                this@PhaseMessageRecyclerViewAdapter, itemPhaseMessage._id, position)
                                        }
                                    },
                                    indexes[count], indexes[count] +
-                                           itemPhaseMessage.control.length,
+                                           itemPhaseMessage.control!!.length,
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
                        }
 
-                       "textField" -> {
+                       "<ENTER VALUE>" -> {
                            val placeHolders = itemPhaseMessage.placeholder
                            var placeHolderList = ArrayList<String>()
                            if (placeHolders != null) {
@@ -222,14 +243,14 @@ class PhaseMessageRecyclerViewAdapter(
                                val placeHolder = placeHolderList[count]
                                val countLocal = count
                                val indexStart = indexes[count]
-                               val indexEnd = indexes[count] + itemPhaseMessage.control.length
+                               val indexEnd = indexes[count] + itemPhaseMessage.control!!.length
                                val messageLocal = message
                                val clickableSpan = object : ClickableSpan(){
                                    override fun onClick(widget: View) {
                                        ViewDialog().showDialog(widget.context,
                                            messageLocal,
                                            "",
-                                           itemPhaseMessage.control,
+                                           itemPhaseMessage.control!!,
                                            placeHolder,
                                            indexStart,
                                            viewPhaseMessage.txtMessage,
@@ -238,7 +259,9 @@ class PhaseMessageRecyclerViewAdapter(
                                    }
                                }
 
-                               spannableList.add(pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, itemPhaseMessage.control))
+                               spannableList.add(pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan,
+                                   itemPhaseMessage.control!!
+                               ))
                                spannable.setSpan(clickableSpan, indexStart, indexEnd,
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )

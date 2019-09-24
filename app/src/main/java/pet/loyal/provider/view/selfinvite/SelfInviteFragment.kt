@@ -18,8 +18,6 @@ import pet.loyal.provider.api.responses.SelfInviteDataResponse
 import pet.loyal.provider.databinding.FragmentParentSelfInviteBinding
 import pet.loyal.provider.util.*
 import pet.loyal.provider.view.login.LoginActivity
-import android.os.PowerManager
-import android.content.Context.POWER_SERVICE
 import android.annotation.SuppressLint
 import pet.loyal.provider.R
 
@@ -60,7 +58,6 @@ class SelfInviteFragment : Fragment() {
         btnSelfInvite?.setOnClickListener {
             sendSelfInvitation(false)
         }
-
     }
 
     private fun setObservers(){
@@ -75,16 +72,18 @@ class SelfInviteFragment : Fragment() {
                         if (signInResponse.statusCode == 401) {
                             redirectToLogin()
                         }else if (signInResponse.statusCode == 400
-                            && signInResponse.errorMessage == Constants.self_invite_parent_already_exist_inactive){
+                            && signInResponse.errorMessage ==
+                            Constants.self_invite_parent_already_exist_inactive){
                             showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                 getString(R.string.text_info))
                         }else{
-                            showPopup(activity!!, selfInviteResponse.throwable?.message!!, getString(R.string.text_info))
+                            showPopup(activity!!, signInResponse.errorMessage!!, getString(R.string.text_info))
                         }
                     } else {
                         showPopup(activity!!, selfInviteResponse.throwable?.message!!, getString(R.string.text_info))
                     }
                 }else if(selfInviteResponse.selfInviteResponse != null){
+                    selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
                     showSuccessPopup(selfInviteResponse.selfInviteResponse?.data)
                 }
             }

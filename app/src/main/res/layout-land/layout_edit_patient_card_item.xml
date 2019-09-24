@@ -47,6 +47,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:textColorLink="@color/btn_color_blue"
                     style="@style/textViewStyleExtraSmall"
                     app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
                     app:layout_constraintTop_toTopOf="parent"

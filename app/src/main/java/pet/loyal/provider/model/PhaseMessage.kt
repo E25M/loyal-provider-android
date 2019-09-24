@@ -13,7 +13,7 @@ data class PhaseMessage(@SerializedName("phaseMessageId") var phaseMessageId:Str
                         @SerializedName("dateTime") var dateTime:String?,
                         @SerializedName("gallery") var imageGallery: ArrayList<Uri>?,
                         var messageSpan: Spannable?,
-                        val control: String?,
+                        var control: String?,
                         val controlMessage: String?,
                         val value: String?,
                         val placeholder: String?,
