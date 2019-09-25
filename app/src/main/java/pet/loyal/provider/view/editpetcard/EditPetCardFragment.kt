@@ -141,9 +141,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
 
         selectedPhotoFile!!.createNewFile()
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         selectedPhotoUri = FileProvider.getUriForFile(activity!!,
             BuildConfig.APPLICATION_ID + ".provider", selectedPhotoFile!!)
+        intent.putExtra("outputX", 1920)
+        intent.putExtra("outputY", 1080)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, selectedPhotoUri)
 
         startActivityForResult(intent, REQUEST_TAKE_PICTURE)
@@ -535,7 +537,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun uploadPhoto() {
 
         viewModel.liveProgressDialog.value = View.VISIBLE
-        viewModel.liveProgressPercentage.value = View.VISIBLE
+//        viewModel.liveProgressPercentage.value = View.VISIBLE
 
         val publicId = "${Calendar.getInstance().timeInMillis}_${preferenceManager.getUserId()}"
         val imageUri = imageGalleryList[imageGalleryList.keys.elementAt(uploadingMessageIdPosition)]?.get(uploadingImagePosition)!!
@@ -544,7 +546,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             MediaManager.get().upload(imageUri)
                 .option("public_id", publicId)
                 .option("folder", "newsfeed/")
-                .unsigned(Constants.upload_preset)
+                .unsigned(BuildConfig.CLOUDINARY_PRESET)
                 .callback(object : UploadCallback {
 
                     override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
@@ -573,8 +575,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }
 
                     override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
-                        viewModel.livePercentage.value = ((uploadedImageCount*100/getAllImageCount())
-                                + ((bytes*(100/getAllImageCount())/totalBytes))).toString() + "%"
+//                        viewModel.livePercentage.value = ((uploadedImageCount*100/getAllImageCount())
+//                                + ((bytes*(100/getAllImageCount())/totalBytes))).toString() + "%"
                     }
 
                     override fun onReschedule(requestId: String?, error: ErrorInfo?) {}

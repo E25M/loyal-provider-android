@@ -43,7 +43,7 @@
                 android:value="480b731947cac89a8ce7d8a8641550cad1faecdd"/>
         <meta-data
                 android:name="CLOUDINARY_URL"
-                android:value="cloudinary://@dktj00acj"/>
+                android:value="@string/cloudinary_username"/>
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="480b731947cac89a8ce7d8a8641550cad1faecdd" />

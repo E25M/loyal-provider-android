@@ -1,5 +1,7 @@
 package pet.loyal.provider.util
 
+import pet.loyal.provider.BuildConfig
+
 class Constants {
 
     companion object {
@@ -85,9 +87,9 @@ class Constants {
         const val folder_loyal = "/Loyal"
         const val captured_pic_name = "captured_pic_name"
 
-        const val url_cloudinary_news_feed = "https://res.cloudinary.com/dktj00acj/image/upload/newsfeed/"
-        const val url_cloudinary_pet_profile = "https://res.cloudinary.com/dktj00acj/image/upload/pet/profile/"
-        const val url_cloudinary = "https://res.cloudinary.com/dktj00acj/image/upload/"
+        const val url_cloudinary_news_feed = "https://res.cloudinary.com/${BuildConfig.CLOUDINARY_USERNAME}/image/upload/newsfeed/"
+        const val url_cloudinary_pet_profile = "https://res.cloudinary.com/${BuildConfig.CLOUDINARY_USERNAME}/image/upload/pet/profile/"
+        const val url_cloudinary = "https://res.cloudinary.com/${BuildConfig.CLOUDINARY_USERNAME}/image/upload/"
         const val directory_user = "profile/"
         //        pet cards sort types
         const val sort_type_parent = "parent"

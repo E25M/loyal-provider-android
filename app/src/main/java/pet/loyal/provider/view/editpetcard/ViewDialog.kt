@@ -40,7 +40,7 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
             dialog.window!!.setLayout(width, height)
         }
 
-        val textTitle = dialog.findViewById(R.id.txtTitle) as TextView
+//        val textTitle = dialog.findViewById(R.id.txtTitle) as TextView
 
         val textContact = dialog.findViewById(R.id.txtContact) as TextInputEditText
         textContact.hint = placeHolder

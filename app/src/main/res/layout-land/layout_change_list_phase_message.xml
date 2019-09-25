@@ -6,16 +6,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
-                                                       android:padding="@dimen/margin_8">
-    <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
-            style="@style/textViewStyleExtraSmall"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+                                                       android:paddingStart="@dimen/margin_8"
+                                                        android:paddingEnd="@dimen/margin_8">
+<!--    <TextView-->
+<!--            android:id="@+id/txtTitle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/textViewStyleExtraSmall"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listViewChangeList"
