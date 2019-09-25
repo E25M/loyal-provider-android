@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import pet.loyal.provider.R
 import pet.loyal.provider.model.Facility
 import pet.loyal.provider.model.LoginUser
-import java.nio.file.attribute.UserDefinedFileAttributeView
 
 class PreferenceManager(context: Context) {
 
@@ -96,7 +95,7 @@ class PreferenceManager(context: Context) {
         return sharedPreferences.getString(Constants.data_facility_id, "default")
     }
 
-    fun getfacilityLogo() : String {
+    fun getfacilityLogo(): String {
         return sharedPreferences.getString(Constants.data_facility_logo, "-")
     }
 

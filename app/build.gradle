@@ -36,13 +36,13 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.7"
+            versionName "0.0.9"
             resValue "string", "app_name", "Provider QA"
         }
         dev {
             applicationIdSuffix = ".dev"
             buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
-//            buildConfigField "String", 'BASE_URL', "\"http://192.168.1.45:3000/v1/tablet/\""
+//          buildConfigField "String", 'BASE_URL', "\"http://192.168.1.45:3000/v1/tablet/\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
@@ -72,7 +72,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.2"
+            versionName "0.0.3"
             resValue "string", "app_name", "Provider Demo"
         }
     }

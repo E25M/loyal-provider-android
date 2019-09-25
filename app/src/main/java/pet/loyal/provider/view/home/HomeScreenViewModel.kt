@@ -17,12 +17,16 @@ class HomeScreenViewModel : ViewModel() {
     var logoutResponse: MediatorLiveData<CommonBaseResponse>
     var providerRepository: ProviderRepository
     var logo = MutableLiveData<String>()
+    var collapseIconVisibility: MutableLiveData<Int> = MutableLiveData()
+    var expandIconVisibility: MutableLiveData<Int> = MutableLiveData()
 
     init {
         toolbarVisibility.value = View.VISIBLE
         progressBarVisibility.value = View.GONE
         logoutResponse = MediatorLiveData()
         providerRepository = RepositoryProvider.provideProviderRepository()
+        collapseIconVisibility.value = View.VISIBLE
+        expandIconVisibility.value = View.GONE
     }
 
     fun logOut(token: String): LiveData<CommonBaseResponse> {
