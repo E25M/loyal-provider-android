@@ -319,6 +319,9 @@ class PhaseMessageRecyclerViewAdapter(
                 if (itemPhaseMessage.imageGallery.isNullOrEmpty()) {
                     collapseView(viewPhaseMessage, viewHolder)
                 }
+                if (itemPhaseMessage.isSelected){
+                    expandView(viewPhaseMessage, viewHolder)
+                }
                 viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
             }
             PhaseMessage.Type.CUSTOM_MESSAGE -> {

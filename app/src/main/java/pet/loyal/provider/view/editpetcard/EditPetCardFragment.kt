@@ -144,8 +144,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         selectedPhotoUri = FileProvider.getUriForFile(activity!!,
             BuildConfig.APPLICATION_ID + ".provider", selectedPhotoFile!!)
-        intent.putExtra("outputX", 1920)
-        intent.putExtra("outputY", 1080)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, selectedPhotoUri)
 
         startActivityForResult(intent, REQUEST_TAKE_PICTURE)
@@ -628,7 +626,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         if (requestCode == REQUEST_TAKE_PICTURE && resultCode == Activity.RESULT_OK){
             addImageUriToGallery(selectedPhotoUri)
             capturedImageCount ++
-//            resetOrientation(selectedPhotoFile)
+            resetOrientation(selectedPhotoFile)
         }
         showAddedImage()
     }
