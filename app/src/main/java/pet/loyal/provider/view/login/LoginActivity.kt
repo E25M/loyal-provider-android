@@ -55,8 +55,8 @@ class LoginActivity : AppCompatActivity() {
     private fun saveUserData(loginResponse: LoginResponse) {
         preferenceManager.saveLoginToken(loginResponse.data.token)
         preferenceManager.saveUser(loginResponse.data.user)
-        Log.i("Token", preferenceManager.getLoginToken())
-        Log.i("DeviceId", preferenceManager.getDeviceId())
+//        Log.i("Token", preferenceManager.getLoginToken())
+//        Log.i("DeviceId", preferenceManager.getDeviceId())
         invokeIntent(Intent(this, HomeScreen::class.java))
     }
 
