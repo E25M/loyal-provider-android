@@ -39,6 +39,7 @@ import pet.loyal.provider.util.*
 import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.login.LoginActivity
 import java.io.File
+import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -70,6 +71,8 @@ class SplashActivity : AppCompatActivity() {
             setObservers()
             splashViewModel.getAppVersion()
         }
+
+        generateDeviceId()
     }
 
     override fun onBackPressed() {
@@ -329,5 +332,12 @@ class SplashActivity : AppCompatActivity() {
                 downloadTheFile()
             }
         }
+    }
+
+    private fun generateDeviceId() {
+        if (preferenceManager.getDeviceId() == "default" || preferenceManager.getDeviceId() == ""){
+            preferenceManager.setDeviceId(UUID.randomUUID().toString())
+        }
+//        Log.i("Device Id", preferenceManager.getDeviceId())
     }
 }
