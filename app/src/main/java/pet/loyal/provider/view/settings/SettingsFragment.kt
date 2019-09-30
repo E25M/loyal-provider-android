@@ -68,7 +68,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
 
                 if (selectedId != null) {
                     val iterator = facilityList?.iterator()
-                    while (iterator?.hasNext()!!) {
+                    while (iterator.hasNext()) {
                         val facility = iterator.next()
                         facility.selected = selectedId.equals(facility.name, true)
                     }
@@ -230,7 +230,7 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
     }
 
 
-    fun showApplyConfirmation(facility: Facility) {
+    private fun showApplyConfirmation(facility: Facility) {
         val builder = AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
         builder.setMessage(getString(R.string.txt_confirm_application) + " " + facility.displayName + " ?")
         builder.setPositiveButton(

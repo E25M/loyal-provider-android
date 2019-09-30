@@ -32,6 +32,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3Client
+import pet.loyal.provider.LoyalProviderApp
 import pet.loyal.provider.R
 import pet.loyal.provider.databinding.ActivitySplashBinding
 import pet.loyal.provider.util.*
@@ -56,9 +57,19 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
-        initDataBinding()
-        setObservers()
-        splashViewModel.getAppVersion()
+        if (LoyalProviderApp.startedApp){
+            if (preferenceManager.isAuthenticated()) {
+//                user has logged in. navigate to the home screen
+                invokeIntent(Intent(this, HomeScreen::class.java))
+            } else {
+//                user hasn't logged in . navigate to the login screen
+                invokeIntent(Intent(this, LoginActivity::class.java))
+            }
+        }else {
+            initDataBinding()
+            setObservers()
+            splashViewModel.getAppVersion()
+        }
     }
 
     override fun onBackPressed() {

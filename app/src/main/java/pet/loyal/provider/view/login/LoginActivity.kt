@@ -19,6 +19,8 @@ import pet.loyal.provider.util.showToast
 import java.net.ConnectException
 import android.text.InputFilter
 import android.util.Log
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.layout_login.*
 import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.selfinvite.SelfInviteFragment

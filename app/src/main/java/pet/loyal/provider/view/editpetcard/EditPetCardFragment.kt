@@ -144,8 +144,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         selectedPhotoUri = FileProvider.getUriForFile(activity!!,
             BuildConfig.APPLICATION_ID + ".provider", selectedPhotoFile!!)
-        intent.putExtra("outputX", 1920)
-        intent.putExtra("outputY", 1080)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, selectedPhotoUri)
 
         startActivityForResult(intent, REQUEST_TAKE_PICTURE)
@@ -373,7 +371,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 && signInResponse.errorMessage == Constants.self_invite_parent_already_exist_inactive){
                                 showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                     getString(R.string.text_info))
-                            }else{
+                            }else if (signInResponse.statusCode == 400
+                                && signInResponse.errorMessage == "PtbMessage validation failed: message: Path `message` is required."){
+                                showPopup(activity!!, "Please enter message.",
+                                    getString(R.string.text_info))
+                            } else{
                                 showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                             }
                         } else {
@@ -628,7 +630,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         if (requestCode == REQUEST_TAKE_PICTURE && resultCode == Activity.RESULT_OK){
             addImageUriToGallery(selectedPhotoUri)
             capturedImageCount ++
-//            resetOrientation(selectedPhotoFile)
+            resetOrientation(selectedPhotoFile)
         }
         showAddedImage()
     }

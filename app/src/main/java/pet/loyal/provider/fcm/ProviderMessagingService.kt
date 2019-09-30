@@ -10,6 +10,7 @@ class ProviderMessagingService : FirebaseMessagingService() {
     lateinit var preferenceManager: PreferenceManager
 
     override fun onNewToken(token: String?) {
+
        if (token != null){
            preferenceManager = PreferenceManager(this)
            preferenceManager.setPushToken(token)

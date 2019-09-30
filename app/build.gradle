@@ -33,6 +33,7 @@ android {
         qa {
             applicationIdSuffix = ".qa"
             buildConfigField "String", 'BASE_URL', "\"http://18.216.161.214:81/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"http://18.216.161.214:81\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
@@ -42,6 +43,7 @@ android {
         dev {
             applicationIdSuffix = ".dev"
             buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81\""
 //          buildConfigField "String", 'BASE_URL', "\"http://192.168.1.45:3000/v1/tablet/\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
@@ -52,6 +54,7 @@ android {
         staging {
             applicationIdSuffix = ".staging"
             buildConfigField "String", 'BASE_URL', "\"https://api-provider.staging.loyal.pet/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.staging.loyal.pet\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
@@ -60,6 +63,7 @@ android {
         }
         prod {
             buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
@@ -69,6 +73,7 @@ android {
         demo {
             applicationIdSuffix = ".demo"
             buildConfigField "String", 'BASE_URL', "\"http://35.166.213.108:81/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"http://35.166.213.108:81\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
@@ -135,4 +140,7 @@ dependencies {
 
     implementation "com.helpscout:beacon-core:$beaconVersion"
     implementation "com.helpscout:beacon-ui:$beaconVersion"
+
+    //socket.io
+    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 }
