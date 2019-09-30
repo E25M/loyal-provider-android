@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.layout_home_screen.*
 import kotlinx.android.synthetic.main.layout_patient_cards.*
 import org.json.JSONException
+import pet.loyal.provider.LoyalProviderApp
 import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
 import pet.loyal.provider.util.*
@@ -39,6 +40,8 @@ class HomeScreen : AppCompatActivity() {
         loadLogo()
         setUpObservers()
         loadHomeFragment(Constants.fragment_type_home)
+
+        LoyalProviderApp.startedApp = true
     }
 
 
@@ -178,6 +181,7 @@ class HomeScreen : AppCompatActivity() {
                 }
             }
         }
+        LoyalProviderApp.startedApp = false
     }
 
     private fun showHideToolBar(type: Int) {

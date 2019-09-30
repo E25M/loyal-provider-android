@@ -371,7 +371,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 && signInResponse.errorMessage == Constants.self_invite_parent_already_exist_inactive){
                                 showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                     getString(R.string.text_info))
-                            }else{
+                            }else if (signInResponse.statusCode == 400
+                                && signInResponse.errorMessage == "PtbMessage validation failed: message: Path `message` is required."){
+                                showPopup(activity!!, "Please enter message.",
+                                    getString(R.string.text_info))
+                            } else{
                                 showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                             }
                         } else {

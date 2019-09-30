@@ -1,7 +1,6 @@
 package pet.loyal.provider.view.patient
 
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -10,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,10 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.layout_login.view.*
 import kotlinx.android.synthetic.main.layout_patient_cards.*
-import kotlinx.android.synthetic.main.layout_photo_gallery_item.view.*
-import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.GetPhaseListResponse
 import pet.loyal.provider.api.responses.PetTrackingBoardDataResponse
 import pet.loyal.provider.databinding.LayoutPatientCardsBinding
@@ -38,7 +32,12 @@ import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import kotlinx.android.synthetic.main.layout_settings.*
+import com.github.nkzawa.emitter.Emitter
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
+import pet.loyal.provider.BuildConfig
+import pet.loyal.provider.R
+import java.net.URISyntaxException
 
 
 /**
@@ -53,13 +52,41 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     lateinit var edittext: EditText
     var phasesLoaded = false
 
-
     lateinit var phasesList: ArrayList<Phase>
 
     var sortBy = Constants.sort_ascending
     var keyWord = ""
     var facilityId = "default"
     var sort = Constants.sort_type_parent
+
+    private lateinit var mSocket:Socket
+
+    private val onNewMessage = Emitter.Listener { args ->
+
+        activity!!.runOnUiThread {
+//            val data = args[0] as String
+//            Log.i("Data", data)
+            loadData()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        try {
+            mSocket = IO.socket(BuildConfig.SOCKET_URL)
+        }catch (ex:URISyntaxException){
+            showToast(activity!!, "Updating pet cards on real time is not working.")
+        }
+
+//        mSocket.connect()
+        mSocket.on("updateDashboard", onNewMessage)
+        mSocket.let {
+            it.connect().on(Socket.EVENT_CONNECT) {
+//                    Log.d("SignallingClient", "Socket connected!!!!!")
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -374,4 +401,10 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         loadData()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSocket.disconnect()
+        mSocket.off("updateDashboard", onNewMessage)
+    }
 }
