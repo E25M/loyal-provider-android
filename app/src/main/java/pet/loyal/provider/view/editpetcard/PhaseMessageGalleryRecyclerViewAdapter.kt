@@ -12,7 +12,7 @@ import pet.loyal.provider.util.Constants
 class PhaseMessageGalleryRecyclerViewAdapter(
     private val type:Int,
     private val messageId: String,
-    private val position: Int,
+    private val positionPhase: Int,
     private val imageList: ArrayList<Uri>?,
     private val imageItemListener: ImageItemListener
 ) :
@@ -42,6 +42,7 @@ class PhaseMessageGalleryRecyclerViewAdapter(
         var image = imageList?.get(position)
         if (image != null) {
             val imageView = viewHolder.itemBinding
+            imageView.imgSource.setImageResource(0)
             Picasso.get().load(image).resize(150, 100).centerCrop().into(imageView.imgSource)
 
             if (type == Constants.view_type_sent_message){
@@ -51,11 +52,11 @@ class PhaseMessageGalleryRecyclerViewAdapter(
             }
 
             imageView.imgSource.setOnClickListener {
-                imageItemListener.onClickImage(position, this.position, messageId)
+                imageItemListener.onClickImage(position, this.positionPhase, messageId)
             }
 
             imageView.btnDelete.setOnClickListener {
-                imageItemListener.onClickDelete(position, this.position, messageId)
+                imageItemListener.onClickDelete(position, this.positionPhase, messageId)
             }
         }
     }

@@ -98,7 +98,7 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
                 viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
                 viewPhaseMessage.mainContainer.setOnClickListener {
-                    if (viewHolder.itemBinding.mainContainer.height == 100) {
+                    if (viewHolder.itemBinding.mainContainer.height == Constants.sent_message_collapse_hight) {
                         if (itemPhaseMessage.imageGallery != null && itemPhaseMessage.imageGallery!!.size > 0) {
                             expandView(viewPhaseMessage, viewHolder)
                         }
@@ -108,7 +108,7 @@ class PhaseMessageRecyclerViewAdapter(
                 }
 
                 viewPhaseMessage.btnDropDown.setOnClickListener {
-                    if (viewHolder.itemBinding.mainContainer.height == 100) {
+                    if (viewHolder.itemBinding.mainContainer.height == Constants.sent_message_collapse_hight) {
                         if (itemPhaseMessage.imageGallery != null && itemPhaseMessage.imageGallery!!.size > 0) {
                             expandView(viewPhaseMessage, viewHolder)
                         }
@@ -279,7 +279,7 @@ class PhaseMessageRecyclerViewAdapter(
                 }
 
                 viewPhaseMessage.btnDropDown.setOnClickListener {
-                    if (viewPhaseMessage.mainContainer.height == 120) {
+                    if (viewPhaseMessage.mainContainer.height == Constants.templete_message_collapse_hight) {
                         expandView(viewPhaseMessage, viewHolder)
                     }else{
                         collapseView(viewPhaseMessage, viewHolder)
@@ -291,7 +291,7 @@ class PhaseMessageRecyclerViewAdapter(
                         itemPhaseMessage._id)
                 }
                 viewPhaseMessage.mainContainer.setOnClickListener {
-                    if (viewPhaseMessage.mainContainer.height == 120) {
+                    if (viewPhaseMessage.mainContainer.height == Constants.templete_message_collapse_hight) {
                         expandView(viewPhaseMessage, viewHolder)
                     }else{
                         collapseView(viewPhaseMessage, viewHolder)
@@ -301,6 +301,11 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener {
                         buttonView, isChecked ->
                     phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
+                }
+
+                viewPhaseMessage.btnCamera.setOnClickListener {
+                    phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto, position,
+                        itemPhaseMessage._id)
                 }
 
                 val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
@@ -321,6 +326,14 @@ class PhaseMessageRecyclerViewAdapter(
                 }
                 if (itemPhaseMessage.isSelected){
                     expandView(viewPhaseMessage, viewHolder)
+                }
+
+                if (itemPhaseMessage.canAddPhoto){
+                    viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
+                    viewPhaseMessage.btnCamera.visibility = View.VISIBLE
+                }else{
+                    viewPhaseMessage.btnAddPhoto.visibility = View.GONE
+                    viewPhaseMessage.btnCamera.visibility = View.INVISIBLE
                 }
                 viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
             }
@@ -348,7 +361,7 @@ class PhaseMessageRecyclerViewAdapter(
                 if ((itemPhaseMessage.imageGallery != null
                             && itemPhaseMessage.imageGallery!!.size > 0)
                     || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
-                    showCheckedCustomMessage(viewPhaseMessage)
+                    showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
                 }else{
                     showUncheckedCustomMessage(viewPhaseMessage)
                 }
@@ -357,7 +370,7 @@ class PhaseMessageRecyclerViewAdapter(
 
                     if (position == phaseMessagesList.size - 1) {
                         if (isChecked) {
-                            showCheckedCustomMessage(viewPhaseMessage)
+                            showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
 
                         } else {
                             showUncheckedCustomMessage(viewPhaseMessage)
@@ -367,16 +380,17 @@ class PhaseMessageRecyclerViewAdapter(
                 }
 
                 if (position != phaseMessagesList.size - 1){
-                    showCheckedCustomMessage(viewPhaseMessage)
+                    showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
                     viewPhaseMessage.btnAddMessage.visibility = View.GONE
                     viewPhaseMessage.chkBoxTicketMessage.isChecked = false
                 }else{
                     if(((itemPhaseMessage.imageGallery != null
                         && itemPhaseMessage.imageGallery!!.size > 0)
-                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty())){
-                    showCheckedCustomMessage(viewPhaseMessage)
-                    viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
-                    viewPhaseMessage.chkBoxTicketMessage.isChecked = true
+                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()))
+                    {
+                        showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
+                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                        viewPhaseMessage.chkBoxTicketMessage.isChecked = true
                     }else{
                         showUncheckedCustomMessage(viewPhaseMessage)
                         viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
@@ -451,11 +465,16 @@ class PhaseMessageRecyclerViewAdapter(
         tpd.show()
     }
 
-    private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
+    private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding, canAddPhoto:Boolean) {
         viewPhaseMessage.txtAddCustomMessage.visibility = View.GONE
         viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
         viewPhaseMessage.layoutMessage.visibility = View.VISIBLE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.VISIBLE
+        if (canAddPhoto){
+            viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
+        }else{
+            viewPhaseMessage.btnAddPhoto.visibility = View.GONE
+        }
     }
 
     private fun showUncheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
@@ -487,7 +506,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_up_black, null)
         )
-        expand(viewPhaseMessage.mainContainer, 500, 250)
+        expand(viewPhaseMessage.mainContainer, 500, Constants.templete_message_expande_hight)
     }
 
     private fun expandView(
@@ -498,7 +517,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_up_white, null)
         )
-        expand(viewHolder.itemBinding.mainContainer, 500, 240)
+        expand(viewHolder.itemBinding.mainContainer, 500, Constants.sent_message_expand_hight)
     }
 
     private fun collapseView(
@@ -509,7 +528,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_down_white, null)
         )
-        collapse(viewPhaseMessage.mainContainer, 500, 100)
+        collapse(viewPhaseMessage.mainContainer, 500, Constants.sent_message_collapse_hight)
     }
 
     private fun collapseView(
@@ -520,7 +539,7 @@ class PhaseMessageRecyclerViewAdapter(
             viewHolder.itemView.resources
                 .getDrawable(R.drawable.ic_drop_down_black, null)
         )
-        collapse(viewPhaseMessage.mainContainer, 500, 120)
+        collapse(viewPhaseMessage.mainContainer, 500, Constants.templete_message_collapse_hight)
     }
 
     override fun getItemViewType(position: Int): Int {

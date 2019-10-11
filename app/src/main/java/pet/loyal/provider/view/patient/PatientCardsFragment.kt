@@ -64,8 +64,6 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     private val onNewMessage = Emitter.Listener { args ->
 
         activity!!.runOnUiThread {
-//            val data = args[0] as String
-//            Log.i("Data", data)
             loadData()
         }
     }
@@ -180,9 +178,12 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         }
 
         img_scroll_left_pet_cards.setOnClickListener {
-            //            if (recyclerview_phases.layoutManager. < (recyclerview_phases.adapter?.itemCount - 1)) {
-//                recyclerview_phases.layoutManager?.scrollToPosition(recyclerview_phases.layoutManager.findLastCompletelyVisibleItemPosition() + 1)
-//            }
+            recyclerview_phases.smoothScrollToPosition(0)
+        }
+
+        img_scroll_right_pet_cards.setOnClickListener {
+            recyclerview_phases.smoothScrollToPosition(
+                recyclerview_phases.adapter!!.itemCount - 1)
         }
 
 
@@ -245,7 +246,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     private fun setUpGridLayoutManager() {
         recyclerview_patient_cards.layoutManager =
-            GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+            GridLayoutManager(context, 4, RecyclerView.VERTICAL, false)
         recyclerview_phases.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }

@@ -257,14 +257,14 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
-    private fun getAllImageCount(): Int{
-        var count = 0
-        imageGalleryList.forEach {
-            count += it.value.size
-        }
-
-        return count
-    }
+//    private fun getAllImageCount(): Int{
+//        var count = 0
+//        imageGalleryList.forEach {
+//            count += it.value.size
+//        }
+//
+//        return count
+//    }
 
     private fun loadPhaseChangeDialog(phaseList: ArrayList<Phase>){
         val phaseListDialogFragment = PhaseListDialogFragment()
@@ -476,14 +476,23 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 true)
                         }
 
-                        phaseMessages.add(
-                            PhaseMessage(
-                                messageTemplate._id, messageTemplate.phaseId,
-                                message, messageTemplate.editable, imageGallery,
-                                messageTemplate.control, messageTemplate.controlMessage,
-                                messageTemplate.value, messageTemplate.placeholder
+                        var messageSent = false
+
+                        petCardDataResponse.ptbSentMessages.iterator().forEach { sentMessage ->
+                            if (sentMessage.phaseMessageId == messageTemplate._id){
+                                messageSent = true
+                            }
+                        }
+                        if (!messageSent) {
+                            phaseMessages.add(
+                                PhaseMessage(
+                                    messageTemplate._id, messageTemplate.phaseId,
+                                    message, messageTemplate.editable, imageGallery,
+                                    messageTemplate.control, messageTemplate.controlMessage,
+                                    messageTemplate.value, messageTemplate.placeholder
+                                )
                             )
-                        )
+                        }
                     }
                 }
 
@@ -516,7 +525,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
                 petCardDataResponse?.appointment?.id, false)
         )
-
     }
 
     private fun showAddedImage(){
@@ -524,6 +532,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             if (phaseMessage._id == selectedMessageId){
                 phaseMessage.imageGallery = imageGalleryList[selectedMessageId]
                 phaseMessage.isSelected = true
+                phaseMessage.canAddPhoto = imageGalleryList[selectedMessageId]!!.size < 10
             }
         }
         notifyItemChange()
@@ -567,8 +576,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             if (imageGalleryList[messageId]?.size == uploadingImagePosition + 1){
                                 uploadingMessageIdPosition ++
                                 uploadingImagePosition = 0
+                            }else {
+                                uploadingImagePosition++
                             }
-                            uploadingImagePosition ++
 
                             uploadPhoto()
                         }
@@ -635,6 +645,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         showAddedImage()
     }
 
+    //Add selected image Uri to gallery list
     private fun addImageUriToGallery(uri: Uri?){
         if (uri != null){
             if (!imageGalleryList.containsKey(selectedMessageId)){
@@ -662,6 +673,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     override fun onClickDelete(positionImage: Int, position: Int, messageId: String) {
         imageGalleryList[messageId]?.removeAt(positionImage)
+        selectedMessagePosition = position
         notifyItemChange()
     }
 

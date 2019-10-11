@@ -20,7 +20,8 @@ data class PhaseMessage(@SerializedName("phaseMessageId") var phaseMessageId:Str
                         var imageIds: ArrayList<String>?,
                         var editable: Boolean,
                         var type: Type,
-                        var isSelected: Boolean){
+                        var isSelected: Boolean,
+                        var canAddPhoto: Boolean){
 
     enum class Type{SENT_MESSAGE, MESSAGE_TEMPLATE, CUSTOM_MESSAGE, PHASE_CHANGE}
 
@@ -28,23 +29,23 @@ data class PhaseMessage(@SerializedName("phaseMessageId") var phaseMessageId:Str
                 imageGallery: ArrayList<Uri>?, control: String?, controlMessage: String?,
                 value: String?, placeholder: String?) : this(null, null, id,
         phaseId, null, message, null, imageGallery, null,control, controlMessage,
-        value, placeholder, null, editable, Type.MESSAGE_TEMPLATE, false)
+        value, placeholder, null, editable, Type.MESSAGE_TEMPLATE, false, true)
 
     constructor(phaseMessageId: String?, status: String?, id: String, phaseId: Int,
                 appointmentId: String?, message: String, dateTime: String?,
                 imageGallery: ArrayList<Uri>?) : this(phaseMessageId, status, id, phaseId,
         appointmentId, message, dateTime, imageGallery, null, null, null, null,
-        null, null, false, Type.SENT_MESSAGE, false)
+        null, null, false, Type.SENT_MESSAGE, false, true)
 
     constructor(id: String, phaseId: Int, appointmentId: String?, isChecked:Boolean) : this(null,
         null, id, phaseId, appointmentId, "", null, null, null,
         null, null, null, null, null, false,
-        Type.CUSTOM_MESSAGE, isChecked)
+        Type.CUSTOM_MESSAGE, isChecked,true)
 
     constructor(message: String) : this(null,
         null, "phaseChange", 0, null, message, null,
         null, null,null, null, null, null,
-        null, false, Type.PHASE_CHANGE, false)
+        null, false, Type.PHASE_CHANGE, false,true)
 
     fun getIsCustom() : Boolean{
         if (type == Type.CUSTOM_MESSAGE){

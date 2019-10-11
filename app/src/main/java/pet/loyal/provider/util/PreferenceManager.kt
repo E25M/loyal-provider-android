@@ -88,7 +88,7 @@ class PreferenceManager(context: Context) {
         editor.putString(Constants.data_facility_name, facility.name)
         editor.putString(Constants.data_facility_phone, facility.phone)
         editor.putString(Constants.data_facility_logo, facility.logo)
-        editor.putString(Constants.data_facility_phone, facility.admin).commit()
+        editor.putString(Constants.data_facility_admin, facility.admin).commit()
     }
 
     fun getFacilityId(): String {

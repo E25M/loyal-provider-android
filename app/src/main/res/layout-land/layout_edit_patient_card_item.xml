@@ -21,8 +21,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/btn_color_blue"
                     app:layout_constraintTop_toTopOf="@id/txtMessage"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
+                    app:layout_constraintStart_toStartOf="parent"/>
 
 <!--            <com.google.android.material.textfield.TextInputLayout-->
 <!--                    android:layout_width="0dp"-->
@@ -54,26 +53,29 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btnCamera"/>
 
-            <ImageView android:id="@+id/btnCamera"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+            <ImageButton android:id="@+id/btnCamera"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="@dimen/margin_12"
                     android:src="@drawable/ic_add_photo"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"
                     app:layout_constraintStart_toEndOf="@id/txtMessage"
                     app:layout_constraintTop_toTopOf="@id/txtMessage"
-                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"
-                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
+                    app:layout_constraintEnd_toStartOf="@id/btnDropDown"/>
 
-            <ImageButton android:id="@+id/btnDropDown"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin_4"
-                    android:paddingStart="@dimen/margin_4"
-                    android:src="@drawable/ic_drop_down_black"
+            <ImageButton
+                    android:id="@+id/btnDropDown"
+                    android:layout_width="14dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="@dimen/margin_4"
                     android:background="@android:color/transparent"
-                    app:layout_constraintStart_toEndOf="@id/btnCamera"
-                    app:layout_constraintTop_toTopOf="@id/txtMessage"
+                    android:padding="@dimen/margin_8"
+                    android:src="@drawable/ic_drop_down_black"
+                    app:layout_constraintBottom_toBottomOf="@id/btnCamera"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/txtMessage"/>
+                    app:layout_constraintStart_toEndOf="@id/btnCamera"
+                    app:layout_constraintTop_toTopOf="@id/btnCamera" />
 
             <ImageButton android:id="@+id/btnAddPhoto"
                     android:layout_width="150dp"

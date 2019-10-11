@@ -21,6 +21,7 @@ class Constants {
         const val data_user_avatar = "user_avatar"
 
         const val data_facility_phone = "user_facility_phone"
+        const val data_facility_admin = "user_facility_admin"
         const val data_facility_name = "user_facility_name"
         const val data_facility_id = "user_facility_id"
         const val data_facility_logo = "user_facility_logo"
@@ -133,6 +134,11 @@ class Constants {
         const val user_type_staff = "staff"
         const val user_type_admin = "admin"
         const val user_type_super_admin = "super_admin"
+
+        const val sent_message_collapse_hight = 60
+        const val templete_message_collapse_hight = 80
+        const val sent_message_expand_hight = 240
+        const val templete_message_expande_hight = 250
 
     }
 }

@@ -37,7 +37,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.9"
+            versionName "0.0.12"
             resValue "string", "app_name", "Provider QA"
         }
         dev {
@@ -58,7 +58,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
-            versionName "1.0.0"
+            versionName "2.0.0"
             resValue "string", "app_name", "Provider Staging"
         }
         prod {

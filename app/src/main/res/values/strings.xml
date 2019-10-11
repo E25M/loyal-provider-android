@@ -73,7 +73,7 @@
     <string name="text_done">Done</string>
     <!--    main menu screen   -->
     <string name="txt_parent_sign_up">Parent Sign Up</string>
-    <string name="txt_patient_cards">Patient Cards</string>
+    <string name="txt_patient_cards">Tracking Board</string>
     <string name="txt_support">Support</string>
     <string name="txt_settings">Settings</string>
     <string name="text_character_remaining">character remaining</string>
