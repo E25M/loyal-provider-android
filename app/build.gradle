@@ -53,7 +53,7 @@ android {
         }
         staging {
             applicationIdSuffix = ".staging"
-            buildConfigField "String", 'BASE_URL', "\"https://api-provider.staging.loyal.pet/v1/tablet/\""
+            buildConfigField "String", 'BASE_URL', "\"https://api-provider-staging.loyal.pet/v1/tablet/\""
             buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.staging.loyal.pet\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""

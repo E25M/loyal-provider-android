@@ -24,6 +24,7 @@ class Constants {
         const val data_facility_name = "user_facility_name"
         const val data_facility_id = "user_facility_id"
         const val data_facility_logo = "user_facility_logo"
+        const val data_facility_admin = "user_facility_admin"
 
         const val data_timeout_type = "screen_timeout_type"
 
