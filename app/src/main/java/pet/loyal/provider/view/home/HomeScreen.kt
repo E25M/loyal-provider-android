@@ -238,7 +238,10 @@ class HomeScreen : AppCompatActivity() {
                         errorMessage = getString(R.string.msg_inactive_account)
                     }
                     else -> {
-                        errorMessage = getString(R.string.error_common)
+                        errorMessage = getString(R.string.text_session_expired)
+                        preferenceManager.deleteSession()
+                        this.finish()
+                        startActivity(Intent(this, LoginActivity::class.java))
                     }
                 }
             } else {

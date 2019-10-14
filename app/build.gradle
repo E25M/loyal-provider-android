@@ -37,14 +37,13 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.12"
+            versionName "0.0.13"
             resValue "string", "app_name", "Provider QA"
         }
         dev {
             applicationIdSuffix = ".dev"
             buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
             buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81\""
-//          buildConfigField "String", 'BASE_URL', "\"http://192.168.1.45:3000/v1/tablet/\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
@@ -58,16 +57,16 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
-            versionName "2.0.0"
+            versionName "4.0.0"
             resValue "string", "app_name", "Provider Staging"
         }
         prod {
-            buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
-            buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81\""
+            buildConfigField "String", 'BASE_URL', "\"https://api-provider.loyal.pet/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.loyal.pet\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
-            versionName "0.0.1"
+            versionName "1.0.0"
             resValue "string", "app_name", "Provider"
         }
         demo {

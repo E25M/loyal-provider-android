@@ -77,6 +77,7 @@
     <string name="txt_support">Support</string>
     <string name="txt_settings">Settings</string>
     <string name="text_character_remaining">character remaining</string>
+    <string name="text_session_expired">Session Expired</string>
 
     <!-- settings screen -->
     <string name="hint_search_facility">Search facility…</string>

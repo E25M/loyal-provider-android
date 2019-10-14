@@ -58,6 +58,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+        initDataBinding()
+
         if (LoyalProviderApp.startedApp){
             if (preferenceManager.isAuthenticated()) {
 //                user has logged in. navigate to the home screen
@@ -67,7 +69,6 @@ class SplashActivity : AppCompatActivity() {
                 invokeIntent(Intent(this, LoginActivity::class.java))
             }
         }else {
-            initDataBinding()
             setObservers()
             splashViewModel.getAppVersion()
         }

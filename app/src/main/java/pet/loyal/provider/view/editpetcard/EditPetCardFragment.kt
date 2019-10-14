@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -641,6 +642,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             addImageUriToGallery(selectedPhotoUri)
             capturedImageCount ++
             resetOrientation(selectedPhotoFile)
+        }else if (resultCode == Activity.RESULT_CANCELED){
+            return
         }
         showAddedImage()
     }
