@@ -5,6 +5,7 @@ import android.os.Bundle
 import pet.loyal.provider.R
 import pet.loyal.provider.view.editpetcard.EditPetCardFragment
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -255,6 +256,11 @@ class HomeScreen : AppCompatActivity() {
         viewModel.progressBarVisibility.value = View.GONE
     }
 
+//
+//    override fun onAttachedToWindow() {
+//        window.setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG)
+//        super.onAttachedToWindow()
+//    }save
 
     fun loadLogo() {
         viewModel.logo.value = preferenceManager.getfacilityLogo()
