@@ -67,7 +67,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
             versionName "1.0.0"
-            resValue "string", "app_name", "Provider"
+            resValue "string", "app_name", "Loyal Pet"
         }
         demo {
             applicationIdSuffix = ".demo"

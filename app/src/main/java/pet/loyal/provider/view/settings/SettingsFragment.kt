@@ -1,6 +1,7 @@
 package pet.loyal.provider.view.settings
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -15,16 +16,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.layout_dialog_facility.*
 import kotlinx.android.synthetic.main.layout_patient_cards.*
 import kotlinx.android.synthetic.main.layout_settings.*
 import pet.loyal.provider.R
+import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.databinding.LayoutSettingsBinding
 import pet.loyal.provider.model.Facility
 import pet.loyal.provider.util.PreferenceManager
 import pet.loyal.provider.util.isConnected
 import pet.loyal.provider.util.showToast
 import pet.loyal.provider.view.home.HomeScreen
+import pet.loyal.provider.view.login.LoginActivity
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
@@ -199,6 +203,17 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
                 }
                 is SocketTimeoutException -> {
                     errorMessage = context?.getString(R.string.error_timeout)
+                }
+                else -> {
+                    val errorResponse =
+                        Gson().fromJson(throwable?.message, CommonResponse::class.java)
+
+                    if (errorResponse.statusCode == 401 && errorResponse.error == "Error: Unauthorized"){
+                        errorMessage = getString(R.string.txt_logged_out)
+                        preferenceManager.deleteSession()
+                        activity!!.finish()
+                        startActivity(Intent(activity, LoginActivity::class.java))
+                    }
                 }
             }
         }

@@ -14,11 +14,8 @@ import android.os.CountDownTimer
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Spannable
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -28,8 +25,6 @@ import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_edit_patiant_card.*
-import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
 import pet.loyal.client.api.response.PetCardDataResponse
 import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.R
