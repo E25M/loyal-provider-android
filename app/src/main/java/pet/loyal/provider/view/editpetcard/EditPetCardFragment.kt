@@ -424,23 +424,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 drawableTop.colorFilter = colorFilter
                 viewModel.livePhaseColorDrawable.value = drawableTop
 
-                petCardDataResponse.ptbSentMessages.iterator().forEach { sentMessage ->
-                    val imageGallery = ArrayList<Uri>()
-                    if (sentMessage.gallery != null) {
-                        sentMessage.gallery.iterator().forEach {
-                            imageGallery.add(Uri.parse(Constants.url_cloudinary_news_feed + it))
-                        }
-                    }
-
-                    var message = sentMessage.message
-                    message = message.replace("PetName",
-                        petCardDataResponse.appointment.petName, true)
-
-                    phaseMessages.add(PhaseMessage(sentMessage.phaseMessageId, sentMessage.status,
-                        sentMessage._id, sentMessage.phaseId, sentMessage.appointmentId,
-                        message, sentMessage.dateTime, imageGallery))
-                }
-
                 petCardDataResponse.ptbMessageTemplates.iterator().forEach { messageTemplate ->
                     run {
                         var imageGallery: ArrayList<Uri>? = null
@@ -492,7 +475,24 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }
                 }
 
-                addCustomMessage()
+                addCustomMessage(null)
+
+                petCardDataResponse.ptbSentMessages.iterator().forEach { sentMessage ->
+                    val imageGallery = ArrayList<Uri>()
+                    if (sentMessage.gallery != null) {
+                        sentMessage.gallery.iterator().forEach {
+                            imageGallery.add(Uri.parse(Constants.url_cloudinary_news_feed + it))
+                        }
+                    }
+
+                    var message = sentMessage.message
+                    message = message.replace("PetName",
+                        petCardDataResponse.appointment.petName, true)
+
+                    phaseMessages.add(PhaseMessage(sentMessage.phaseMessageId, sentMessage.status,
+                        sentMessage._id, sentMessage.phaseId, sentMessage.appointmentId,
+                        message, sentMessage.dateTime, imageGallery))
+                }
 
                 val phaseMessageRecyclerViewAdapter = PhaseMessageRecyclerViewAdapter(
                     phaseMessages, this)
@@ -515,12 +515,17 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         petCardDataResponse = null
     }
 
-    private fun addCustomMessage(){
+    private fun addCustomMessage(position: Int?){
         customMessageId++
-        phaseMessages.add(
-            PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
-                petCardDataResponse?.appointment?.id, false)
-        )
+        if (position != null){
+            phaseMessages.add(position + 1,
+                PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
+                    petCardDataResponse?.appointment?.id, false))
+        }else{
+            phaseMessages.add(
+                PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
+                    petCardDataResponse?.appointment?.id, false))
+        }
     }
 
     private fun showAddedImage(){
@@ -702,6 +707,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 }
             }
         }
+        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+            run {
+                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+            }
+        }
     }
 
     override fun onEditMessage(message: String, position: Int, messageId: String) {
@@ -767,7 +777,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     override fun onAddCustomMessage(position: Int) {
-        addCustomMessage()
+        addCustomMessage(position)
     }
 
     fun showPopup(context: Context, message: String, title: String) {
