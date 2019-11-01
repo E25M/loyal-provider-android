@@ -57,7 +57,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"hpn3bbb5\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
-            versionName "4.0.0"
+            versionName "4.0.1"
             resValue "string", "app_name", "Provider Staging"
         }
         prod {
