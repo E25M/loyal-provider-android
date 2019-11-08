@@ -275,7 +275,6 @@ class PhaseMessageRecyclerViewAdapter(
                     viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
                 }else{
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
-//                    viewPhaseMessage.txtMessage.visibility = View.VISIBLE
                 }
 
                 viewPhaseMessage.btnDropDown.setOnClickListener {
@@ -343,12 +342,6 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
 
-//                if (itemPhaseMessage.isSelected){
-//                    showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-//                }else{
-//                    showUncheckedCustomMessage(viewPhaseMessage)
-//                }
-
                 viewPhaseMessage.btnAddPhoto.setOnClickListener {
                     phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
                         position, itemPhaseMessage._id)
@@ -367,9 +360,7 @@ class PhaseMessageRecyclerViewAdapter(
                     ) {}
                 })
 
-                if ((itemPhaseMessage.imageGallery != null
-                            && itemPhaseMessage.imageGallery!!.size > 0)
-                    || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                if (itemPhaseMessage.isSelected) {
                     showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
                 }else{
                     showUncheckedCustomMessage(viewPhaseMessage)
@@ -377,40 +368,29 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener { _, isChecked ->
 
-//                    if (position == phaseMessagesList.size - 1) {
                     if ((phaseMessagesList.size > position + 1)
                         && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE)
                         || position == phaseMessagesList.size - 1)
                     {
-                        if (isChecked) {
-                            itemPhaseMessage.isSelected = true
-                            showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-                        } else {
-                            itemPhaseMessage.isSelected = false
-                            showUncheckedCustomMessage(viewPhaseMessage)
-                        }
                         phaseMessageItemListener.onClickTickCustom(isChecked, position, itemPhaseMessage._id)
                     }
                 }
 
-//                if (position != phaseMessagesList.size - 1){
                 if (((phaseMessagesList.size > position + 1)
-                    && (phaseMessagesList[position + 1].type != PhaseMessage.Type.SENT_MESSAGE))
-                    || position != phaseMessagesList.size - 1)
+                    && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE))
+                    || position == phaseMessagesList.size - 1)
                 {
-                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
-//                    viewPhaseMessage.chkBoxTicketMessage.isChecked = false
+                    viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
                 }else{
+                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
                     if(((itemPhaseMessage.imageGallery != null
                         && itemPhaseMessage.imageGallery!!.size > 0)
                         || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()
                                 || itemPhaseMessage.isSelected))
                     {
                         showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-//                        viewPhaseMessage.chkBoxTicketMessage.isChecked = true
                     }else{
                         showUncheckedCustomMessage(viewPhaseMessage)
-//                        viewPhaseMessage.chkBoxTicketMessage.isChecked = false
                     }
                 }
 
@@ -483,11 +463,8 @@ class PhaseMessageRecyclerViewAdapter(
 
     private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding, canAddPhoto:Boolean) {
         viewPhaseMessage.txtAddCustomMessage.visibility = View.GONE
-        viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
         viewPhaseMessage.layoutMessage.visibility = View.VISIBLE
-        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.VISIBLE
-//        viewPhaseMessage.chkBoxTicketMessage.isChecked = true
         if (canAddPhoto){
             viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
         }else{
@@ -501,7 +478,6 @@ class PhaseMessageRecyclerViewAdapter(
         viewPhaseMessage.layoutMessage.visibility = View.GONE
         viewPhaseMessage.btnAddMessage.visibility = View.GONE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.GONE
-//        viewPhaseMessage.chkBoxTicketMessage.isChecked = false
     }
 
     private fun updateCountValue(message: String, countView: TextView){

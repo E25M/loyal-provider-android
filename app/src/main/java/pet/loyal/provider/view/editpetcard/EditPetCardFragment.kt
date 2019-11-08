@@ -707,6 +707,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 }
             }
         }
+
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
             run {
                 fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
