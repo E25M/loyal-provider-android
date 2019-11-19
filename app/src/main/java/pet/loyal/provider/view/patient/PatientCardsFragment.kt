@@ -63,7 +63,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     var facilityId = "default"
     var sort = Constants.sort_type_parent
 
-    private lateinit var mSocket:Socket
+    private lateinit var mSocket: Socket
 
     private val onNewMessage = Emitter.Listener { args ->
 
@@ -77,7 +77,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
         try {
             mSocket = IO.socket(BuildConfig.SOCKET_URL)
-        }catch (ex:URISyntaxException){
+        } catch (ex: URISyntaxException) {
             showToast(activity!!, "Updating pet cards on real time is not working.")
         }
 
@@ -85,7 +85,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         mSocket.on("updateDashboard", onNewMessage)
         mSocket.let {
             it.connect().on(Socket.EVENT_CONNECT) {
-//                    Log.d("SignallingClient", "Socket connected!!!!!")
+                //                    Log.d("SignallingClient", "Socket connected!!!!!")
             }
         }
     }
@@ -187,16 +187,17 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
         img_scroll_right_pet_cards.setOnClickListener {
             recyclerview_phases.smoothScrollToPosition(
-                recyclerview_phases.adapter!!.itemCount - 1)
+                recyclerview_phases.adapter!!.itemCount - 1
+            )
         }
 
 
 //        drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
             if (filterPanel.height == 0) {
-                expand(filterPanel, 200, 240)
+                expand(filterPanel, 200, 160)
                 drpDwnFilterArea.setImageResource(R.drawable.ic_up_nav)
-                loadPhases()
+//                loadPhases()
             } else {
                 collapse(filterPanel, 200, 0)
                 viewModel.collapseIconVisibility.value = View.GONE
@@ -218,10 +219,10 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
 
         img_expand_cards_view.setOnClickListener {
-            expand(filterPanel, 200, 240)
+            expand(filterPanel, 200, 160)
             viewModel.collapseIconVisibility.value = View.VISIBLE
             viewModel.expandIconVisibility.value = View.GONE
-            loadPhases()
+//            loadPhases()
         }
     }
 
@@ -367,7 +368,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                     val errorResponse =
                         Gson().fromJson(throwable?.message, CommonResponse::class.java)
 
-                    if (errorResponse.statusCode == 401 && errorResponse.error == "Error: Unauthorized"){
+                    if (errorResponse.statusCode == 401 && errorResponse.error == "Error: Unauthorized") {
                         errorMessage = getString(R.string.txt_logged_out)
                         preferenceManager.deleteSession()
                         activity!!.finish()

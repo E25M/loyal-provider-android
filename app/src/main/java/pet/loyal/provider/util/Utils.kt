@@ -47,11 +47,11 @@ fun setLogo(imageView: ImageView, url: String?) {
     if (url != null) {
         Picasso.get()
             .load(Constants.url_cloudinary + Constants.directory_user + url)
-            .placeholder(R.drawable.facility_logo_sample)
-            .error(R.drawable.facility_logo_sample)
+//            .placeholder(R.drawable.facility_logo_sample)
+//            .error(R.drawable.facility_logo_sample)
             .into(imageView)
     } else {
-        imageView.setImageResource(R.drawable.facility_logo_sample)
+//        imageView.setImageResource(R.drawable.facility_logo_sample)
     }
 }
 

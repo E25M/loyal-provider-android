@@ -541,6 +541,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
+//    private fun notifyItemChange(){
+//        if (fragmentEditPatiantCardBinding.recyclerViewMessages.adapter != null) {
+//            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!
+//                .notifyItemChanged(selectedMessagePosition)
+//        }
+//    }
+
     private fun uploadPhoto() {
 
         viewModel.liveProgressDialog.value = View.VISIBLE
