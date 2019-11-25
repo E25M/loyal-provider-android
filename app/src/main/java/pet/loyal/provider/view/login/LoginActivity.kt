@@ -68,12 +68,13 @@ class LoginActivity : AppCompatActivity() {
         layoutLoginBinding.lifecycleOwner = this
 
         val filter = InputFilter { source, start, end, dest, dstart, dend ->
-            for (i in start until end) {
-                if (Character.isWhitespace(source[i])) {
-                    return@InputFilter ""
-                }
-            }
-            null
+            //            for (i in start until end) {
+//                if (Character.isWhitespace(source[i])) {
+//                    return@InputFilter ""
+//                }
+//            }
+//            null
+            source.toString().filterNot { it.isWhitespace() }
         }
 
         txt_login_username.filters = (arrayOf(filter))
@@ -121,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.progressBarVisibility.value = View.GONE
     }
 
-    private fun invokeIntent(intent: Intent){
+    private fun invokeIntent(intent: Intent) {
         this.finish()
         startActivity(intent)
     }

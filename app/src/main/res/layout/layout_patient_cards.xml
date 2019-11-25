@@ -28,7 +28,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filterPanelLinear" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
         <LinearLayout
                 android:id="@+id/filterPanelLinear"
@@ -42,7 +42,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/filterPanel"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp">
+                    android:layout_height="120dp">
 
                 <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
@@ -194,8 +194,11 @@
                         android:background="@android:color/transparent"
                         app:layout_constraintStart_toEndOf="@+id/img_patient_cards_sort_by"
                         app:layout_constraintTop_toBottomOf="@id/toolbar"
-                        app:tabBackground="@color/colorPrimary"
-                        app:tabIndicatorColor="@android:color/transparent">
+                        app:tabBackground="@drawable/sort_tab_background"
+                        app:tabIndicatorColor="@android:color/transparent"
+                        app:tabSelectedTextColor="@color/btn_color_gray"
+                        app:tabTextAppearance="@style/MyCustomTextAppearance"
+                        app:tabTextColor="@color/font_color_dark_grey_1">
 
                     <com.google.android.material.tabs.TabItem
                             android:layout_width="wrap_content"
@@ -208,53 +211,6 @@
                             android:text="Pet" />
 
                 </com.google.android.material.tabs.TabLayout>
-
-                <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="35dp"
-                        android:text="@string/txt_filter_pet_cards"
-                        android:textColor="@color/font_color_black"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/recyclerview_phases"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/recyclerview_phases" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview_phases"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="@dimen/margin_8"
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toStartOf="@+id/img_scroll_right_pet_cards"
-                        app:layout_constraintStart_toEndOf="@+id/img_scroll_left_pet_cards"
-                        app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort" />
-
-                <ImageView
-                        android:id="@+id/img_scroll_left_pet_cards"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:background="?selectableItemBackgroundBorderless"
-                        app:layout_constraintStart_toEndOf="@+id/textView20"
-                        app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
-                        app:srcCompat="@drawable/ic_left_arrow" />
-
-                <ImageView
-                        android:id="@+id/img_scroll_right_pet_cards"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:background="?selectableItemBackgroundBorderless"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tablayout_patient_cards_sort"
-                        app:srcCompat="@drawable/ic_right_arrow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -271,6 +227,113 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_up_nav" />
+
+        <!--        <TextView-->
+        <!--                android:id="@+id/textView20"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="35dp"-->
+        <!--                android:text="@string/txt_filter_pet_cards"-->
+        <!--                android:textColor="@color/font_color_black"-->
+        <!--                android:textStyle="bold"-->
+        <!--                app:layout_constraintBottom_toTopOf="@+id/recyclerview_patient_cards"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/filterPanelLinear" />-->
+
+        <!--        <ImageView-->
+        <!--                android:id="@+id/img_scroll_left_pet_cards"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_marginStart="16dp"-->
+        <!--                android:layout_marginTop="125dp"-->
+        <!--                android:background="?selectableItemBackgroundBorderless"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/textView20"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:srcCompat="@drawable/ic_left_arrow" />-->
+
+        <!--        <ImageView-->
+        <!--                android:id="@+id/img_scroll_right_pet_cards"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_marginTop="125dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:background="?selectableItemBackgroundBorderless"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:srcCompat="@drawable/ic_right_arrow" />-->
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--                android:id="@+id/recyclerview_phases"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="24dp"-->
+        <!--                android:layout_marginTop="125dp"-->
+        <!--                android:layout_marginEnd="24dp"-->
+        <!--                android:orientation="horizontal"-->
+        <!--                app:layout_constraintEnd_toStartOf="@+id/img_scroll_right_pet_cards"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/img_scroll_left_pet_cards"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/filterPanelLinear">
+
+            <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/txt_filter_pet_cards"
+                    android:textColor="@color/font_color_black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/img_scroll_left_pet_cards"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView20"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_left_arrow" />
+
+            <ImageView
+                    android:id="@+id/img_scroll_right_pet_cards"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_right_arrow" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_phases"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/img_scroll_right_pet_cards"
+                    app:layout_constraintStart_toEndOf="@+id/img_scroll_left_pet_cards"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
                 android:id="@+id/progressBar3"

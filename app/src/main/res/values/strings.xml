@@ -1,4 +1,4 @@
-<resource>
+<resources>
 
     <string name="txt_loyal_inc">2019 Loyal Pet, Inc.</string>
     <string name="text_sign_up_for_loyal">Sign-up for Loyal</string>
@@ -79,7 +79,7 @@
     <string name="text_session_expired">Session Expired</string>
 
     <!-- settings screen -->
-    <string name="hint_search_facility">Search facility…</string>
+    <string name="hint_search_facility">Search…</string>
     <string name="txt_select_facility">Select Your Facility</string>
     <string name="txt_screen_timeout">Screen Timeout</string>
     <string name="txt_screen_timeout_no_auto_logout">No Auto Logout</string>
@@ -95,7 +95,7 @@
     <string name="text_phase_change_failed">Phase change failed</string>
     <string name="msg_setup_facility_complete">Setup successful</string>
 
-   <!--    patient cards screen -->
+    <!--    patient cards screen -->
     <string name="msg_no_facility_selected">No facility selected</string>
     <string name="txt_filter_pet_cards">Filter by phase</string>
     <string name="txt_sort_pet_cards">Sort by</string>
@@ -104,4 +104,4 @@
     <string name="help_scout_beacon_id">70c6d9e2-fdab-4049-8f1a-7ee15d60e478</string>
     <string name="text_10_photos_limit">You can add only 10 photos..</string>
     <string name="error_update_pet_cards">Updating pet cards on real time is not working.</string>
-</resource>
+</resources>
