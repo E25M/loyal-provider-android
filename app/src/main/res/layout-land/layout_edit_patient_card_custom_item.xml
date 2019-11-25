@@ -18,6 +18,7 @@
             <CheckBox android:id="@+id/chkBoxTicketMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:saveEnabled="false"
                     android:button="@drawable/bg_checkbox_custom"
                     app:layout_constraintTop_toTopOf="@id/layoutMessage"
                     app:layout_constraintStart_toStartOf="parent"/>

@@ -78,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         txt_login_username.filters = (arrayOf(filter))
+        txt_login_password.filters = arrayOf(filter)
     }
 
     fun onLoginAttempt(view: View) {

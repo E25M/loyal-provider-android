@@ -35,6 +35,7 @@ class EditPetCardViewModel : ViewModel() {
     val livePhaseColorDrawable = MutableLiveData<Drawable>()
     val livePetImage = MutableLiveData<String>()
     val livePercentage = MutableLiveData<String>()
+    var logo = MutableLiveData<String>()
 
     init {
         liveProgressDialog.value = View.GONE

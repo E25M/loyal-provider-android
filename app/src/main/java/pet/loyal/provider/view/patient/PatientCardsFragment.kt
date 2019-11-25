@@ -145,13 +145,13 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             }
         )
 
-
         imageView2.setOnClickListener {
             if (activity is HomeScreen) {
                 val homeScreen = activity as HomeScreen
                 homeScreen.loadPatientCardsFragment()
             }
         }
+
         tablayout_patient_cards_sort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -398,7 +398,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         editPetCardFragment.arguments = bundle
         viewModel.expandIconVisibility.value = View.GONE
         viewModel.collapseIconVisibility.value = View.VISIBLE
-        activity.changeFragment(editPetCardFragment, 5)
+        activity.changeFragment(editPetCardFragment, 4)
     }
 
 

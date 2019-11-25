@@ -48,7 +48,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
             versionName "0.0.1"
-            resValue "string", "app_name", "Provider Dev"
+            resValue "string", "app_name", "Loyal Pet Dev"
         }
         staging {
             applicationIdSuffix = ".staging"
@@ -58,7 +58,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"loyal-pet\""
             resValue "string", "cloudinary_username", "cloudinary://loyal-pet"
             versionName "4.0.0"
-            resValue "string", "app_name", "Provider Staging"
+            resValue "string", "app_name", "Loyal Pet Staging"
         }
         prod {
             buildConfigField "String", 'BASE_URL', "\"https://api-provider.loyal.pet/v1/tablet/\""
@@ -77,7 +77,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
             versionName "0.0.3"
-            resValue "string", "app_name", "Provider Demo"
+            resValue "string", "app_name", "Loyal Pet Demo"
         }
     }
 }

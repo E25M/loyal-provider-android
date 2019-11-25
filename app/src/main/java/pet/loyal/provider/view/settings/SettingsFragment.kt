@@ -189,7 +189,6 @@ class SettingsFragment : Fragment(), OnFacilityClickListener {
 
     private fun handleError(throwable: Throwable, isConnected: Boolean, isDataLoading: Boolean) {
 
-
         var errorMessage = context?.getString(R.string.error_common)
         if (!isConnected) {
             errorMessage = context?.getString(R.string.error_no_connection)

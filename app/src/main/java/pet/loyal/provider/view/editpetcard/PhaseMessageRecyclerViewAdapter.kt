@@ -185,7 +185,7 @@ class PhaseMessageRecyclerViewAdapter(
                                             showTimePicker(viewPhaseMessage.txtMessage.context,
                                                 message,
                                                 viewPhaseMessage.txtMessage,
-                                                itemPhaseMessage.control!!, itemPhaseMessage._id)
+                                                itemPhaseMessage.control!!, itemPhaseMessage._id, position)
                                        }
                                    },
                                    indexes[count], indexes[count] +
@@ -275,7 +275,6 @@ class PhaseMessageRecyclerViewAdapter(
                     viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
                 }else{
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
-//                    viewPhaseMessage.txtMessage.visibility = View.VISIBLE
                 }
 
                 viewPhaseMessage.btnDropDown.setOnClickListener {
@@ -300,6 +299,11 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener {
                         buttonView, isChecked ->
+                    if (isChecked){
+                        viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
+                    }else{
+                        viewPhaseMessage.txtMessage.movementMethod = null
+                    }
                     phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
                 }
 
@@ -340,6 +344,9 @@ class PhaseMessageRecyclerViewAdapter(
             PhaseMessage.Type.CUSTOM_MESSAGE -> {
                 val viewPhaseMessage = (viewHolder as PhaseMessageCustomViewHolder).itemBinding
                 viewPhaseMessage.edtTxtMessage.setText(itemPhaseMessage.message)
+
+                viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
+
                 viewPhaseMessage.btnAddPhoto.setOnClickListener {
                     phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
                         position, itemPhaseMessage._id)
@@ -349,8 +356,8 @@ class PhaseMessageRecyclerViewAdapter(
 
                     override fun afterTextChanged(s: Editable?) {
                         updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
-                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
-                            itemPhaseMessage._id)
+//                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
+//                            itemPhaseMessage._id)
                     }
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
                                                    after: Int) {}
@@ -358,9 +365,7 @@ class PhaseMessageRecyclerViewAdapter(
                     ) {}
                 })
 
-                if ((itemPhaseMessage.imageGallery != null
-                            && itemPhaseMessage.imageGallery!!.size > 0)
-                    || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                if (itemPhaseMessage.isSelected) {
                     showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
                 }else{
                     showUncheckedCustomMessage(viewPhaseMessage)
@@ -368,40 +373,40 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener { _, isChecked ->
 
-                    if (position == phaseMessagesList.size - 1) {
-                        if (isChecked) {
-                            showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-
-                        } else {
-                            showUncheckedCustomMessage(viewPhaseMessage)
-                        }
+                    if ((phaseMessagesList.size > position + 1)
+                        && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE)
+                        || position == phaseMessagesList.size - 1)
+                    {
                         phaseMessageItemListener.onClickTickCustom(isChecked, position, itemPhaseMessage._id)
                     }
                 }
 
-                if (position != phaseMessagesList.size - 1){
-                    showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
-                    viewPhaseMessage.chkBoxTicketMessage.isChecked = false
+                if (((phaseMessagesList.size > position + 1)
+                    && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE))
+                    || position == phaseMessagesList.size - 1)
+                {
+                    viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
                 }else{
+                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
                     if(((itemPhaseMessage.imageGallery != null
                         && itemPhaseMessage.imageGallery!!.size > 0)
-                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()))
+                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()
+                                || itemPhaseMessage.isSelected))
                     {
                         showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
-                        viewPhaseMessage.chkBoxTicketMessage.isChecked = true
                     }else{
                         showUncheckedCustomMessage(viewPhaseMessage)
-                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
-                        viewPhaseMessage.chkBoxTicketMessage.isChecked = false
                     }
                 }
 
                 viewPhaseMessage.btnAddMessage.setOnClickListener {
-                    if (!viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                    if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
                         phaseMessageItemListener.onAddCustomMessage(position)
-                        notifyDataSetChanged()
+                        phaseMessageItemListener.onEditMessageCustom(viewPhaseMessage.edtTxtMessage.text.toString(), position,
+                            itemPhaseMessage._id)
+//                        notifyDataSetChanged()
+                    }else{
+                        showToast(viewHolder.itemView.context, "Message cannot be empty")
                     }
                 }
 
@@ -419,7 +424,8 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
             }
             PhaseMessage.Type.PHASE_CHANGE -> {
-                val viewPhaseMessage = (viewHolder as PhaseMessagePhaseChangeViewHolder).itemBinding
+                val viewPhaseMessage = (viewHolder as
+                        PhaseMessagePhaseChangeViewHolder).itemBinding
                 viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
 //                viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
             }
@@ -437,7 +443,7 @@ class PhaseMessageRecyclerViewAdapter(
     }
 
     private fun showTimePicker(context: Context, text: String, textView: TextView,
-                               replaceValue:String, messageId: String) {
+                               replaceValue:String, messageId: String, position: Int) {
         var c = Calendar.getInstance()
         val hour = c.get(Calendar.HOUR)
         val minute = c.get(Calendar.MINUTE)
@@ -448,10 +454,11 @@ class PhaseMessageRecyclerViewAdapter(
             spannable.setSpan(
                 object :ClickableSpan(){
                     override fun onClick(widget: View) {
+
                         showTimePicker(widget.context,
                             text,
                             textView,
-                            replaceValue, messageId)
+                            replaceValue, messageId, position)
                     }
                 },
                 message.indexOf(getTimeStringWithAMPM(hour, minute)), message.indexOf(getTimeStringWithAMPM(hour, minute)) +
@@ -459,15 +466,13 @@ class PhaseMessageRecyclerViewAdapter(
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
             textView.text = spannable
-            phaseMessageItemListener.onEditMessage(spannable, 0,
-                            messageId)
+            phaseMessageItemListener.onEditMessage(spannable, position, messageId)
         }, hour, minute, false)
         tpd.show()
     }
 
     private fun showCheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding, canAddPhoto:Boolean) {
         viewPhaseMessage.txtAddCustomMessage.visibility = View.GONE
-        viewPhaseMessage.btnAddPhoto.visibility = View.VISIBLE
         viewPhaseMessage.layoutMessage.visibility = View.VISIBLE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.VISIBLE
         if (canAddPhoto){
@@ -481,6 +486,7 @@ class PhaseMessageRecyclerViewAdapter(
         viewPhaseMessage.txtAddCustomMessage.visibility = View.VISIBLE
         viewPhaseMessage.btnAddPhoto.visibility = View.GONE
         viewPhaseMessage.layoutMessage.visibility = View.GONE
+        viewPhaseMessage.btnAddMessage.visibility = View.GONE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.GONE
     }
 

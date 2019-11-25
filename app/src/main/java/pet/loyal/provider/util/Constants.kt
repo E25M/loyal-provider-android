@@ -128,6 +128,7 @@ class Constants {
         const val fragment_type_pet_cards = 1
         const val fragment_type_settings = 2
         const val fragment_type_parent_sign_up = 3
+        const val fragment_type_edit_pet_card = 4
 
         // user types
         const val user_type_client= "client"
