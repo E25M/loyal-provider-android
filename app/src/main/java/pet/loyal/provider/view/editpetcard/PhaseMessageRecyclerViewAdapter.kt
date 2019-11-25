@@ -185,7 +185,7 @@ class PhaseMessageRecyclerViewAdapter(
                                             showTimePicker(viewPhaseMessage.txtMessage.context,
                                                 message,
                                                 viewPhaseMessage.txtMessage,
-                                                itemPhaseMessage.control!!, itemPhaseMessage._id)
+                                                itemPhaseMessage.control!!, itemPhaseMessage._id, position)
                                        }
                                    },
                                    indexes[count], indexes[count] +
@@ -272,7 +272,7 @@ class PhaseMessageRecyclerViewAdapter(
                    }
 
                    viewPhaseMessage.txtMessage.text = spannable
-//                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
+                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
                 }else{
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
                 }
@@ -443,7 +443,7 @@ class PhaseMessageRecyclerViewAdapter(
     }
 
     private fun showTimePicker(context: Context, text: String, textView: TextView,
-                               replaceValue:String, messageId: String) {
+                               replaceValue:String, messageId: String, position: Int) {
         var c = Calendar.getInstance()
         val hour = c.get(Calendar.HOUR)
         val minute = c.get(Calendar.MINUTE)
@@ -454,10 +454,11 @@ class PhaseMessageRecyclerViewAdapter(
             spannable.setSpan(
                 object :ClickableSpan(){
                     override fun onClick(widget: View) {
+
                         showTimePicker(widget.context,
                             text,
                             textView,
-                            replaceValue, messageId)
+                            replaceValue, messageId, position)
                     }
                 },
                 message.indexOf(getTimeStringWithAMPM(hour, minute)), message.indexOf(getTimeStringWithAMPM(hour, minute)) +
@@ -465,8 +466,7 @@ class PhaseMessageRecyclerViewAdapter(
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
             textView.text = spannable
-            phaseMessageItemListener.onEditMessage(spannable, 0,
-                            messageId)
+            phaseMessageItemListener.onEditMessage(spannable, position, messageId)
         }, hour, minute, false)
         tpd.show()
     }

@@ -748,6 +748,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == messageId){
                 phaseMessage.message = message
+                phaseMessage.isSelected = true
             }
         }
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
@@ -762,6 +763,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             if (phaseMessage._id == messageId){
                 phaseMessage.messageSpan = message
                 phaseMessage.message = message.toString()
+                phaseMessage.isSelected = true
             }
         }
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
