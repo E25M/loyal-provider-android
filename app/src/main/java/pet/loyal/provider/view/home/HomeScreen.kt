@@ -196,6 +196,9 @@ class HomeScreen : AppCompatActivity() {
             Constants.fragment_type_settings -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
             }
+            Constants.fragment_type_edit_pet_card -> {
+                viewModel.toolbarVisibility.value = View.GONE
+            }
             else -> {
                 viewModel.toolbarVisibility.value = View.VISIBLE
             }

@@ -29,11 +29,15 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
                              textView: TextView, messageId: String, position: Int)
     }
 
-    fun showDialog(activity: Context, message: String, replaceValue: String, replaceOldValue: String, placeHolder: String, index: Int,
-                   textView: TextView, viewDialogListener: ViewDialogListener, messageId: String, position: Int, no: Int, spannableList:ArrayList<Spannable>) {
+    fun showDialog(activity: Context, message: String, replaceValue: String, replaceOldValue: String,
+                   placeHolder: String, index: Int, textView: TextView, viewDialogListener:
+                   ViewDialogListener, messageId: String, position: Int, no: Int,
+                   spannableList:ArrayList<Spannable>) {
+
         val dialog = Dialog(activity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.layout_change_phase_message)
+
         if (dialog != null) {
             val width = 400
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -43,13 +47,16 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
 //        val textTitle = dialog.findViewById(R.id.txtTitle) as TextView
 
         val textContact = dialog.findViewById(R.id.txtContact) as TextInputEditText
+
         textContact.hint = placeHolder
-        if (replaceValue.isNotEmpty()){
-            textContact.setText(replaceValue)
+        if (replaceOldValue.isNotEmpty() && replaceOldValue != "<ENTER VALUE>"){
+            textContact.setText(replaceOldValue)
         }
+
         val layoutContact = dialog.findViewById(R.id.layoutContact) as TextInputLayout
 
         val buttonUpdate = dialog.findViewById(R.id.btnUpdate) as Button
+
         buttonUpdate.setOnClickListener {
             viewDialogListener.onUpdateEditText(message, textContact.text.toString(),
                 replaceOldValue, placeHolder, index, textView, messageId, position, no, spannableList)

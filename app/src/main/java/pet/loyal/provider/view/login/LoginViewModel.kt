@@ -49,7 +49,7 @@ class LoginViewModel : ViewModel() {
         passwordsErrorEnabled.value = true
 
         //  check if the username  is empty
-        if (TextUtils.isEmpty(loginFields.email)) {
+        if (TextUtils.isEmpty(loginFields.email.trim())) {
             emailError.value = context.getString(R.string.msg_empty_username)
 //            check if the email is valid
         }
@@ -61,7 +61,7 @@ class LoginViewModel : ViewModel() {
         }
 
         //        check if the password is empty
-        if (TextUtils.isEmpty(loginFields.password)) {
+        if (TextUtils.isEmpty(loginFields.password.trim())) {
             passwordError.value = context.getString(R.string.msg_empty_password)
         } else {
             passwordsErrorEnabled.value = false

@@ -272,7 +272,7 @@ class PhaseMessageRecyclerViewAdapter(
                    }
 
                    viewPhaseMessage.txtMessage.text = spannable
-                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
+//                    viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
                 }else{
                     viewPhaseMessage.txtMessage.text = itemPhaseMessage.message
                 }
@@ -299,6 +299,11 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener {
                         buttonView, isChecked ->
+                    if (isChecked){
+                        viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
+                    }else{
+                        viewPhaseMessage.txtMessage.movementMethod = null
+                    }
                     phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
                 }
 
@@ -351,8 +356,8 @@ class PhaseMessageRecyclerViewAdapter(
 
                     override fun afterTextChanged(s: Editable?) {
                         updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
-                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
-                            itemPhaseMessage._id)
+//                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
+//                            itemPhaseMessage._id)
                     }
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
                                                    after: Int) {}
@@ -395,9 +400,13 @@ class PhaseMessageRecyclerViewAdapter(
                 }
 
                 viewPhaseMessage.btnAddMessage.setOnClickListener {
-                    if (!viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()){
+                    if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
                         phaseMessageItemListener.onAddCustomMessage(position)
-                        notifyDataSetChanged()
+                        phaseMessageItemListener.onEditMessageCustom(viewPhaseMessage.edtTxtMessage.text.toString(), position,
+                            itemPhaseMessage._id)
+//                        notifyDataSetChanged()
+                    }else{
+                        showToast(viewHolder.itemView.context, "Message cannot be empty")
                     }
                 }
 
@@ -415,7 +424,8 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
             }
             PhaseMessage.Type.PHASE_CHANGE -> {
-                val viewPhaseMessage = (viewHolder as PhaseMessagePhaseChangeViewHolder).itemBinding
+                val viewPhaseMessage = (viewHolder as
+                        PhaseMessagePhaseChangeViewHolder).itemBinding
                 viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
 //                viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
             }

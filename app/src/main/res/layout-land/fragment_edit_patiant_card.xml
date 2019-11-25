@@ -12,8 +12,85 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/margin_8"
         android:background="@color/bg_main_color">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_home_screen"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:navigationIcon="@drawable/ic_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="32dp">
+
+            <TextView
+                    android:id="@+id/textView4"
+                    style="@style/TitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_welcome"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="100dp"
+                    android:layout_height="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:onClick="onLogoClick"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imageView4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:logo="@{viewModel.logo}" />
+
+            <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onLogout"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_logout" />
+
+            <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="32dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="35dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="navigateToHome"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_home" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
         <androidx.cardview.widget.CardView
                 android:layout_width="262dp"
@@ -21,7 +98,9 @@
                 android:minHeight="168dp"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="0dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_8"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_home_screen"
                 app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,11 +216,15 @@
 
     <androidx.cardview.widget.CardView
             android:layout_width="678dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:cardCornerRadius="0dp"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
             app:cardBackgroundColor="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/toolbar_home_screen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
