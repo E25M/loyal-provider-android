@@ -90,7 +90,9 @@
         up Loyal Tablet Application for</string>
     <string name="text_error">Error</string>
     <string name="text_please_active_pet">is inactive. Please activate pet to update the procedure.</string>
-    <string name="text_please_active_parent">is inactive. Please activate parent to update the procedure.</string>
+    <string name="error_please_active_pet">is inactive. Please activate pet to update the messages.</string>
+    <string name="error_active_parent">is inactive. Please activate parent to update the messages.</string>
+    <string name="error_please_active_parent">is inactive. Please activate parent to update the procedure.</string>
     <string name="text_please_complete_ongoing_appointment">has an ongoing procedure. Please complete the ongoing procedure before starting a new procedure.</string>
     <string name="text_phase_change_failed">Phase change failed</string>
     <string name="msg_setup_facility_complete">Setup successful</string>
