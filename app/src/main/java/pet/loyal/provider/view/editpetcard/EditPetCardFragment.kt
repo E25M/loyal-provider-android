@@ -728,9 +728,18 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             run {
                 if (phaseMessage._id == messageId) {
                     phaseMessage.isSelected = isChecked
+                    phaseMessage.imageGallery = null
+                    if (!isChecked){
+                        imageGalleryList.remove(messageId)
+                        if (phaseMessage.initialSpan != null) {
+                            phaseMessage.messageSpan = phaseMessage.initialSpan
+                        }
+                    }
                 }
             }
         }
+
+
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
             run {
                 fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
@@ -767,18 +776,26 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             }
         }
     }
+    private var count = 0
 
     override fun onEditMessage(message: Spannable, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == messageId){
-                phaseMessage.messageSpan = message
-                phaseMessage.message = message.toString()
-                phaseMessage.isSelected = true
-            }
-        }
-        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-            run {
-                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+                if (count == 0){
+                    phaseMessage.initialSpan = message
+                    phaseMessage.isSelected = false
+                }else{
+                    phaseMessage.messageSpan = message
+                    phaseMessage.message = message.toString()
+                    phaseMessage.isSelected = true
+
+                    fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+                        run {
+                            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+                        }
+                    }
+                }
+                count ++
             }
         }
     }

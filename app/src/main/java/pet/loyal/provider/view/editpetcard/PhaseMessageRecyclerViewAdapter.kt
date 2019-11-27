@@ -150,29 +150,42 @@ class PhaseMessageRecyclerViewAdapter(
 
                 }else if (itemPhaseMessage.editable && itemPhaseMessage.control != null){
 
-                    when(itemPhaseMessage.control){
+                    val placeHolders = itemPhaseMessage.placeholder
+                    var placeHolderList = ArrayList<String>()
+                    if (placeHolders != null) {
+                        if (placeHolders.contains(",")) {
+                            placeHolderList = placeHolders.split(",") as ArrayList<String>
+                        } else {
+                            placeHolderList.add(placeHolders)
+                        }
 
-                        "timePicker" -> {
-                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
-                                itemPhaseMessage.control!!, "<SELECT TIME>")
-                            itemPhaseMessage.control = "<SELECT TIME>"
+                        var count = 0
+                        placeHolderList.forEach { _ ->
+                            itemPhaseMessage.message = itemPhaseMessage.message.replaceFirst(
+                                itemPhaseMessage.control!!,
+                                "<" + placeHolderList[count].trim().toUpperCase() + ">")
+                            count++
                         }
-                        "dropDown" -> {
-                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
-                                itemPhaseMessage.control!!, "<PLEASE SELECT>")
-                            itemPhaseMessage.control = "<PLEASE SELECT>"
-                        }
-                        "textField" -> {
-                            itemPhaseMessage.message = itemPhaseMessage.message.replace(
-                                itemPhaseMessage.control!!, "<ENTER VALUE>")
-                            itemPhaseMessage.control = "<ENTER VALUE>"
+                    }else{
+                        when(itemPhaseMessage.control) {
+                            "timePicker" -> {
+                                itemPhaseMessage.message = itemPhaseMessage.message.replace(
+                                    itemPhaseMessage.control!!, "<SELECT TIME>"
+                                )
+                                itemPhaseMessage.control = "<SELECT TIME>"
+                            }
+                            "dropDown" -> {
+                                itemPhaseMessage.message = itemPhaseMessage.message.replace(
+                                    itemPhaseMessage.control!!, "<PLEASE SELECT>"
+                                )
+                                itemPhaseMessage.control = "<PLEASE SELECT>"
+                            }
                         }
                     }
 
+                    val indexes = getIndexes(itemPhaseMessage.message, itemPhaseMessage.control!!)
                     message = itemPhaseMessage.message
-
-                    val spannable = SpannableString(message)
-                    val indexes = getIndexes(message, itemPhaseMessage.control!!)
+                    var spannable = SpannableString(message)
 
                    when(itemPhaseMessage.control){
 
@@ -193,6 +206,8 @@ class PhaseMessageRecyclerViewAdapter(
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
+
+                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
 
                        "<PLEASE SELECT>" -> {
@@ -216,7 +231,8 @@ class PhaseMessageRecyclerViewAdapter(
                                                valueList,
                                                itemPhaseMessage.control!!,
                                                viewPhaseMessage.txtMessage,
-                                               this@PhaseMessageRecyclerViewAdapter, itemPhaseMessage._id, position)
+                                               this@PhaseMessageRecyclerViewAdapter,
+                                               itemPhaseMessage._id, position)
                                        }
                                    },
                                    indexes[count], indexes[count] +
@@ -224,33 +240,41 @@ class PhaseMessageRecyclerViewAdapter(
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
+                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
 
-                       "<ENTER VALUE>" -> {
-                           val placeHolders = itemPhaseMessage.placeholder
-                           var placeHolderList = ArrayList<String>()
-                           if (placeHolders != null) {
-                               if (placeHolders.contains(",")) {
-                                   placeHolderList = placeHolders.split(",") as ArrayList<String>
+//                       "<ENTER VALUE>" -> {
+                       else -> {
+                           val placeHolders2 = itemPhaseMessage.placeholder
+                           var placeHolderList2 = ArrayList<String>()
+                           if (placeHolders2 != null) {
+                               if (placeHolders2.contains(",")) {
+                                   placeHolderList2 = placeHolders2.split(",") as ArrayList<String>
                                } else {
-                                   placeHolderList.add(placeHolders)
+                                   placeHolderList2.add(placeHolders2)
                                }
                            }
 
                            var count = 0
                            val spannableList = ArrayList<pet.loyal.provider.model.Spannable>()
-                           indexes.forEach { _ ->
-                               val placeHolder = placeHolderList[count]
+                           placeHolderList2.forEach { placeHolder ->
+
+                               itemPhaseMessage.control = "<" + placeHolder.trim().toUpperCase() + ">"
+
                                val countLocal = count
-                               val indexStart = indexes[count]
-                               val indexEnd = indexes[count] + itemPhaseMessage.control!!.length
+                               val indexStart = message.indexOf(itemPhaseMessage.control!!)
+                               val indexEnd = message.indexOf(itemPhaseMessage.control!!) + itemPhaseMessage.control!!.length
                                val messageLocal = message
+                               val localPlaceHolder = placeHolderList2[count]
+                               val localOldReplaceValue = itemPhaseMessage.control
+
                                val clickableSpan = object : ClickableSpan(){
                                    override fun onClick(widget: View) {
                                        ViewDialog().showDialog(widget.context,
                                            messageLocal,
                                            "",
-                                           itemPhaseMessage.control!!,
+                                           localOldReplaceValue!!,
+//                                           localOldReplaceValue.substring(localOldReplaceValue.indexOf("<") + 1, localOldReplaceValue.indexOf(">")).toLowerCase(),
                                            placeHolder,
                                            indexStart,
                                            viewPhaseMessage.txtMessage,
@@ -259,16 +283,20 @@ class PhaseMessageRecyclerViewAdapter(
                                    }
                                }
 
-                               spannableList.add(pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan,
-                                   itemPhaseMessage.control!!
+                               spannableList.add(pet.loyal.provider.model.Spannable(indexStart,
+                                   indexEnd, clickableSpan, itemPhaseMessage.control!!
                                ))
                                spannable.setSpan(clickableSpan, indexStart, indexEnd,
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
+
+                               itemPhaseMessage.control = placeHolder
                                count++
                            }
+
+//                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
-                       else -> {}
+//                       else -> {}
                    }
 
                    viewPhaseMessage.txtMessage.text = spannable
@@ -299,11 +327,6 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener {
                         buttonView, isChecked ->
-                    if (isChecked){
-                        viewPhaseMessage.txtMessage.movementMethod = LinkMovementMethod.getInstance()
-                    }else{
-                        viewPhaseMessage.txtMessage.movementMethod = null
-                    }
                     phaseMessageItemListener.onClickTick(isChecked, position, itemPhaseMessage._id)
                 }
 
@@ -667,13 +690,16 @@ class PhaseMessageRecyclerViewAdapter(
                         clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
                     )
 
-                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, spannableObject.replaceOldValue)
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd,
+                        clickableSpan, spannableObject.replaceOldValue)
                 }
             }
             count++
         }
         textView.text = spannable
-        phaseMessageItemListener.onEditMessage(spannable, position, messageId)
+        if (replaceOldValue != replaceValue) {
+            phaseMessageItemListener.onEditMessage(spannable, position, messageId)
+        }
     }
 
     override fun onUpdateListView(message: String, valueList: ArrayList<String>, replaceValue: String,
@@ -696,7 +722,13 @@ class PhaseMessageRecyclerViewAdapter(
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         textView.text = spannable
-        phaseMessageItemListener.onEditMessage(spannable, position,
-            messageId)
+        if (replaceValue != "<PLEASE SELECT>") {
+            phaseMessageItemListener.onEditMessage(
+                spannable, position,
+                messageId
+            )
+        }else{
+//            phaseMessageItemListener.onClickTick(false, position, messageId)
+        }
     }
 }
