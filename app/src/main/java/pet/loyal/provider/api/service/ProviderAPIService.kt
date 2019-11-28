@@ -57,4 +57,9 @@ interface ProviderAPIService {
     fun logOut(
         @HeaderMap hashMap: HashMap<String, String>
     ): Call<CommonResponse>
+
+    @GET(Constants.url_facility)
+    fun updateFacility(
+        @HeaderMap hashMap: HashMap<String, String>
+    ): Call<UpdateFacilityResponse>
 }
