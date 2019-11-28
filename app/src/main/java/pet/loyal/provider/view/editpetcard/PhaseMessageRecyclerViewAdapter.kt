@@ -37,6 +37,7 @@ class PhaseMessageRecyclerViewAdapter(
         fun onClickTickCustom(isChecked: Boolean, position: Int, messageId: String)
         fun onEditMessage(message: String, position: Int, messageId: String)
         fun onEditMessage(message: Spannable, position: Int, messageId: String)
+        fun onEditMessageEditText(message: Spannable, position: Int, messageId: String)
         fun onEditMessageCustom(message: String, position: Int, messageId: String)
         fun onAddCustomMessage(position: Int)
     }
@@ -207,7 +208,6 @@ class PhaseMessageRecyclerViewAdapter(
                                )
                            }
 
-                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
 
                        "<PLEASE SELECT>" -> {
@@ -240,10 +240,8 @@ class PhaseMessageRecyclerViewAdapter(
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
-                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
 
-//                       "<ENTER VALUE>" -> {
                        else -> {
                            val placeHolders2 = itemPhaseMessage.placeholder
                            var placeHolderList2 = ArrayList<String>()
@@ -265,7 +263,6 @@ class PhaseMessageRecyclerViewAdapter(
                                val indexStart = message.indexOf(itemPhaseMessage.control!!)
                                val indexEnd = message.indexOf(itemPhaseMessage.control!!) + itemPhaseMessage.control!!.length
                                val messageLocal = message
-                               val localPlaceHolder = placeHolderList2[count]
                                val localOldReplaceValue = itemPhaseMessage.control
 
                                val clickableSpan = object : ClickableSpan(){
@@ -274,7 +271,6 @@ class PhaseMessageRecyclerViewAdapter(
                                            messageLocal,
                                            "",
                                            localOldReplaceValue!!,
-//                                           localOldReplaceValue.substring(localOldReplaceValue.indexOf("<") + 1, localOldReplaceValue.indexOf(">")).toLowerCase(),
                                            placeHolder,
                                            indexStart,
                                            viewPhaseMessage.txtMessage,
@@ -284,7 +280,7 @@ class PhaseMessageRecyclerViewAdapter(
                                }
 
                                spannableList.add(pet.loyal.provider.model.Spannable(indexStart,
-                                   indexEnd, clickableSpan, itemPhaseMessage.control!!
+                                   indexEnd, clickableSpan, itemPhaseMessage.control!!, placeHolder
                                ))
                                spannable.setSpan(clickableSpan, indexStart, indexEnd,
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
@@ -293,10 +289,7 @@ class PhaseMessageRecyclerViewAdapter(
                                itemPhaseMessage.control = placeHolder
                                count++
                            }
-
-//                           phaseMessageItemListener.onEditMessage(spannable, position, itemPhaseMessage._id)
                        }
-//                       else -> {}
                    }
 
                    viewPhaseMessage.txtMessage.text = spannable
@@ -396,12 +389,12 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener { _, isChecked ->
 
-                    if ((phaseMessagesList.size > position + 1)
-                        && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE)
-                        || position == phaseMessagesList.size - 1)
-                    {
+//                    if ((phaseMessagesList.size > position + 1)
+//                        && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE)
+//                        || position == phaseMessagesList.size - 1)
+//                    {
                         phaseMessageItemListener.onClickTickCustom(isChecked, position, itemPhaseMessage._id)
-                    }
+//                    }
                 }
 
                 if (((phaseMessagesList.size > position + 1)
@@ -424,10 +417,9 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.btnAddMessage.setOnClickListener {
                     if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
-                        phaseMessageItemListener.onAddCustomMessage(position)
                         phaseMessageItemListener.onEditMessageCustom(viewPhaseMessage.edtTxtMessage.text.toString(), position,
                             itemPhaseMessage._id)
-//                        notifyDataSetChanged()
+                        phaseMessageItemListener.onAddCustomMessage(position)
                     }else{
                         showToast(viewHolder.itemView.context, "Message cannot be empty")
                     }
@@ -631,7 +623,7 @@ class PhaseMessageRecyclerViewAdapter(
                                 messageSpan,
                                 "",
                                 spannableObject.replaceOldValue,
-                                placeHolder,
+                                spannableObject.placeHolder,
                                 indexStart,
                                 textView,
                                 this@PhaseMessageRecyclerViewAdapter,
@@ -642,7 +634,7 @@ class PhaseMessageRecyclerViewAdapter(
                     spannable.setSpan(
                         clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
                     )
-                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, spannableObject.replaceOldValue)
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, spannableObject.replaceOldValue, placeHolder)
                 }
                 count == no -> {
                     indexStart = spannableObject.start
@@ -655,7 +647,7 @@ class PhaseMessageRecyclerViewAdapter(
                                 messageSpan,
                                 "",
                                 replaceValue,
-                                placeHolder,
+                                spannableObject.placeHolder,
                                 indexStart,
                                 textView,
                                 this@PhaseMessageRecyclerViewAdapter,
@@ -666,7 +658,7 @@ class PhaseMessageRecyclerViewAdapter(
                         clickableSpan, indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_INCLUSIVE
                     )
 
-                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, replaceValue)
+                    spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd, clickableSpan, replaceValue, placeHolder)
                 }
                 else -> {
                     indexStart = spannableObject.start - indexChange
@@ -679,7 +671,7 @@ class PhaseMessageRecyclerViewAdapter(
                                 messageSpan,
                                 "",
                                 spannableObject.replaceOldValue,
-                                placeHolder,
+                                spannableObject.placeHolder,
                                 indexStart,
                                 textView,
                                 this@PhaseMessageRecyclerViewAdapter,
@@ -691,15 +683,13 @@ class PhaseMessageRecyclerViewAdapter(
                     )
 
                     spannableList[count] = pet.loyal.provider.model.Spannable(indexStart, indexEnd,
-                        clickableSpan, spannableObject.replaceOldValue)
+                        clickableSpan, spannableObject.replaceOldValue, placeHolder)
                 }
             }
             count++
         }
         textView.text = spannable
-        if (replaceOldValue != replaceValue) {
-            phaseMessageItemListener.onEditMessage(spannable, position, messageId)
-        }
+        phaseMessageItemListener.onEditMessageEditText(spannable, position, messageId)
     }
 
     override fun onUpdateListView(message: String, valueList: ArrayList<String>, replaceValue: String,
@@ -722,13 +712,13 @@ class PhaseMessageRecyclerViewAdapter(
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         textView.text = spannable
-        if (replaceValue != "<PLEASE SELECT>") {
+//        if (replaceValue != "<PLEASE SELECT>") {
             phaseMessageItemListener.onEditMessage(
                 spannable, position,
                 messageId
             )
-        }else{
+//        }else{
 //            phaseMessageItemListener.onClickTick(false, position, messageId)
-        }
+//        }
     }
 }
