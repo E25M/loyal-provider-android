@@ -77,8 +77,8 @@ class LoginActivity : AppCompatActivity() {
             source.toString().filterNot { it.isWhitespace() }
         }
 
-        txt_login_username.filters = (arrayOf(filter))
-        txt_login_password.filters = arrayOf(filter)
+//        txt_login_username.filters = (arrayOf(filter))
+//        txt_login_password.filters = arrayOf(filter)
     }
 
     fun onLoginAttempt(view: View) {

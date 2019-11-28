@@ -31,6 +31,7 @@ import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.databinding.FragmentEditPatiantCardBinding
+import pet.loyal.provider.model.MessageTemplate
 import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.model.RequestPTBMessage
@@ -81,6 +82,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private var imageIdsList: HashMap<String, ArrayList<String>> = HashMap()
     private var petCardDataResponse:PetCardDataResponse? = null
     private val phaseMessages = ArrayList<PhaseMessage>()
+    private val initialControl = HashMap<String, String>()
+    private val initialMessage = HashMap<String, String>()
     private var uploadingImagePosition = 0
     private var uploadingMessageIdPosition = 0
 
@@ -295,9 +298,19 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun savePTBMessages(){
-        viewModel.savePTMMessages(getSelectedMessages()!!, preferenceManager.getLoginToken(),
-                petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
-            preferenceManager.getFacilityId(), movingPhase)
+        if (movingPhase != 1) {
+            sendPTBMessgas()
+        }else{
+            showConfirmPopup(activity!!, getString(R.string.msg_expected_phase), getString(R.string.title_confirm))
+        }
+    }
+
+    private fun sendPTBMessgas(){
+        viewModel.savePTMMessages(
+            getSelectedMessages()!!, preferenceManager.getLoginToken(),
+            petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
+            preferenceManager.getFacilityId(), movingPhase
+        )
     }
 
     private fun getSelectedMessages() : ArrayList<RequestPTBMessage>?{
@@ -312,7 +325,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }else{
                         phaseMessage.message
                     }
-                    if (!(message.contains("<") && message.contains(">"))) {
+                    if (message.isNotEmpty() && !(message.contains("<") && message.contains(">"))) {
                         val requestPTBMessage = RequestPTBMessage(
                             phaseMessage._id,
                             message,
@@ -322,8 +335,16 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         )
                         requestMessageList.add(requestPTBMessage)
                     }else{
-                        showErrorsIncompleteMessage(message.substring(message.indexOf("<"),
-                            message.indexOf(">") + 1))
+                        if (message.contains("<") && message.contentEquals(">")) {
+                            showErrorsIncompleteMessage(
+                                message.substring(
+                                    message.indexOf("<"),
+                                    message.indexOf(">") + 1
+                                )
+                            )
+                        }else{
+                            showPopup(activity!!, "Message can not be empty", getString(R.string.text_info))
+                        }
                         return null
                     }
                 }
@@ -493,15 +514,20 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 messageSent = true
                             }
                         }
+
+                        var phaseMessage: PhaseMessage?
                         if (!messageSent) {
-                            phaseMessages.add(
-                                PhaseMessage(
-                                    messageTemplate._id, messageTemplate.phaseId,
-                                    message, messageTemplate.editable, imageGallery,
-                                    messageTemplate.control, messageTemplate.controlMessage,
-                                    messageTemplate.value, messageTemplate.placeholder
-                                )
+                            phaseMessage = PhaseMessage(
+                                messageTemplate._id, messageTemplate.phaseId,
+                                message, messageTemplate.editable, imageGallery,
+                                messageTemplate.control, messageTemplate.controlMessage,
+                                messageTemplate.value, messageTemplate.placeholder
                             )
+                            if (phaseMessage.control != null) {
+                                initialControl[phaseMessage._id] = phaseMessage.control!!
+                                initialMessage[phaseMessage._id] = phaseMessage.controlMessage!!
+                            }
+                            phaseMessages.add(phaseMessage)
                         }
                     }
                 }
@@ -536,6 +562,32 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
+    private fun formatMessage(oldMessage: String) : String{
+
+        var message = oldMessage
+
+        message = message.replace("PetName",
+            petCardDataResponse!!.appointment!!.petName, true)
+
+        message = message.replace("PhoneNumber",
+            getPhoneNo(), true)
+
+        message = message.replace("FacilityName",
+            preferenceManager.getFacilityName(), true)
+
+        return message
+    }
+
+    private fun getPhoneNo() :String{
+        val phoneNo = preferenceManager.getFacilityPhone()
+        if (phoneNo.length == 10) {
+            return "(" + phoneNo.substring(0, 3) +
+                    ") " + phoneNo.substring(3, 6) +
+                    "-" + phoneNo.substring(6)
+        }
+        return ""
+    }
+
     private fun refreshAll(){
         imageGalleryList.clear()
         imageIdsList.clear()
@@ -552,12 +604,12 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             phaseMessages.add(position + 1,
                 PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
                     petCardDataResponse?.appointment?.id, false))
+            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter?.notifyItemChanged(position)
         }else{
             phaseMessages.add(
                 PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
                     petCardDataResponse?.appointment?.id, false))
         }
-        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter?.notifyDataSetChanged()
     }
 
     private fun showAddedImage(){
@@ -719,26 +771,25 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         notifyItemChange()
     }
 
-    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {
-
-    }
+    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {}
 
     override fun onClickTick(isChecked: Boolean, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
             run {
                 if (phaseMessage._id == messageId) {
                     phaseMessage.isSelected = isChecked
-                    phaseMessage.imageGallery = null
                     if (!isChecked){
+                        phaseMessage.imageGallery = null
                         imageGalleryList.remove(messageId)
-                        if (phaseMessage.initialSpan != null) {
-                            phaseMessage.messageSpan = phaseMessage.initialSpan
+                        phaseMessage.messageSpan = null
+                        if (initialControl.contains(messageId)) {
+                            phaseMessage.control = initialControl[messageId]!!
+                            phaseMessage.message = formatMessage(initialMessage[messageId]!!)
                         }
                     }
                 }
             }
         }
-
 
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
             run {
@@ -752,6 +803,15 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             run {
                 if (phaseMessage._id == messageId) {
                     phaseMessage.isSelected = isChecked
+                    if (!isChecked){
+                        phaseMessage.imageGallery = null
+                        imageGalleryList.remove(messageId)
+                        phaseMessage.message = ""
+                        if (initialControl.contains(messageId)) {
+                            phaseMessage.control = initialControl[messageId]!!
+                            phaseMessage.message = formatMessage(initialMessage[messageId]!!)
+                        }
+                    }
                 }
             }
         }
@@ -776,26 +836,35 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             }
         }
     }
-    private var count = 0
 
     override fun onEditMessage(message: Spannable, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == messageId){
-                if (count == 0){
-                    phaseMessage.initialSpan = message
-                    phaseMessage.isSelected = false
-                }else{
-                    phaseMessage.messageSpan = message
-                    phaseMessage.message = message.toString()
-                    phaseMessage.isSelected = true
+                phaseMessage.messageSpan = message
+                phaseMessage.message = message.toString()
+                phaseMessage.isSelected = true
 
-                    fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-                        run {
-                            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
-                        }
+                fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+                    run {
+                        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
                     }
                 }
-                count ++
+            }
+        }
+    }
+
+    override fun onEditMessageEditText(message: Spannable, position: Int, messageId: String) {
+        phaseMessages.iterator().forEach { phaseMessage ->
+            if (phaseMessage._id == messageId){
+                phaseMessage.messageSpan = message
+                phaseMessage.message = message.toString()
+                phaseMessage.isSelected = true
+
+                fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+                    run {
+                        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+                    }
+                }
             }
         }
     }
@@ -804,6 +873,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == messageId){
                 phaseMessage.message = message
+                phaseMessage.isSelected = true
             }
         }
     }
@@ -859,6 +929,20 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setTitle(title)
             .setPositiveButton(android.R.string.ok) { _, _ ->
 //                loadAppointment()
+            }
+            .create()
+        aDialog.show()
+    }
+
+    private fun showConfirmPopup(context: Context, message: String, title: String) {
+        val aDialog = AlertDialog.Builder(context)
+            .setMessage(message)
+            .setTitle(title)
+            .setPositiveButton(R.string.yes) { _, _ ->
+               sendPTBMessgas()
+            }
+            .setNegativeButton(R.string.no){_,_->
+
             }
             .create()
         aDialog.show()

@@ -106,4 +106,9 @@
     <string name="help_scout_beacon_id">70c6d9e2-fdab-4049-8f1a-7ee15d60e478</string>
     <string name="text_10_photos_limit">You can add only 10 photos..</string>
     <string name="error_update_pet_cards">Updating pet cards on real time is not working.</string>
+
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="msg_expected_phase">This action will reset all sent messages. Are you sure you want to continue?</string>
+    <string name="title_confirm">Confirm</string>
 </resources>

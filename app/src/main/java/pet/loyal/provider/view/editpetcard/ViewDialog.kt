@@ -60,7 +60,7 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
         buttonUpdate.setOnClickListener {
             var replaceValue = textContact.text.toString()
             if (replaceValue.isEmpty()){
-                replaceValue = replaceOldValue
+                replaceValue = "<" + placeHolder.trim().toUpperCase() + ">"
             }
             viewDialogListener.onUpdateEditText(message, replaceValue,
                 replaceOldValue, placeHolder, index, textView, messageId, position, no, spannableList)
