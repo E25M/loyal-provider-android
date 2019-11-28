@@ -49,7 +49,7 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
         val textContact = dialog.findViewById(R.id.txtContact) as TextInputEditText
 
         textContact.hint = placeHolder
-        if (replaceOldValue.isNotEmpty() && replaceOldValue != "<ENTER VALUE>"){
+        if (replaceOldValue.isNotEmpty() && replaceOldValue != "<" + placeHolder.trim().toUpperCase() + ">"){
             textContact.setText(replaceOldValue)
         }
 
@@ -58,7 +58,11 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
         val buttonUpdate = dialog.findViewById(R.id.btnUpdate) as Button
 
         buttonUpdate.setOnClickListener {
-            viewDialogListener.onUpdateEditText(message, textContact.text.toString(),
+            var replaceValue = textContact.text.toString()
+            if (replaceValue.isEmpty()){
+                replaceValue = replaceOldValue
+            }
+            viewDialogListener.onUpdateEditText(message, replaceValue,
                 replaceOldValue, placeHolder, index, textView, messageId, position, no, spannableList)
             dialog.dismiss()
         }
@@ -97,6 +101,13 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
                     }
                 }
             }
+        }else{
+            dropDownList.iterator().forEach {dropDownItem ->
+                if (dropDownItem.text == replaceOldValue){
+                    dropDownItem.isSelected = true
+                    return@forEach
+                }
+            }
         }
 
         recyclerView = dialog.findViewById(R.id.listViewChangeList) as RecyclerView
@@ -122,7 +133,7 @@ class ViewDialog : DropDownListAdapter.DropDownClickListener{
             }else{
                 viewDialogListener.onUpdateListView(
                     message, valueList,
-                    "dropDown", replaceOldValue,
+                    "<PLEASE SELECT>", replaceOldValue,
                     textView, messageId, position
                 )
             }

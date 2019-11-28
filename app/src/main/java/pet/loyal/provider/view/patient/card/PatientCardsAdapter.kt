@@ -54,7 +54,7 @@ class PatientCardsAdapter(
             card.parentLastName
 
         holder.itemView.txt_date_time_lis_item_pet_card.text =
-            formatDate(card.dateTime, SimpleDateFormat("HH:mm a"))
+            formatDate(card.dateTime, SimpleDateFormat("hh:mm a"))
 
         if (card.petImage != null) {
             if (!TextUtils.isEmpty(card.petImage)) {

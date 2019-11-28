@@ -392,7 +392,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 && signInResponse.errorMessage == "PtbMessage validation failed: message: Path `message` is required."){
                                 showPopup(activity!!, "Please enter message.",
                                     getString(R.string.text_info))
-                            } else{
+                            } else if (signInResponse.statusCode == 400){
+                                showPopup(activity!!, getMessageUpdateError(signInResponse.errorMessage!!),
+                                    getString(R.string.text_info))
+
+                            }else{
                                 showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                             }
                         } else {
@@ -465,8 +469,14 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         if (messageTemplate.fetchable){
                             var replaceableText = ""
                             when(messageTemplate.fetchableValue){
-                                "PhoneNumber" -> replaceableText =
-                                    preferenceManager.getFacilityPhone()
+                                "PhoneNumber" -> {
+                                    val phoneNo = preferenceManager.getFacilityPhone()
+                                    if (phoneNo.length == 10) {
+                                        replaceableText = "(" + phoneNo.substring(0, 3) +
+                                                ") " + phoneNo.substring(3, 6) +
+                                                "-" + phoneNo.substring(6)
+                                    }
+                                }
                                 "FacilityName" -> replaceableText =
                                     preferenceManager.getFacilityName()
                             }
@@ -567,13 +577,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 .notifyItemChanged(selectedMessagePosition)
         }
     }
-
-//    private fun notifyItemChange(){
-//        if (fragmentEditPatiantCardBinding.recyclerViewMessages.adapter != null) {
-//            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!
-//                .notifyItemChanged(selectedMessagePosition)
-//        }
-//    }
 
     private fun uploadPhoto() {
 
@@ -725,9 +728,18 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             run {
                 if (phaseMessage._id == messageId) {
                     phaseMessage.isSelected = isChecked
+                    phaseMessage.imageGallery = null
+                    if (!isChecked){
+                        imageGalleryList.remove(messageId)
+                        if (phaseMessage.initialSpan != null) {
+                            phaseMessage.messageSpan = phaseMessage.initialSpan
+                        }
+                    }
                 }
             }
         }
+
+
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
             run {
                 fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
@@ -764,18 +776,26 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             }
         }
     }
+    private var count = 0
 
     override fun onEditMessage(message: Spannable, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
             if (phaseMessage._id == messageId){
-                phaseMessage.messageSpan = message
-                phaseMessage.message = message.toString()
-                phaseMessage.isSelected = true
-            }
-        }
-        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-            run {
-                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+                if (count == 0){
+                    phaseMessage.initialSpan = message
+                    phaseMessage.isSelected = false
+                }else{
+                    phaseMessage.messageSpan = message
+                    phaseMessage.message = message.toString()
+                    phaseMessage.isSelected = true
+
+                    fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+                        run {
+                            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
+                        }
+                    }
+                }
+                count ++
             }
         }
     }
@@ -807,7 +827,21 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     getString(R.string.text_please_active_pet)
             Constants.parent_is_not_active -> "${petCardDataResponse?.appointment?.parentFirstName}" +
                     " ${petCardDataResponse?.appointment?.parentLastName} " +
-                    getString(R.string.text_please_active_parent)
+                    getString(R.string.error_please_active_parent)
+            Constants.there_are_another_ongoing_appointments_for_this_pet ->
+                "${petCardDataResponse?.appointment?.petName} " +
+                        getString(R.string.text_please_complete_ongoing_appointment)
+            else -> getString(R.string.text_phase_change_failed)
+        }
+    }
+
+    private fun getMessageUpdateError(errorMessage: String): String {
+        return when(errorMessage){
+            Constants.pet_is_not_active -> "${petCardDataResponse?.appointment?.petName} " +
+                    getString(R.string.error_please_active_pet)
+            Constants.parent_is_not_active -> "${petCardDataResponse?.appointment?.parentFirstName}" +
+                    " ${petCardDataResponse?.appointment?.parentLastName} " +
+                    getString(R.string.error_active_parent)
             Constants.there_are_another_ongoing_appointments_for_this_pet ->
                 "${petCardDataResponse?.appointment?.petName} " +
                         getString(R.string.text_please_complete_ongoing_appointment)

@@ -298,6 +298,8 @@ fun formatDate(defaultDateString: String, preferredFormat: SimpleDateFormat): St
         "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
         Locale.getDefault()
     )
+    defaultFormat.timeZone = TimeZone.getTimeZone("UTC")
+
     val date = defaultFormat.parse(defaultDateString)
     return preferredFormat.format(date)
 }
