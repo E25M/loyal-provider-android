@@ -31,7 +31,6 @@ import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.databinding.FragmentEditPatiantCardBinding
-import pet.loyal.provider.model.MessageTemplate
 import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.model.RequestPTBMessage
@@ -299,13 +298,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun savePTBMessages(){
         if (movingPhase != 1) {
-            sendPTBMessgas()
+            sendPTBMessages()
         }else{
             showConfirmPopup(activity!!, getString(R.string.msg_expected_phase), getString(R.string.title_confirm))
         }
     }
 
-    private fun sendPTBMessgas(){
+    private fun sendPTBMessages(){
         viewModel.savePTMMessages(
             getSelectedMessages()!!, preferenceManager.getLoginToken(),
             petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
@@ -335,7 +334,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         )
                         requestMessageList.add(requestPTBMessage)
                     }else{
-                        if (message.contains("<") && message.contentEquals(">")) {
+                        if (message.contains("<") && message.contains(">")) {
                             showErrorsIncompleteMessage(
                                 message.substring(
                                     message.indexOf("<"),
@@ -343,7 +342,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                 )
                             )
                         }else{
-                            showPopup(activity!!, "Message can not be empty", getString(R.string.text_info))
+                            showPopup(activity!!, getString(R.string.error_message_connot_empty), getString(R.string.text_info))
                         }
                         return null
                     }
@@ -939,7 +938,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setMessage(message)
             .setTitle(title)
             .setPositiveButton(R.string.yes) { _, _ ->
-               sendPTBMessgas()
+               sendPTBMessages()
             }
             .setNegativeButton(R.string.no){_,_->
 
@@ -974,11 +973,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun showErrorsIncompleteMessage(errorCode: String){
-        var errorMessage = ""
-        when(errorCode){
-            "<SELECT TIME>" -> errorMessage = "Select a time"
-            "<PLEASE SELECT>" -> errorMessage = "Select at least one option"
-            "<ENTER VALUE>" -> errorMessage = "Message cannot be empty"
+        var errorMessage: String
+        errorMessage = when(errorCode){
+            "<SELECT TIME>" -> "Select a time"
+            "<PLEASE SELECT>" -> "Select at least one option"
+            else -> "Message cannot be empty"
         }
         showPopup(activity!!, errorMessage, getString(R.string.text_info))
     }
