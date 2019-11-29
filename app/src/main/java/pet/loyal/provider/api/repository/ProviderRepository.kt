@@ -33,6 +33,6 @@ interface ProviderRepository {
 
     fun logOut(token: String) : LiveData<CommonBaseResponse>
 
-    fun updateFacility(token: String) : LiveData<UpdateFacilityBaseResponse>
+    fun updateFacility(token: String , facilityId : String) : LiveData<UpdateFacilityBaseResponse>
 
 }

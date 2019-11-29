@@ -355,9 +355,10 @@ class ProviderRepositoryImpl : ProviderRepository {
         return logoutResponse
     }
 
-    override fun updateFacility(token: String): LiveData<UpdateFacilityBaseResponse> {
+    override fun updateFacility(token: String, facilityId: String):
+            LiveData<UpdateFacilityBaseResponse> {
         val updateFacilityBaseResponse = MutableLiveData<UpdateFacilityBaseResponse>()
-        val call = apiService.updateFacility(getRequestHeaders(token))
+        val call = apiService.updateFacility(getRequestHeaders(token), facilityId)
 
         val baseResponse = UpdateFacilityBaseResponse()
 

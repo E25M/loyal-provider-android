@@ -96,6 +96,10 @@ class MainMenuFragment : Fragment() {
             } else {
                 if (response.updateFacilityResponse?.data != null) {
                     preferenceManager.saveFacility(response.updateFacilityResponse?.data!!)
+                    if (activity is HomeScreen) {
+                        val activity = activity as HomeScreen
+                        activity.loadLogo()
+                    }
                 }
 //                showToast(context!!, "success")
             }
@@ -125,7 +129,12 @@ class MainMenuFragment : Fragment() {
 
     private fun loadData() {
         if (isConnected(context!!)) {
-            viewModel.updateFacility(preferenceManager.getLoginToken())
+            if (preferenceManager.facilitySelected()) {
+                viewModel.updateFacility(
+                    preferenceManager.getLoginToken(),
+                    preferenceManager.getFacilityId()
+                )
+            }
         }
     }
 

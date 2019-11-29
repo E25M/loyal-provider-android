@@ -58,8 +58,9 @@ interface ProviderAPIService {
         @HeaderMap hashMap: HashMap<String, String>
     ): Call<CommonResponse>
 
-    @GET(Constants.url_facility)
+    @GET(Constants.url_facility + "{facilityId}")
     fun updateFacility(
-        @HeaderMap hashMap: HashMap<String, String>
+        @HeaderMap hashMap: HashMap<String, String> ,
+        @Path("facilityId") facilityId: String
     ): Call<UpdateFacilityResponse>
 }

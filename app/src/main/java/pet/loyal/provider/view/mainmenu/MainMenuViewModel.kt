@@ -27,9 +27,9 @@ class MainMenuViewModel : ViewModel() {
         showToast(context, " number is : $action")
     }
 
-    fun updateFacility(token: String) {
+    fun updateFacility(token: String, facilityId: String) {
         val dataSource =
-            repository.updateFacility(token)
+            repository.updateFacility(token, facilityId)
         updateFacilityBaseResponse.addSource(dataSource) { response ->
             if (this.updateFacilityBaseResponse.hasActiveObservers()) {
                 this.updateFacilityBaseResponse.removeSource(dataSource)
