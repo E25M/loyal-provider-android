@@ -1,7 +1,9 @@
 package pet.loyal.provider.view.patient
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -32,6 +34,8 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
@@ -61,7 +65,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     var sortBy = Constants.sort_ascending
     var keyWord = ""
     var facilityId = "default"
-    var sort = Constants.sort_type_parent
+    var sort = ""
 
     private lateinit var mSocket: Socket
 
@@ -155,16 +159,18 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         tablayout_patient_cards_sort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tablayout_patient_cards_sort.selectedTabPosition == 0) {
-                    sort = Constants.sort_type_parent
+                sort = if (tablayout_patient_cards_sort.selectedTabPosition == 0) {
+                    Constants.sort_type_parent
                 } else {
-                    sort = Constants.sort_type_patient
+                    Constants.sort_type_patient
                 }
                 loadData()
             }
 
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
 
+                sort = ""
+                loadData()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
