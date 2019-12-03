@@ -8,6 +8,7 @@ data class PetTrackingAppointment(
     @SerializedName("phaseHistory") val phaseHistory: ArrayList<Int>,
     @SerializedName("type") val type: String,
     @SerializedName("dateTime") val dateTime: String,
+    @SerializedName("updatedAt") val updatedAt: String,
     @SerializedName("petId") val petId: String,
     @SerializedName("petBirthday") val petBirthday: String,
     @SerializedName("petGender") val petGender: String,
