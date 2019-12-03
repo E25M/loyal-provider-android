@@ -15,6 +15,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Spannable
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -554,7 +555,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     phaseMessages, this)
                 fragmentEditPatiantCardBinding.recyclerViewMessages.setHasFixedSize(true)
                 fragmentEditPatiantCardBinding.recyclerViewMessages.layoutManager =
-                    LinearLayoutManager(context)
+                    LinearLayoutManagerWrapper(context, LinearLayoutManager.VERTICAL, false)
                 fragmentEditPatiantCardBinding.recyclerViewMessages.adapter =
                     phaseMessageRecyclerViewAdapter
             }
@@ -600,6 +601,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun addCustomMessage(position: Int?){
         customMessageId++
         if (position != null){
+            hideKeyboard()
             phaseMessages.add(position + 1,
                 PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
                     petCardDataResponse?.appointment?.id, false))
@@ -763,7 +765,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         phaseMessages.iterator().forEach { phaseMessage ->
             run {
                 if (phaseMessage._id == messageId){
-                    phaseMessage.canAddPhoto = true
+                    if (phaseMessage.type != PhaseMessage.Type.CUSTOM_MESSAGE && positionImage == 0){
+                        phaseMessage.isSelected = false
+                    }else {
+                        phaseMessage.canAddPhoto = true
+                    }
                 }
             }
         }
@@ -798,26 +804,28 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     override fun onClickTickCustom(isChecked: Boolean, position: Int, messageId: String) {
-        phaseMessages.iterator().forEach { phaseMessage ->
+        val iterator = phaseMessages.iterator()
+        iterator.forEach { phaseMessage ->
             run {
-                if (phaseMessage._id == messageId) {
-                    phaseMessage.isSelected = isChecked
-                    if (!isChecked){
-                        phaseMessage.imageGallery = null
-                        imageGalleryList.remove(messageId)
-                        phaseMessage.message = ""
-                        if (initialControl.contains(messageId)) {
-                            phaseMessage.control = initialControl[messageId]!!
-                            phaseMessage.message = formatMessage(initialMessage[messageId]!!)
+                if (phaseMessage.type == PhaseMessage.Type.CUSTOM_MESSAGE) {
+                    if (phaseMessage._id == messageId) {
+                        phaseMessage.isSelected = isChecked
+                        if (!isChecked) {
+                            phaseMessage.imageGallery = null
+                            imageGalleryList.remove(messageId)
+                            if (phaseMessages.size > position + 1
+                                && phaseMessages[position + 1].type == PhaseMessage.Type.CUSTOM_MESSAGE)
+                            {
+                                iterator.remove()
+                            }
+                        }
+                        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
+                            run {
+                                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
+                            }
                         }
                     }
                 }
-            }
-        }
-
-        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-            run {
-                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
             }
         }
     }
@@ -829,6 +837,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 phaseMessage.isSelected = true
             }
         }
+
         fragmentEditPatiantCardBinding.recyclerViewMessages.post {
             run {
                 fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
@@ -981,4 +990,16 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
         showPopup(activity!!, errorMessage, getString(R.string.text_info))
     }
+
+    private fun hideKeyboard() {
+        val imm = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity!!.currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }
+

@@ -417,9 +417,9 @@ class PhaseMessageRecyclerViewAdapter(
 
                 viewPhaseMessage.btnAddMessage.setOnClickListener {
                     if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
-                        phaseMessageItemListener.onEditMessageCustom(viewPhaseMessage.edtTxtMessage.text.toString(), position,
-                            itemPhaseMessage._id)
                         phaseMessageItemListener.onAddCustomMessage(position)
+                        phaseMessageItemListener.onEditMessageCustom(
+                            viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
                     }else{
                         showToast(viewHolder.itemView.context, "Message cannot be empty")
                     }
@@ -431,7 +431,7 @@ class PhaseMessageRecyclerViewAdapter(
                     position,
                     itemPhaseMessage.imageGallery,
                     this)
-                viewPhaseMessage.recyclerViewImageGallery.layoutManager = LinearLayoutManager(
+                viewPhaseMessage.recyclerViewImageGallery.layoutManager = LinearLayoutManagerWrapper(
                     viewPhaseMessage.recyclerViewImageGallery.context,
                     LinearLayoutManager.HORIZONTAL,
                     false)
@@ -495,6 +495,7 @@ class PhaseMessageRecyclerViewAdapter(
         }else{
             viewPhaseMessage.btnAddPhoto.visibility = View.GONE
         }
+        expand(viewPhaseMessage.mainContainer, 500, 300)
     }
 
     private fun showUncheckedCustomMessage(viewPhaseMessage: LayoutEditPatientCardCustomItemBinding) {
@@ -503,6 +504,7 @@ class PhaseMessageRecyclerViewAdapter(
         viewPhaseMessage.layoutMessage.visibility = View.GONE
         viewPhaseMessage.btnAddMessage.visibility = View.GONE
         viewPhaseMessage.recyclerViewImageGallery.visibility = View.GONE
+        collapse(viewPhaseMessage.mainContainer, 500, 88)
     }
 
     private fun updateCountValue(message: String, countView: TextView){
