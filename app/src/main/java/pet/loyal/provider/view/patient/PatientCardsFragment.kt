@@ -315,7 +315,6 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                     )
                 }
             }
-
         })
     }
 

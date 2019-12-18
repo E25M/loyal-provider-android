@@ -83,7 +83,6 @@ class SelfInviteFragment : Fragment() {
                         showPopup(activity!!, selfInviteResponse.throwable?.message!!, getString(R.string.text_info))
                     }
                 }else if(selfInviteResponse.selfInviteResponse != null){
-                    selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
                     showSuccessPopup(selfInviteResponse.selfInviteResponse?.data)
                 }
             }
@@ -96,11 +95,14 @@ class SelfInviteFragment : Fragment() {
                 data.status == Constants.self_invite_parent_added_success -> {
                     val selfInviteSuccessDialogFragment = SelfInviteSuccessDialogFragment()
                     selfInviteSuccessDialogFragment.show(fragmentManager!!, "")
+                    selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
                 }
                 data.status == Constants.self_invite_parent_exist_facility_not_exist ->
                     showAddToFacilityPopup(data.data.firstName, data.data.lastName)
-                data.status == Constants.self_invite_parent_already_exist ->
+                data.status == Constants.self_invite_parent_already_exist -> {
+                    selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
                     showParentExistPopup(data.data.firstName, data.data.lastName)
+                }
             }
         }
     }
@@ -173,7 +175,7 @@ class SelfInviteFragment : Fragment() {
                 sendSelfInvitation(true)
             }
             .setNegativeButton(getString(R.string.text_cancel)){ _, _ ->
-
+                selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
             }
             .show()
     }

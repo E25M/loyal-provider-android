@@ -26,6 +26,7 @@
                 android:theme="@style/AppThemeBlue" />
         <activity
                 android:name=".view.login.LoginActivity"
+                android:theme="@style/AppThemeDark"
                 android:screenOrientation="landscape" />
 
         <service android:name=".services.DownloadService" />

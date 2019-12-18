@@ -53,8 +53,13 @@ class PatientCardsAdapter(
         holder.itemView.txt_first_name_list_item_pet_card.text =
             card.parentLastName
 
-        holder.itemView.txt_date_time_lis_item_pet_card.text =
-            formatDate(card.dateTime, SimpleDateFormat("hh:mm a"))
+        if (card.phase == 1) {
+            holder.itemView.txt_date_time_lis_item_pet_card.text =
+                formatDate(card.dateTime, SimpleDateFormat("hh:mm a"))
+        }else{
+            holder.itemView.txt_date_time_lis_item_pet_card.text =
+                formatDate(card.updatedAt, SimpleDateFormat("hh:mm a"))
+        }
 
         if (card.petImage != null) {
             if (!TextUtils.isEmpty(card.petImage)) {
