@@ -1,9 +1,7 @@
 package pet.loyal.provider.view.patient
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -34,8 +32,6 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO

@@ -372,8 +372,6 @@ class PhaseMessageRecyclerViewAdapter(
 
                     override fun afterTextChanged(s: Editable?) {
                         updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
-//                        phaseMessageItemListener.onEditMessageCustom(s.toString(), position,
-//                            itemPhaseMessage._id)
                     }
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
                                                    after: Int) {}
@@ -383,43 +381,28 @@ class PhaseMessageRecyclerViewAdapter(
 
                 if (itemPhaseMessage.isSelected) {
                     showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
+                    if (position == 0) {
+                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                    }else{
+                        viewPhaseMessage.btnAddMessage.visibility = View.GONE
+                    }
                 }else{
                     showUncheckedCustomMessage(viewPhaseMessage)
                 }
 
-                viewPhaseMessage.chkBoxTicketMessage.setOnCheckedChangeListener { _, isChecked ->
-
-//                    if ((phaseMessagesList.size > position + 1)
-//                        && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE)
-//                        || position == phaseMessagesList.size - 1)
-//                    {
-                        phaseMessageItemListener.onClickTickCustom(isChecked, position, itemPhaseMessage._id)
-//                    }
-                }
-
-                if (((phaseMessagesList.size > position + 1)
-                    && (phaseMessagesList[position + 1].type == PhaseMessage.Type.SENT_MESSAGE))
-                    || position == phaseMessagesList.size - 1)
-                {
-                    viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
-                }else{
-                    viewPhaseMessage.btnAddMessage.visibility = View.GONE
-                    if(((itemPhaseMessage.imageGallery != null
-                        && itemPhaseMessage.imageGallery!!.size > 0)
-                        || !viewPhaseMessage.edtTxtMessage.text.isNullOrEmpty()
-                                || itemPhaseMessage.isSelected))
-                    {
-                        showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-                    }else{
-                        showUncheckedCustomMessage(viewPhaseMessage)
-                    }
+                viewPhaseMessage.chkBoxTicketMessage.setOnClickListener{
+                    phaseMessageItemListener.onClickTickCustom(
+                        viewPhaseMessage.chkBoxTicketMessage.isChecked,
+                        position,
+                        itemPhaseMessage._id
+                    )
                 }
 
                 viewPhaseMessage.btnAddMessage.setOnClickListener {
                     if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
+                        phaseMessageItemListener.onEditMessageCustom(viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
                         phaseMessageItemListener.onAddCustomMessage(position)
-                        phaseMessageItemListener.onEditMessageCustom(
-                            viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
+                        notifyDataSetChanged()
                     }else{
                         showToast(viewHolder.itemView.context, "Message cannot be empty")
                     }

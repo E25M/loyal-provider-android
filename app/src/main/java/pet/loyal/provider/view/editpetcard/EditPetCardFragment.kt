@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import com.google.gson.Gson
 import pet.loyal.client.api.response.PetCardDataResponse
 import pet.loyal.provider.BuildConfig
@@ -40,6 +42,7 @@ import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.phasechange.PhaseListDialogFragment
 import java.io.File
+import java.net.URISyntaxException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -92,6 +95,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private var movingPhase = 0
     private var uploadedImageCount = 0
 
+    private lateinit var mSocket: Socket
+
     companion object {
         fun newInstance() = EditPetCardFragment()
     }
@@ -99,6 +104,12 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        try {
+            mSocket = IO.socket(BuildConfig.SOCKET_URL)
+        } catch (ex: URISyntaxException) {
+            showToast(activity!!, "Updating pet cards on real time is not working.")
+        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
@@ -258,6 +269,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun showUpdateConfirmation(){
+        mSocket.emit("phaseUpdated", preferenceManager.getFacilityId())
+
         showUpdateConfirmPopup(activity!!,
             "Update sent to ${petCardDataResponse?.appointment?.petName} support network at" +
                     "\n ${getCurrentDateString()}, ${getCurrentTimeString()}",
@@ -444,7 +457,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
                 if (appointment.petBreed != null) {
                     viewModel.liveBreedSpecies.value = appointment.petBreed +
-                            ", " + appointment.petSpecies + "\n" + appointment.petGender
+                            ", " + appointment.petSpecies + "\n" + appointment.petGender.replace("_", " ")
                 }else{
                     viewModel.liveBreedSpecies.value = appointment.petSpecies + "\n" + appointment.petGender
                 }
@@ -600,17 +613,10 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun addCustomMessage(position: Int?){
         customMessageId++
-        if (position != null){
-            hideKeyboard()
-            phaseMessages.add(position + 1,
-                PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
-                    petCardDataResponse?.appointment?.id, false))
-            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter?.notifyItemChanged(position)
-        }else{
-            phaseMessages.add(
-                PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
-                    petCardDataResponse?.appointment?.id, false))
-        }
+//            hideKeyboard()
+        val newCustomMessage = PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
+            petCardDataResponse?.appointment?.id, false)
+            phaseMessages.add(0, newCustomMessage)
     }
 
     private fun showAddedImage(){
@@ -765,7 +771,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         phaseMessages.iterator().forEach { phaseMessage ->
             run {
                 if (phaseMessage._id == messageId){
-                    if (phaseMessage.type != PhaseMessage.Type.CUSTOM_MESSAGE && positionImage == 0){
+                    if (phaseMessage.type != PhaseMessage.Type.CUSTOM_MESSAGE
+                        && positionImage == 0){
+
                         phaseMessage.isSelected = false
                     }else {
                         phaseMessage.canAddPhoto = true
@@ -813,17 +821,18 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         if (!isChecked) {
                             phaseMessage.imageGallery = null
                             imageGalleryList.remove(messageId)
-                            if (phaseMessages.size > position + 1
-                                && phaseMessages[position + 1].type == PhaseMessage.Type.CUSTOM_MESSAGE)
-                            {
+                            phaseMessage.message = ""
+                            if ((position != 0) || (position == 0)
+                                && (phaseMessages[1].type == PhaseMessage.Type.CUSTOM_MESSAGE)) {
+
                                 iterator.remove()
                             }
                         }
-                        fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-                            run {
-                                fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
-                            }
+
+                        fragmentEditPatiantCardBinding.recyclerViewMessages.post{
+                            fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
                         }
+                        return@forEach
                     }
                 }
             }
@@ -869,9 +878,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 phaseMessage.isSelected = true
 
                 fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-                    run {
-                        fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
-                    }
+                    fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
                 }
             }
         }
