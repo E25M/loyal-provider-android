@@ -1,9 +1,7 @@
 package pet.loyal.provider.view.patient
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -34,8 +32,6 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
@@ -107,33 +103,11 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         conteinerView = view.findViewById(R.id.constraint_layout_cards_container)
         edittext = view.findViewById(R.id.serachview_patient_cards_keyword)
-//        val searchView = view.findViewById(R.id.serachview_patient_cards_keyword) as SearchView
-//        val id = searchView.context
-//            .resources
-//            .getIdentifier("android:id/search_src_text", null, null)
-//        val textView = searchView.findViewById<View>(id) as TextView
-//        textView.setHintTextColor(Color.WHITE)
-//        textView.setTextColor(Color.WHITE)
-//        setUpLayoutManager()
+
         viewModel.selectedFacilityLogo.value = preferenceManager.getfacilityLogo()
         setUpGridLayoutManager()
         setUpObservers()
-//        serachview_patient_cards_keyword.setOnQueryTextListener(object :
-//            SearchView.OnQueryTextListener {
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextSubmit(newText: String?): Boolean {
-//                if (newText != null) {
-//                    if (!TextUtils.isEmpty(newText)) {
-//                        keyWord = newText
-//                        loadData()
-//                    }
-//                }
-//                return true
-//            }
-//        })
+
         serachview_patient_cards_keyword.setOnEditorActionListener(
             object : TextView.OnEditorActionListener {
                 override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
@@ -167,15 +141,9 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                 loadData()
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-                sort = ""
-                loadData()
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-
-            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
         })
 
         img_patient_cards_sort_by.setOnClickListener {
