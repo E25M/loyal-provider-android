@@ -354,4 +354,33 @@ class ProviderRepositoryImpl : ProviderRepository {
         })
         return logoutResponse
     }
+
+    override fun updateFacility(token: String, facilityId: String):
+            LiveData<UpdateFacilityBaseResponse> {
+        val updateFacilityBaseResponse = MutableLiveData<UpdateFacilityBaseResponse>()
+        val call = apiService.updateFacility(getRequestHeaders(token), facilityId)
+
+        val baseResponse = UpdateFacilityBaseResponse()
+
+        call.enqueue(object : Callback<UpdateFacilityResponse> {
+            override fun onResponse(
+                call: Call<UpdateFacilityResponse>,
+                response: Response<UpdateFacilityResponse>
+            ) {
+                if (response.isSuccessful) {
+                    baseResponse.updateFacilityResponse = response.body()
+                } else {
+                    baseResponse.throwable = Throwable(response.errorBody()?.string())
+                }
+
+                updateFacilityBaseResponse.value = baseResponse
+            }
+
+            override fun onFailure(call: Call<UpdateFacilityResponse>, t: Throwable) {
+                baseResponse.throwable = t
+                updateFacilityBaseResponse.value = baseResponse
+            }
+        })
+        return updateFacilityBaseResponse
+    }
 }

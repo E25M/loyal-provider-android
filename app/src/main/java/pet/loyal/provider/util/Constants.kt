@@ -41,6 +41,7 @@ class Constants {
         const val url_get_phases = "ptb/phases"
         const val url_save_facility = "device-facility"
         const val url_logout = "logout"
+        const val url_facility = "facility/"
         const val upload_preset = "rt8cuu9q"
 
         const val query_appointment_id = "appointment-ID"

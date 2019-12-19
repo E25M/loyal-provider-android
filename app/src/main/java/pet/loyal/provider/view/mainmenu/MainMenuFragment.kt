@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.helpscout.beacon.Beacon
 import com.helpscout.beacon.ui.BeaconActivity
@@ -12,6 +13,8 @@ import kotlinx.android.synthetic.main.main_menu_fragment.*
 import pet.loyal.provider.databinding.MainMenuFragmentBinding
 import pet.loyal.provider.util.Constants
 import pet.loyal.provider.util.PreferenceManager
+import pet.loyal.provider.util.isConnected
+import pet.loyal.provider.util.showToast
 import pet.loyal.provider.view.home.HomeScreen
 
 class MainMenuFragment : Fragment() {
@@ -83,6 +86,24 @@ class MainMenuFragment : Fragment() {
 //                }
             }
         }
+
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.updateFacilityBaseResponse.observe(this, Observer { response ->
+            if (response.throwable != null) {
+            } else {
+                if (response.updateFacilityResponse?.data != null) {
+                    preferenceManager.saveFacility(response.updateFacilityResponse?.data!!)
+                    if (activity is HomeScreen) {
+                        val activity = activity as HomeScreen
+                        activity.loadLogo()
+                    }
+                }
+//                showToast(context!!, "success")
+            }
+        })
     }
 
     private fun initDataBinding() {
@@ -99,6 +120,22 @@ class MainMenuFragment : Fragment() {
     private fun changeFragment(type: Int) {
         val activity = activity as HomeScreen
         activity.changeFragment(type)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadData()
+    }
+
+    private fun loadData() {
+        if (isConnected(context!!)) {
+            if (preferenceManager.facilitySelected()) {
+                viewModel.updateFacility(
+                    preferenceManager.getLoginToken(),
+                    preferenceManager.getFacilityId()
+                )
+            }
+        }
     }
 
 }

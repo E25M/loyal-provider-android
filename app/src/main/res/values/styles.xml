@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/font_color_blue</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/font_color_blue</item>
+    </style>
+
     <!--blue colored app theme-->
     <style name="AppThemeBlue" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
