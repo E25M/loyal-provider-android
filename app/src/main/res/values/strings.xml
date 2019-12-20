@@ -112,4 +112,5 @@
     <string name="msg_expected_phase">This action will reset all sent messages. Are you sure you want to continue?</string>
     <string name="title_confirm">Confirm</string>
     <string name="error_message_connot_empty">Message cannot be empty</string>
+    <string name="text_confirm_message">The changes you have made will be lost if you navigate away from this page. Are you sure you want to leave this page?</string>
 </resources>
