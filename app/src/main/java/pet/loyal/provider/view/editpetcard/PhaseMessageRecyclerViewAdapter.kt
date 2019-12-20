@@ -364,6 +364,10 @@ class PhaseMessageRecyclerViewAdapter(
                 viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
 
                 viewPhaseMessage.btnAddPhoto.setOnClickListener {
+                    phaseMessageItemListener.onEditMessageCustom(
+                                viewPhaseMessage.edtTxtMessage.text.toString(),
+                                position,
+                                itemPhaseMessage._id)
                     phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
                         position, itemPhaseMessage._id)
                 }
