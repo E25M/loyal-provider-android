@@ -85,7 +85,7 @@ class EditPetCardViewModel : ViewModel() {
         jsonObjectMain.put("phaseId", phaseId)
         jsonObjectMain.put("appointmentId", appointmentId)
         jsonObjectMain.put("facility", facilityId)
-        if (movingPhase - phaseId > 0) {
+        if (movingPhase - phaseId >= 0) {
             jsonObjectMain.put("backward", false)
         }else{
             jsonObjectMain.put("backward", true)

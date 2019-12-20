@@ -232,7 +232,12 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
 
         fragmentEditPatiantCardBinding.btnCancel.setOnClickListener {
-            activity!!.onBackPressed()
+            if (isDataChanged()) {
+                showConfirmNoUpdatedMessages(activity!!, getString(R.string.text_confirm_message),
+                    getString(R.string.title_confirm))
+            }else{
+                activity!!.onBackPressed()
+            }
         }
 
         fragmentEditPatiantCardBinding.layoutNext.setOnClickListener {
@@ -266,6 +271,15 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         (activity as HomeScreen).setEditCardPermissionListener(this)
 
         return fragmentEditPatiantCardBinding.root
+    }
+
+    private fun isDataChanged(): Boolean{
+        phaseMessages.forEach {
+            if (it.isSelected) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun showUpdateConfirmation(){
@@ -955,6 +969,20 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setTitle(title)
             .setPositiveButton(R.string.yes) { _, _ ->
                sendPTBMessages()
+            }
+            .setNegativeButton(R.string.no){_,_->
+
+            }
+            .create()
+        aDialog.show()
+    }
+
+    private fun showConfirmNoUpdatedMessages(context: Context, message: String, title: String) {
+        val aDialog = AlertDialog.Builder(context)
+            .setMessage(message)
+            .setTitle(title)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                activity!!.onBackPressed()
             }
             .setNegativeButton(R.string.no){_,_->
 
