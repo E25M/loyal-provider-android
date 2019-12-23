@@ -38,6 +38,7 @@ import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.model.RequestPTBMessage
 import pet.loyal.provider.util.*
+import pet.loyal.provider.view.dialog.ImageEnlargeFragment
 import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.phasechange.PhaseListDialogFragment
@@ -352,6 +353,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }else{
                         phaseMessage.message
                     }
+
                     if (message.isNotEmpty() && !(message.contains("<") && message.contains(">"))) {
                         val requestPTBMessage = RequestPTBMessage(
                             phaseMessage._id,
@@ -361,7 +363,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             imageIdsList[phaseMessage._id]
                         )
                         requestMessageList.add(requestPTBMessage)
-                    }else{
+                    } else {
                         if (message.contains("<") && message.contains(">")) {
                             showErrorsIncompleteMessage(
                                 message.substring(
@@ -369,8 +371,20 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                     message.indexOf(">") + 1
                                 )
                             )
-                        }else{
-                            showPopup(activity!!, getString(R.string.error_message_connot_empty), getString(R.string.text_info))
+                        } else {
+                            if (phaseMessage.type == PhaseMessage.Type.CUSTOM_MESSAGE){
+                                showPopup(
+                                    activity!!,
+                                    getString(R.string.error_message_please_apply),
+                                    getString(R.string.text_info)
+                                )
+                            }else {
+                                showPopup(
+                                    activity!!,
+                                    getString(R.string.error_message_connot_empty),
+                                    getString(R.string.text_info)
+                                )
+                            }
                         }
                         return null
                     }
@@ -466,6 +480,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             val appointment = petCardDataResponse.appointment
             if (appointment != null){
                 val phases = petCardDataResponse.phases
+                movingPhase = appointment.phase
                 viewModel.livePetName.value = appointment.petName + ", " + appointment.parentLastName
                 viewModel.livePetImage.value = appointment.petImage
 
@@ -786,7 +801,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             run {
                 if (phaseMessage._id == messageId){
                     if (phaseMessage.type != PhaseMessage.Type.CUSTOM_MESSAGE
-                        && positionImage == 0){
+                        && positionImage == 0 && imageGalleryList[messageId]!!.size == 0){
 
                         phaseMessage.isSelected = false
                     }else {
@@ -798,7 +813,17 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         notifyItemChange()
     }
 
-    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {}
+    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {
+        enlargeImage(imageGalleryList[messageId]?.get(positionImage).toString())
+    }
+
+    private fun enlargeImage(url: String) {
+        val bundle = Bundle()
+        bundle.putString(Constants.extra_image_id, url)
+        val imageEnlargeFragment = ImageEnlargeFragment()
+        imageEnlargeFragment.arguments = bundle
+        imageEnlargeFragment.show(fragmentManager!!, "")
+    }
 
     override fun onClickTick(isChecked: Boolean, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
@@ -911,8 +936,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         if (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE){
             phaseMessages.removeAt(0)
         }
-        phaseMessages.add(0, PhaseMessage(message))
         this.movingPhase = movingPhase
+        if (message != "true") {
+            phaseMessages.add(0, PhaseMessage(message))
+        }else{
+            phaseMessages.add(0, PhaseMessage(""))
+            savePTBMessages()
+        }
         fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
     }
 

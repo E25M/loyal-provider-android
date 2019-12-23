@@ -19,6 +19,7 @@ import pet.loyal.provider.LoyalProviderApp
 import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.databinding.LayoutHomeScreenBinding
 import pet.loyal.provider.util.*
+import pet.loyal.provider.view.dialog.FragmentActivityControlListener
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.mainmenu.MainMenuFragment
 import pet.loyal.provider.view.patient.PatientCardsFragment
@@ -34,6 +35,7 @@ class HomeScreen : AppCompatActivity() {
     lateinit var viewModel: HomeScreenViewModel
     lateinit var preferenceManager: PreferenceManager
     var editPetCardPermissionListener: EditPetCardPermissionListener? = null
+    var onPremissionGrantedListener: FragmentActivityControlListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,9 @@ class HomeScreen : AppCompatActivity() {
         LoyalProviderApp.startedApp = true
     }
 
+    fun setPermissionGrantedListener(fragmentActivityControlListener: FragmentActivityControlListener) {
+        this.onPremissionGrantedListener = fragmentActivityControlListener
+    }
 
     fun setEditCardPermissionListener(editPetCardPermissionListener: EditPetCardPermissionListener) {
         this.editPetCardPermissionListener = editPetCardPermissionListener

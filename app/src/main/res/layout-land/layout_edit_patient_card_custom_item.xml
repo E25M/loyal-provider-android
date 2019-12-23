@@ -52,7 +52,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_8"
-                        android:text="100 characters remaining"
+                        android:text="250 characters remaining"
                         app:layout_constraintTop_toBottomOf="@id/edtTxtMessage"
                         app:layout_constraintEnd_toStartOf="@id/btnAddMessage"/>
 

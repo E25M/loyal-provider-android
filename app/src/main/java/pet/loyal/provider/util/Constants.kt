@@ -59,6 +59,7 @@ class Constants {
         const val extra_phase_id = "extra.phase.id"
         const val extra_appointment_id = "extra.appointment.id"
         const val extra_pet_name = "extra.pet.name"
+        const val extra_image_id = "extra.image.id"
 
         const val action_download_apk = "pet.loyal.provider.download.apk"
 
@@ -83,7 +84,7 @@ class Constants {
         const val view_type_custom_message = 1
         const val view_type_template_message = 2
         const val view_type_phase_change_message = 3
-        const val custom_message_character_limit = 100
+        const val custom_message_character_limit = 250
 
         //select image
         const val folder_loyal = "/Loyal"
@@ -141,6 +142,7 @@ class Constants {
         const val templete_message_collapse_hight = 80
         const val sent_message_expand_hight = 240
         const val templete_message_expande_hight = 250
+
 
     }
 }
