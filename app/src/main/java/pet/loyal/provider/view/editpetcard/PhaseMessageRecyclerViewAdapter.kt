@@ -504,7 +504,7 @@ class PhaseMessageRecyclerViewAdapter(
             Constants.custom_message_character_limit - message.length < 0 -> {
 
             }
-            else -> messageTextCounter = "${100 - message.length} characters remaining"
+            else -> messageTextCounter = "${Constants.custom_message_character_limit - message.length} characters remaining"
         }
         countView.text = messageTextCounter
     }

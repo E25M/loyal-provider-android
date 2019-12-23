@@ -38,6 +38,7 @@ import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
 import pet.loyal.provider.model.RequestPTBMessage
 import pet.loyal.provider.util.*
+import pet.loyal.provider.view.dialog.ImageEnlargeFragment
 import pet.loyal.provider.view.home.HomeScreen
 import pet.loyal.provider.view.login.LoginActivity
 import pet.loyal.provider.view.phasechange.PhaseListDialogFragment
@@ -466,6 +467,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             val appointment = petCardDataResponse.appointment
             if (appointment != null){
                 val phases = petCardDataResponse.phases
+                movingPhase = appointment.phase
                 viewModel.livePetName.value = appointment.petName + ", " + appointment.parentLastName
                 viewModel.livePetImage.value = appointment.petImage
 
@@ -798,7 +800,17 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         notifyItemChange()
     }
 
-    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {}
+    override fun onClickImage(positionImage: Int, position: Int, messageId: String) {
+        enlargeImage(imageGalleryList[messageId]?.get(positionImage).toString())
+    }
+
+    private fun enlargeImage(url: String) {
+        val bundle = Bundle()
+        bundle.putString(Constants.extra_image_id, url)
+        val imageEnlargeFragment = ImageEnlargeFragment()
+        imageEnlargeFragment.arguments = bundle
+        imageEnlargeFragment.show(fragmentManager!!, "")
+    }
 
     override fun onClickTick(isChecked: Boolean, position: Int, messageId: String) {
         phaseMessages.iterator().forEach { phaseMessage ->
