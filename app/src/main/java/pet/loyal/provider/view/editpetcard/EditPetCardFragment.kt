@@ -353,6 +353,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                     }else{
                         phaseMessage.message
                     }
+
                     if (message.isNotEmpty() && !(message.contains("<") && message.contains(">"))) {
                         val requestPTBMessage = RequestPTBMessage(
                             phaseMessage._id,
@@ -362,7 +363,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             imageIdsList[phaseMessage._id]
                         )
                         requestMessageList.add(requestPTBMessage)
-                    }else{
+                    } else {
                         if (message.contains("<") && message.contains(">")) {
                             showErrorsIncompleteMessage(
                                 message.substring(
@@ -370,8 +371,20 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                                     message.indexOf(">") + 1
                                 )
                             )
-                        }else{
-                            showPopup(activity!!, getString(R.string.error_message_connot_empty), getString(R.string.text_info))
+                        } else {
+                            if (phaseMessage.type == PhaseMessage.Type.CUSTOM_MESSAGE){
+                                showPopup(
+                                    activity!!,
+                                    getString(R.string.error_message_please_apply),
+                                    getString(R.string.text_info)
+                                )
+                            }else {
+                                showPopup(
+                                    activity!!,
+                                    getString(R.string.error_message_connot_empty),
+                                    getString(R.string.text_info)
+                                )
+                            }
                         }
                         return null
                     }
@@ -788,7 +801,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             run {
                 if (phaseMessage._id == messageId){
                     if (phaseMessage.type != PhaseMessage.Type.CUSTOM_MESSAGE
-                        && positionImage == 0){
+                        && positionImage == 0 && imageGalleryList[messageId]!!.size == 0){
 
                         phaseMessage.isSelected = false
                     }else {
@@ -923,8 +936,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         if (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE){
             phaseMessages.removeAt(0)
         }
-        phaseMessages.add(0, PhaseMessage(message))
         this.movingPhase = movingPhase
+        if (message != "true") {
+            phaseMessages.add(0, PhaseMessage(message))
+        }else{
+            phaseMessages.add(0, PhaseMessage(""))
+            savePTBMessages()
+        }
         fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
     }
 

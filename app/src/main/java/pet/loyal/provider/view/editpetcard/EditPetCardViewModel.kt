@@ -85,10 +85,16 @@ class EditPetCardViewModel : ViewModel() {
         jsonObjectMain.put("phaseId", phaseId)
         jsonObjectMain.put("appointmentId", appointmentId)
         jsonObjectMain.put("facility", facilityId)
-        if (movingPhase - phaseId >= 0) {
-            jsonObjectMain.put("backward", false)
-        }else{
-            jsonObjectMain.put("backward", true)
+        when {
+            movingPhase == phaseId -> {
+                jsonObjectMain.put("backward", false)
+            }
+            movingPhase > phaseId -> {
+                jsonObjectMain.put("backward", true)
+            }
+            else -> {
+                jsonObjectMain.put("backward", false)
+            }
         }
 
         if (ptbMessageList[ptbMessageList.size -1].isPhaseChange) {

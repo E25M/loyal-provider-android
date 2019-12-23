@@ -42,8 +42,8 @@ android {
         }
         dev {
             applicationIdSuffix = ".dev"
-            buildConfigField "String", 'BASE_URL', "\"https://api-provider.dev.loyal.pet/v1/tablet/\""
-            buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.dev.loyal.pet\""
+            buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81/\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"

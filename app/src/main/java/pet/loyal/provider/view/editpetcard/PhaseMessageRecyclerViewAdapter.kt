@@ -207,7 +207,6 @@ class PhaseMessageRecyclerViewAdapter(
                                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
                                )
                            }
-
                        }
 
                        "<PLEASE SELECT>" -> {
@@ -430,7 +429,9 @@ class PhaseMessageRecyclerViewAdapter(
                 val viewPhaseMessage = (viewHolder as
                         PhaseMessagePhaseChangeViewHolder).itemBinding
                 viewPhaseMessage.txtSentMessage.text = itemPhaseMessage.message
-//                viewPhaseMessage.txtDateTime.text = getTimeString(itemPhaseMessage.dateTime!!) + ", " + getDateString(itemPhaseMessage.dateTime!!)
+                if (itemPhaseMessage.message == ""){
+                    collapse(viewPhaseMessage.mainContainer, 10, 0)
+                }
             }
         }
     }
