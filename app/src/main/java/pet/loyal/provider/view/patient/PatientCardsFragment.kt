@@ -85,7 +85,6 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         mSocket.on("updateDashboard", onNewMessage)
         mSocket.let {
             it.connect().on(Socket.EVENT_CONNECT) {
-                //                    Log.d("SignallingClient", "Socket connected!!!!!")
             }
         }
     }
@@ -134,9 +133,9 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 sort = if (tablayout_patient_cards_sort.selectedTabPosition == 0) {
-                    Constants.sort_type_parent
-                } else {
                     Constants.sort_type_patient
+                } else {
+                    Constants.sort_type_parent
                 }
                 loadData()
             }

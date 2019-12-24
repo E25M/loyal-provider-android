@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.google.gson.Gson
@@ -102,6 +103,13 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         fun newInstance() = EditPetCardFragment()
     }
 
+    private val onNewMessageCard = Emitter.Listener { args ->
+
+        activity!!.runOnUiThread {
+            loadAppointment()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -110,6 +118,12 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             mSocket = IO.socket(BuildConfig.SOCKET_URL)
         } catch (ex: URISyntaxException) {
             showToast(activity!!, "Updating pet cards on real time is not working.")
+        }
+
+        mSocket.on("updateDashboard", onNewMessageCard)
+        mSocket.let {
+            it.connect().on(Socket.EVENT_CONNECT) {
+            }
         }
     }
 
@@ -285,7 +299,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private fun showUpdateConfirmation(){
         mSocket.emit("phaseUpdated", preferenceManager.getFacilityId())
-
         showUpdateConfirmPopup(activity!!,
             "Update sent to ${petCardDataResponse?.appointment?.petName} support network at" +
                     "\n ${getCurrentDateString()}, ${getCurrentTimeString()}",
@@ -326,7 +339,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun savePTBMessages(){
-        if (movingPhase != 1) {
+        if ((movingPhase != 1) || (petCardDataResponse?.appointment?.phase!! == movingPhase)) {
             sendPTBMessages()
         }else{
             showConfirmPopup(activity!!, getString(R.string.msg_expected_phase), getString(R.string.title_confirm))
@@ -776,6 +789,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             }
             if (imageGalleryList[selectedMessageId]?.size!! < 10) {
                 imageGalleryList[selectedMessageId]?.add(0, uri)
+                selectedPhotoUri = Uri.EMPTY
             }else{
                 showToast(activity!!, getString(R.string.text_10_photos_limit))
             }
@@ -1065,6 +1079,26 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        mSocket.off("updateDashboard", onNewMessageCard)
+
+        val root = Environment.getExternalStorageDirectory().toString()
+        val loyalDir = File("$root${Constants.folder_loyal}")
+        loyalDir.mkdirs()
+
+        for (i in 0 until capturedImageCount) {
+            val file = File(loyalDir, Constants.captured_pic_name + i + ".png")
+
+            if (file != null) {
+                if (file.exists()) {
+                    file.delete()
+                }
+            }
+        }
     }
 }
 

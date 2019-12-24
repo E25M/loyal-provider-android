@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import pet.loyal.provider.databinding.LayoutPhotoGalleryItemBinding
 import pet.loyal.provider.util.Constants
@@ -43,7 +44,7 @@ class PhaseMessageGalleryRecyclerViewAdapter(
         if (image != null) {
             val imageView = viewHolder.itemBinding
             imageView.imgSource.setImageResource(0)
-            Picasso.get().load(image).resize(150, 100).centerCrop().into(imageView.imgSource)
+            Picasso.get().load(image).memoryPolicy(MemoryPolicy.NO_CACHE).resize(150, 100).centerCrop().into(imageView.imgSource)
 
             if (type == Constants.view_type_sent_message){
                 imageView.btnDelete.visibility = View.INVISIBLE

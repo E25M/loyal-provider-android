@@ -43,7 +43,7 @@
                         android:id="@+id/edtTxtMessage"
                         android:background="@null"
                         android:minLines="2"
-                        android:maxLength="100"
+                        android:maxLength="250"
                         android:hint="@string/text_add_new_message"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"/>
