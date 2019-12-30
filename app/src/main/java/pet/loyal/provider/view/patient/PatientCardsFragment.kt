@@ -148,8 +148,10 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         img_patient_cards_sort_by.setOnClickListener {
             if (sortBy == Constants.sort_ascending) {
                 sortBy = Constants.sort_descending
+                viewModel.sortByIcon.value = resources.getDrawable(R.drawable.ic_sort_by_dec, null)
             } else {
                 sortBy = Constants.sort_ascending
+                viewModel.sortByIcon.value = resources.getDrawable(R.drawable.ic_sort_by, null)
             }
             loadData()
         }
@@ -163,7 +165,6 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
                 recyclerview_phases.adapter!!.itemCount - 1
             )
         }
-
 
 //        drpDwnFilterArea.alpha = 0.5f
         drpDwnFilterArea.setOnClickListener {
@@ -211,6 +212,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         layoutBinding.lifecycleOwner = this
         preferenceManager = PreferenceManager(context!!)
         facilityId = preferenceManager.getFacilityId()
+        viewModel.sortByIcon.value = resources.getDrawable(R.drawable.ic_sort_by, null)
     }
 
 
