@@ -828,7 +828,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     override fun onClickImage(positionImage: Int, position: Int, messageId: String) {
-        enlargeImage(imageGalleryList[messageId]?.get(positionImage).toString())
+        enlargeImage(phaseMessages[position].imageGallery?.get(positionImage).toString())
     }
 
     private fun enlargeImage(url: String) {

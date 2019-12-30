@@ -1,5 +1,6 @@
 package pet.loyal.provider.view.patient
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -9,6 +10,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import pet.loyal.provider.R
 import pet.loyal.provider.api.repository.ProviderRepository
 import pet.loyal.provider.api.repository.RepositoryProvider
 import pet.loyal.provider.api.responses.GetPhaseListBaseResponse
@@ -25,6 +27,7 @@ class PatientCardsViewModel : ViewModel() {
     var collapseIconVisibility: MutableLiveData<Int> = MutableLiveData()
     var expandIconVisibility: MutableLiveData<Int> = MutableLiveData()
     var selectedFacilityLogo = MutableLiveData<String>()
+    val sortByIcon = MutableLiveData<Drawable>()
     lateinit var filters: ArrayList<Int>
 
     init {
