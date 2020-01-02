@@ -15,7 +15,7 @@
     <string name="msg_title_install_update">Update downloaded successfully</string>
     <string name="no_connection">No internet connection</string>
     <string name="msg_invite_sent">Invite Sent Successfully</string>
-    <string name="msg_invite_sent_description">We have sent a download link for the Pet mobile app to the email address or phone number provided by you</string>
+    <string name="msg_invite_sent_description">We have sent a download link for the Pet mobile app to the mobile phone provided by you</string>
     <string name="text_ok">OK</string>
 
     <!--login screen-->
@@ -27,11 +27,10 @@
     <string name="hint_input_email">Email / User Name</string>
     <string name="txt_provider_login">Provider Login</string>
     <string name="txt_welcome">Welcome to Loyal Pet</string>
-    <string name="msg_empty_username">Email/username cannot be empty</string>
+    <string name="msg_empty_username">Email / User Name cannot be empty</string>
     <string name="msg_empty_password">Password cannot be empty</string>
     <string name="msg_invalid_credentials">Invalid username or password</string>
-    <string name="msg_inactive_account">The account associated with this email
-        address/username has been deactivated</string>
+    <string name="msg_inactive_account">The account associated with this email address/username has been deactivated</string>
 
     <!-- common error codes -->
     <string name="error_common">Unknown error occurred</string>
@@ -55,8 +54,8 @@
     <string name="text_info">Info</string>
     <string name="msg_parent_inactive">This parent already exists with your facility. Please
         activate by visiting parent profile.</string>
-    <string name="error_invalid_email_phone">Invalid email address/phone number</string>
-    <string name="error_email_phone_empty">Please provide an email address or your phone number</string>
+    <string name="error_invalid_email_phone">Invalid mobile phone</string>
+    <string name="error_email_phone_empty">Please provide your mobile phone</string>
 
     <!-- edit pet card screen -->
     <string name="text_take_a_photo">Take a photo</string>
@@ -113,4 +112,5 @@
     <string name="error_message_please_apply">Please apply the custom message prior to updating pet card</string>
     <string name="text_confirm_message">The changes you have made will be lost if you navigate away from this page. Are you sure you want to leave this page?</string>
     <string name="error_permission_denied">Couldn\'t download image. permission denied.</string>
+    <string name="text_mobile_phone">Mobile Phone</string>
 </resources>

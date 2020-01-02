@@ -166,8 +166,17 @@ class SelfInviteFragment : Fragment() {
         } else {
             AlertDialog.Builder(activity!!)
         }
+        var firstNameLast = fistName
+        if (firstNameLast == "Loyal User"){
+            firstNameLast = "User"
+        }
+
+        var lastNameLast = lastName
+        if (lastNameLast == "."){
+            lastNameLast = ""
+        }
         builder.setTitle(getString(R.string.text_confirm))
-            .setMessage("$fistName $lastName " +
+            .setMessage("$firstNameLast $lastNameLast " +
                     getString(R.string.msg_parent_exist_with_another_facility)
             )
             .setCancelable(false)
@@ -186,8 +195,17 @@ class SelfInviteFragment : Fragment() {
         } else {
             AlertDialog.Builder(activity!!)
         }
+        var firstNameLast = fistName
+        if (firstNameLast == "Loyal User"){
+            firstNameLast = "User"
+        }
+
+        var lastNameLast = lastName
+        if (lastNameLast == "."){
+            lastNameLast = ""
+        }
         builder.setTitle(getString(R.string.text_info))
-            .setMessage("$fistName $lastName " +
+            .setMessage("$firstNameLast $lastNameLast " +
                     getString(R.string.msg_parent_already_exist)
             )
             .setCancelable(false)
