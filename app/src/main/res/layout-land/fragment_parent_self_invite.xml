@@ -81,7 +81,7 @@
                             android:id="@+id/edtTxtMessage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Email or Phone Number"
+                            android:hint="@string/text_mobile_phone"
                             android:inputType="textEmailAddress"
                             android:text="@{viewModel.liveEmailOrPhone}"
                             android:theme="@style/textViewStyleSmall" />
