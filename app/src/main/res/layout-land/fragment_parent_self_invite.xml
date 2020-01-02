@@ -57,6 +57,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="24dp"
                         android:gravity="center"
+                        android:textStyle="bold"
                         android:text="@string/text_self_invite_description"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -102,26 +103,24 @@
                         app:layout_constraintTop_toBottomOf="@+id/til_forgot_pw_email" />
 
                 <ImageView
-                        android:id="@+id/imgPlayStore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="2dp"
-                        android:src="@drawable/ic_google_play"
-                        app:layout_constraintEnd_toStartOf="@id/imgAppStore"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
-
-                <ImageView
                         android:id="@+id/imgAppStore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_app_store"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/imgPlayStore"
+                        app:layout_constraintEnd_toStartOf="@id/imgPlayStore"
+                        app:layout_constraintStart_toStartOf="@id/btnSelfInvite"
                         app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
+
+                <ImageView
+                        android:id="@+id/imgPlayStore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_google_play"
+                        app:layout_constraintEnd_toEndOf="@id/btnSelfInvite"
+                        app:layout_constraintStart_toEndOf="@id/imgAppStore"
+                        app:layout_constraintTop_toTopOf="@id/imgAppStore" />
 
                 <TextView
                         android:id="@+id/linkLoyal"

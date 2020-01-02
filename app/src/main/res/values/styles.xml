@@ -49,7 +49,7 @@
 
     <style name="SelfInviteDescriptionTextView">
         <item name="android:textColor">@color/font_color_gray_1</item>
-        <item name="android:textSize">@dimen/font_size_extra_small</item>
+        <item name="android:textSize">@dimen/font_size_extra_small_2</item>
     </style>
 
     <!--outlined text view-->

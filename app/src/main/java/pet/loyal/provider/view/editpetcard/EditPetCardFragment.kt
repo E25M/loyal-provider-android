@@ -931,7 +931,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 phaseMessage.isSelected = true
 
                 fragmentEditPatiantCardBinding.recyclerViewMessages.post {
-//                    fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyItemChanged(position)
                     fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
                 }
             }

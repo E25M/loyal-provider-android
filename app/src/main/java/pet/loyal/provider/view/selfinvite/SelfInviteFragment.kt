@@ -203,5 +203,4 @@ class SelfInviteFragment : Fragment() {
         startActivity(Intent(activity, LoginActivity::class.java))
         activity?.finish()
     }
-
 }

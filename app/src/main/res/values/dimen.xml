@@ -5,6 +5,7 @@
     <dimen name="font_size_super_small">10sp</dimen>
     <dimen name="font_size_extra_extra_small">12sp</dimen>
     <dimen name="font_size_extra_small">14sp</dimen>
+    <dimen name="font_size_extra_small_2">15sp</dimen>
     <dimen name="font_size_small">16sp</dimen>
     <dimen name="font_size_medium">20sp</dimen>
     <dimen name="font_size_large">30sp</dimen>
