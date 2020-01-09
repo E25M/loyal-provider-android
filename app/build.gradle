@@ -32,8 +32,8 @@ android {
     productFlavors {
         qa {
             applicationIdSuffix = ".qa"
-            buildConfigField "String", 'BASE_URL', "\"http://18.216.161.214:81/v1/tablet/\""
-            buildConfigField "String", 'SOCKET_URL', "\"http://18.216.161.214:81\""
+            buildConfigField "String", 'BASE_URL', "\"https://api-provider.qa.loyal.pet/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.qa.loyal.pet\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
@@ -42,12 +42,12 @@ android {
         }
         dev {
             applicationIdSuffix = ".dev"
-            buildConfigField "String", 'BASE_URL', "\"http://52.14.33.22:81/v1/tablet/\""
-            buildConfigField "String", 'SOCKET_URL', "\"http://52.14.33.22:81/\""
+            buildConfigField "String", 'BASE_URL', "\"https://api-provider.dev.loyal.pet/v1/tablet/\""
+            buildConfigField "String", 'SOCKET_URL', "\"https://api-provider.dev.loyal.pet/\""
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "1.2.1"
+            versionName "0.0.6"
             resValue "string", "app_name", "Loyal Pet Dev"
         }
         staging {
@@ -69,16 +69,16 @@ android {
             versionName "1.2.1"
             resValue "string", "app_name", "Loyal Pet"
         }
-        demo {
-            applicationIdSuffix = ".demo"
-            buildConfigField "String", 'BASE_URL', "\"http://35.166.213.108:81/v1/tablet/\""
-            buildConfigField "String", 'SOCKET_URL', "\"http://35.166.213.108:81\""
-            buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
-            buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
-            resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.3"
-            resValue "string", "app_name", "Loyal Pet Demo"
-        }
+//        demo {
+//            applicationIdSuffix = ".demo"
+//            buildConfigField "String", 'BASE_URL', "\"http://35.166.213.108:81/v1/tablet/\""
+//            buildConfigField "String", 'SOCKET_URL', "\"http://35.166.213.108:81\""
+//            buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
+//            buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
+//            resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
+//            versionName "0.0.3"
+//            resValue "string", "app_name", "Loyal Pet Demo"
+//        }
     }
 }
 
