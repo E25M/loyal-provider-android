@@ -82,7 +82,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/text_mobile_phone"
-                            android:inputType="textEmailAddress"
+                            android:inputType="phone"
                             android:text="@{viewModel.liveEmailOrPhone}"
                             android:theme="@style/textViewStyleSmall" />
 
@@ -102,25 +102,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/til_forgot_pw_email" />
 
-                <ImageView
+                <TextView
                         android:id="@+id/imgAppStore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:src="@drawable/ic_app_store"
-                        app:layout_constraintEnd_toStartOf="@id/imgPlayStore"
+                        android:text="@string/txt_get_loyal"
+                        android:textColor="@color/bg_color_black"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@+id/btnSelfInvite"
                         app:layout_constraintStart_toStartOf="@id/btnSelfInvite"
                         app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
-
-                <ImageView
-                        android:id="@+id/imgPlayStore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:src="@drawable/ic_google_play"
-                        app:layout_constraintEnd_toEndOf="@id/btnSelfInvite"
-                        app:layout_constraintStart_toEndOf="@id/imgAppStore"
-                        app:layout_constraintTop_toTopOf="@id/imgAppStore" />
 
                 <TextView
                         android:id="@+id/linkLoyal"
