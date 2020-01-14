@@ -56,6 +56,7 @@
         activate by visiting parent profile.</string>
     <string name="error_invalid_email_phone">Invalid mobile phone</string>
     <string name="error_email_phone_empty">Please provide your mobile phone</string>
+    <string name="txt_get_loyal">Find Loyal Pet in the app stores</string>
 
     <!-- edit pet card screen -->
     <string name="text_take_a_photo">Take a photo</string>
@@ -112,5 +113,5 @@
     <string name="error_message_please_apply">Please save custom message</string>
     <string name="text_confirm_message">The changes you have made will be lost if you navigate away from this page. Are you sure you want to leave this page?</string>
     <string name="error_permission_denied">Couldn\'t download image. permission denied.</string>
-    <string name="text_mobile_phone">Mobile Phone</string>
+    <string name="text_mobile_phone">Mobile Number</string>
 </resources>
