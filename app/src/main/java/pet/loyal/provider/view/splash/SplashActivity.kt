@@ -1,6 +1,8 @@
 package pet.loyal.provider.view.splash
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -31,6 +33,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3Client
+import com.evernote.android.job.v14.PlatformAlarmReceiver
 import pet.loyal.provider.LoyalProviderApp
 import pet.loyal.provider.R
 import pet.loyal.provider.databinding.ActivitySplashBinding
@@ -340,4 +343,5 @@ class SplashActivity : AppCompatActivity() {
         }
 //        Log.i("Device Id", preferenceManager.getDeviceId())
     }
+
 }

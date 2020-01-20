@@ -1,9 +1,15 @@
 package pet.loyal.provider.view.patient
 
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +38,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
@@ -42,6 +49,8 @@ import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.CommonResponse
 import pet.loyal.provider.view.login.LoginActivity
 import java.net.URISyntaxException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -64,6 +73,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
     var sort = ""
 
     private lateinit var mSocket: Socket
+    private lateinit var mBroadcastReceiver: BroadcastReceiver
 
     private val onNewMessage = Emitter.Listener { args ->
 
@@ -87,6 +97,17 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             it.connect().on(Socket.EVENT_CONNECT) {
             }
         }
+
+        mBroadcastReceiver = object :BroadcastReceiver(){
+
+            override fun onReceive(context: Context?, intent: Intent?) {
+                loadData()
+            }
+        }
+
+        activity!!.registerReceiver(mBroadcastReceiver, IntentFilter().apply {
+            addAction("pet.loyal.provider.reset2")
+        })
     }
 
     override fun onCreateView(
@@ -198,6 +219,8 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             viewModel.expandIconVisibility.value = View.GONE
 //            loadPhases()
         }
+
+        setRepeatAlarm()
     }
 
     override fun onStart() {
@@ -363,6 +386,39 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     }
 
+    private fun setRepeatAlarm(){
+
+        val myIntent = Intent(activity, AlarmReceiver::class.java)
+        myIntent.action = "pet.loyal.provider.reset"
+
+        val pendingIntent = PendingIntent.getBroadcast(activity, 0, myIntent, 0)
+        val alarmManager = activity!!.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+
+        val firingCal= Calendar.getInstance()
+        val currentCal = Calendar.getInstance()
+
+        firingCal.set(Calendar.HOUR_OF_DAY, 0) // At the hour you wanna fire
+        firingCal.set(Calendar.MINUTE, 0) // Particular minute
+        firingCal.set(Calendar.SECOND, 0) // particular second
+
+        var intendedTime = firingCal.timeInMillis
+        val currentTime = currentCal.timeInMillis
+
+        if(intendedTime >= currentTime){
+            // you can add buffer time too here to ignore some small differences in milliseconds
+            // set from today
+            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+        } else{
+            // set from next day
+            // you might consider using calendar.add() for adding one day to the current day
+
+            firingCal.add(Calendar.DAY_OF_MONTH, 1)
+            intendedTime = firingCal.timeInMillis
+
+            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+        }
+    }
+
     override fun onPerCardClick(card: PetTrackingAppointment, position: Int) {
         // navigate the user to the pet card section
         val activity = activity as HomeScreen
@@ -396,5 +452,8 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
         mSocket.disconnect()
         mSocket.off("updateDashboard", onNewMessage)
+        if (mBroadcastReceiver != null) {
+            activity!!.unregisterReceiver(mBroadcastReceiver)
+        }
     }
 }

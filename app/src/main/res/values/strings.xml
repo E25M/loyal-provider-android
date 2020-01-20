@@ -31,6 +31,7 @@
     <string name="msg_empty_password">Password cannot be empty</string>
     <string name="msg_invalid_credentials">Invalid username or password</string>
     <string name="msg_inactive_account">The account associated with this email address/username has been deactivated</string>
+    <string name="msg_parent_already_exist_but_inactive_in_facility">This parent already exists with our facility. Please activate by visiting parent profile</string>
 
     <!-- common error codes -->
     <string name="error_common">Unknown error occurred</string>
@@ -47,15 +48,15 @@
     <string name="text_retry">RETRY</string>
     <string name="text_add">Add</string>
     <string name="text_cancel">Cancel</string>
-    <string name="msg_parent_already_exist">already exists with our facility</string>
-    <string name="msg_parent_exist_with_another_facility">is already a member with Loyal.
+    <string name="msg_parent_already_exist">User already exists with our facility</string>
+    <string name="msg_parent_exist_with_another_facility">User is already a member with Loyal.
     Would you like to add this contact to your facility?</string>
     <string name="text_confirm">Confirm</string>
     <string name="text_info">Info</string>
     <string name="msg_parent_inactive">This parent already exists with your facility. Please
         activate by visiting parent profile.</string>
-    <string name="error_invalid_email_phone">Invalid mobile phone</string>
-    <string name="error_email_phone_empty">Please provide your mobile phone</string>
+    <string name="error_invalid_email_phone">is not a valid mobile number</string>
+    <string name="error_email_phone_empty">Mobile number cannot be empty</string>
     <string name="txt_get_loyal">Find Loyal Pet in the app stores</string>
 
     <!-- edit pet card screen -->

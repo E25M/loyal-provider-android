@@ -74,6 +74,7 @@ class Constants {
         const val self_invite_parent_exist_facility_not_exist = "parent-exist-facility-not-exist"
         const val self_invite_parent_already_exist = "parent-already-exist"
         const val self_invite_parent_already_exist_inactive = "parent-already-exist"
+        const val self_invite_parent_already_exist_but_inactive_in_facility = "parent_already_exist_but_inactive_in_facility"
 
         //sample parameters
         const val sample_first_name = "Loyal User"

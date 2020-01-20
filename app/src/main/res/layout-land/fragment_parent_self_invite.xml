@@ -83,6 +83,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/text_mobile_phone"
                             android:inputType="phone"
+                            android:maxLength="14"
                             android:text="@{viewModel.liveEmailOrPhone}"
                             android:theme="@style/textViewStyleSmall" />
 
@@ -109,7 +110,7 @@
                         android:layout_marginTop="2dp"
                         android:text="@string/txt_get_loyal"
                         android:textColor="@color/bg_color_black"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@+id/btnSelfInvite"
                         app:layout_constraintStart_toStartOf="@id/btnSelfInvite"
                         app:layout_constraintTop_toBottomOf="@id/btnSelfInvite" />
