@@ -1,25 +1,28 @@
 package pet.loyal.provider.view.selfinvite
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.i18n.phonenumbers.NumberParseException
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
+import kotlinx.android.synthetic.main.layout_edit_patient_card_item.*
+import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.api.responses.SelfInviteDataResponse
 import pet.loyal.provider.databinding.FragmentParentSelfInviteBinding
 import pet.loyal.provider.util.*
 import pet.loyal.provider.view.login.LoginActivity
-import android.annotation.SuppressLint
-import pet.loyal.provider.R
 
 
 /**
@@ -58,6 +61,8 @@ class SelfInviteFragment : Fragment() {
         btnSelfInvite?.setOnClickListener {
             sendSelfInvitation(false)
         }
+
+        edtTxtMessage.addTextChangedListener(PhoneNumberFormatter(edtTxtMessage))
     }
 
     private fun setObservers(){
@@ -76,7 +81,12 @@ class SelfInviteFragment : Fragment() {
                             Constants.self_invite_parent_already_exist_inactive){
                             showPopup(activity!!, getString(R.string.msg_parent_inactive),
                                 getString(R.string.text_info))
-                        }else{
+                        }else if (signInResponse.errorMessage
+                            == Constants.self_invite_parent_already_exist_but_inactive_in_facility){
+                            showPopup(activity!!,
+                                getString(R.string.msg_parent_already_exist_but_inactive_in_facility),
+                                getString(R.string.text_info))
+                        }else {
                             showPopup(activity!!, signInResponse.errorMessage!!, getString(R.string.text_info))
                         }
                     } else {
@@ -103,8 +113,25 @@ class SelfInviteFragment : Fragment() {
                     selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
                     showParentExistPopup(data.data.firstName, data.data.lastName)
                 }
+                data.status == Constants.self_invite_parent_already_exist_but_inactive_in_facility -> {
+                    selfInviteViewModel.liveEmailOrPhone.value = getString(R.string.txt_empty)
+                    showParentExistPopup(data.data.firstName, data.data.lastName)
+                }
             }
         }
+    }
+
+    private fun isValidNo(phoneNo: String): Boolean{
+        val phoneUtil = PhoneNumberUtil.getInstance()
+        try {
+            val usNumberProto = phoneUtil.parse(phoneNo, "US")
+            return phoneUtil.isValidNumber(usNumberProto)
+
+        } catch (e: NumberParseException) {
+            System.err.println("NumberParseException was thrown: $e")
+        }
+
+        return false
     }
 
     private fun validateEmailPhone(emailPhone: String):Boolean{
@@ -115,13 +142,13 @@ class SelfInviteFragment : Fragment() {
                     showValidStatus()
                     true
                 }
-                isValidPhone(emailPhone) -> {
+                isValidNo(emailPhone) -> {
                     showValidStatus()
                     true
                 }
                 else -> {
                     selfInviteViewModel.emailPhoneError.value =
-                        resources.getString(R.string.error_invalid_email_phone)
+                        emailPhone + " " + resources.getString(R.string.error_invalid_email_phone)
                     false
                 }
             }
@@ -145,7 +172,7 @@ class SelfInviteFragment : Fragment() {
                         Constants.sample_first_name,
                         Constants.sample_last_name,
                         addToCurrentAccount,
-                        edtTxtMessage.text.toString(),
+                        edtTxtMessage.text.toString().replace("[^\\d]".toRegex(), ""),
                         preferenceManager.getFacilityId()
                     )
                 }
@@ -176,8 +203,7 @@ class SelfInviteFragment : Fragment() {
             lastNameLast = ""
         }
         builder.setTitle(getString(R.string.text_confirm))
-            .setMessage("$firstNameLast $lastNameLast " +
-                    getString(R.string.msg_parent_exist_with_another_facility)
+            .setMessage(getString(R.string.msg_parent_exist_with_another_facility)
             )
             .setCancelable(false)
             .setPositiveButton(getString(R.string.text_add)) { _, _ ->
@@ -205,8 +231,7 @@ class SelfInviteFragment : Fragment() {
             lastNameLast = ""
         }
         builder.setTitle(getString(R.string.text_info))
-            .setMessage("$firstNameLast $lastNameLast " +
-                    getString(R.string.msg_parent_already_exist)
+            .setMessage(getString(R.string.msg_parent_already_exist)
             )
             .setCancelable(false)
             .setPositiveButton(getString(R.string.text_ok)) { _, _ ->

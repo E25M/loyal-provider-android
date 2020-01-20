@@ -66,6 +66,11 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/provider_paths" />
         </provider>
-    </application>
 
+        <receiver android:name=".util.AlarmReceiver">
+            <intent-filter>
+                <action android:name="pet.loyal.provider.reset" />
+            </intent-filter>
+        </receiver>
+    </application>
 </manifest>
