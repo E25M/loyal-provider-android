@@ -16,7 +16,6 @@ import com.google.gson.Gson
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.android.synthetic.main.fragment_parent_self_invite.*
-import kotlinx.android.synthetic.main.layout_edit_patient_card_item.*
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
 import pet.loyal.provider.api.responses.SelfInviteDataResponse
@@ -62,6 +61,7 @@ class SelfInviteFragment : Fragment() {
             sendSelfInvitation(false)
         }
 
+        loadLogo()
         edtTxtMessage.addTextChangedListener(PhoneNumberFormatter(edtTxtMessage))
     }
 
@@ -161,6 +161,10 @@ class SelfInviteFragment : Fragment() {
 
     private fun showValidStatus(){
         selfInviteViewModel.isEmailPhoneError.value = false
+    }
+
+    fun loadLogo() {
+        selfInviteViewModel.logo.value = preferenceManager.getfacilityLogo()
     }
 
     private fun sendSelfInvitation(addToCurrentAccount: Boolean){

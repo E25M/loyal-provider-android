@@ -75,7 +75,7 @@ class MainMenuFragment : Fragment() {
         img_main_menu_parent_sign_up.setOnClickListener {
             if (preferenceManager.facilitySelected()) {
 //                if (preferenceManager.getUserType() != Constants.user_type_super_admin) {
-                changeFragment(Constants.fragment_type_parent_sign_up)
+                changeFragmentParentSignup(Constants.fragment_type_parent_sign_up)
 //                }
             }
         }
@@ -120,6 +120,11 @@ class MainMenuFragment : Fragment() {
     private fun changeFragment(type: Int) {
         val activity = activity as HomeScreen
         activity.changeFragment(type)
+    }
+
+    private fun changeFragmentParentSignup(type: Int) {
+        val activity = activity as HomeScreen
+        activity.changeFragmentParentSignup(type)
     }
 
     override fun onStart() {

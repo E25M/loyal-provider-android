@@ -37,7 +37,7 @@ android {
             buildConfigField "String", 'CLOUDINARY_PRESET', "\"rt8cuu9q\""
             buildConfigField "String", 'CLOUDINARY_USERNAME', "\"dktj00acj\""
             resValue "string", "cloudinary_username", "cloudinary://dktj00acj"
-            versionName "0.0.28"
+            versionName "0.0.29"
             resValue "string", "app_name", "Provider QA"
         }
         dev {

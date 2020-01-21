@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="75dp" />
+                app:layout_constraintGuide_begin="100dp" />
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewMain"
@@ -39,7 +40,7 @@
                         style="@style/SelfInviteTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/margin_25"
                         android:layout_marginBottom="@dimen/margin_large_3"
                         android:gravity="center"
                         android:text="@string/text_sign_up_for_loyal"
@@ -122,6 +123,7 @@
                         android:layout_marginTop="2dp"
                         android:gravity="center"
                         android:padding="4dp"
+                        android:textColor="@color/font_color_blue"
                         android:text="@string/link_www_loyal_pet"
                         android:textAllCaps="false"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,27 +156,117 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-                android:id="@+id/imgLogoContainer"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="4dp"
+                android:id="@+id/imgFacilityLogo"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:clickable="true"
+                android:focusable="true"
                 android:elevation="3dp"
-                android:outlineProvider="none"
-                android:src="@drawable/oval"
+                android:onClick="onLogoClick"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/toolbar_self_sign_up"
+                app:logo="@{viewModel.logo}" />
 
-        <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="3dp"
-                android:outlineProvider="none"
-                android:src="@drawable/ic_logo"
-                app:layout_constraintBottom_toBottomOf="@id/imgLogoContainer"
-                app:layout_constraintEnd_toEndOf="@id/imgLogoContainer"
-                app:layout_constraintStart_toStartOf="@id/imgLogoContainer"
-                app:layout_constraintTop_toTopOf="@id/imgLogoContainer" />
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_self_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="32dp">
+
+                <TextView
+                        android:id="@+id/textView4"
+                        style="@style/TitleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_welcome"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onLogoClick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_logo_sign_up"/>
+
+                <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="32dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="onLogout"
+                        android:scaleType="centerInside"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_logout" />
+
+                <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="32dp"
+                        android:layout_height="0dp"
+                        android:layout_marginEnd="35dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="navigateToHome"
+                        android:scaleType="centerInside"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_home" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+<!--        <ImageView-->
+<!--                android:id="@+id/imgLogoContainer"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:elevation="3dp"-->
+<!--                android:outlineProvider="none"-->
+<!--                android:src="@drawable/oval"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageView-->
+<!--                android:id="@+id/imageView6"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:elevation="3dp"-->
+<!--                android:outlineProvider="none"-->
+<!--                android:src="@drawable/ic_logo"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/imgLogoContainer"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/imgLogoContainer"-->
+<!--                app:layout_constraintStart_toStartOf="@id/imgLogoContainer"-->
+<!--                app:layout_constraintTop_toTopOf="@id/imgLogoContainer" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
