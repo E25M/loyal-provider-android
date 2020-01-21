@@ -20,6 +20,7 @@ class SelfInviteViewModel: ViewModel() {
     var liveEmailOrPhone: MutableLiveData<String> = MutableLiveData()
     val isEmailPhoneError = MutableLiveData<Boolean>()
     val emailPhoneError = MutableLiveData<String>()
+    var logo = MutableLiveData<String>()
 
     fun selfInvite(token: String, firstName:String, lastName: String, confirm: Boolean,
                    emailOrPhone: String, facilityId:String): LiveData<SelfInviteBaseResponse> {

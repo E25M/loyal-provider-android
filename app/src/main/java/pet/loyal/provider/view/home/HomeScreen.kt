@@ -134,6 +134,14 @@ class HomeScreen : AppCompatActivity() {
         ).addToBackStack(type.toString()).commit()
     }
 
+    fun changeFragmentParentSignup(type: Int) {
+        showHideToolBar(type)
+        supportFragmentManager.beginTransaction().replace(
+            R.id.constraint_layout_container_main,
+            getFragment(type)
+        ).addToBackStack(type.toString()).commit()
+    }
+
     fun changeFragment(fragment: Fragment, type: Int) {
         showHideToolBar(type)
         supportFragmentManager.beginTransaction().replace(
@@ -160,7 +168,7 @@ class HomeScreen : AppCompatActivity() {
                 SettingsFragment()
             }
             Constants.fragment_type_parent_sign_up -> {
-                viewModel.toolbarVisibility.value = View.VISIBLE
+                viewModel.toolbarVisibility.value = View.GONE
                 resetToolbar(true)
                 SelfInviteFragment()
             }
@@ -202,6 +210,9 @@ class HomeScreen : AppCompatActivity() {
                 viewModel.toolbarVisibility.value = View.VISIBLE
             }
             Constants.fragment_type_edit_pet_card -> {
+                viewModel.toolbarVisibility.value = View.GONE
+            }
+            Constants.fragment_type_parent_sign_up -> {
                 viewModel.toolbarVisibility.value = View.GONE
             }
             else -> {
