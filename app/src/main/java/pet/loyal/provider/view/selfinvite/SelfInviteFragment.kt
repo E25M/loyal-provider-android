@@ -163,7 +163,7 @@ class SelfInviteFragment : Fragment() {
         selfInviteViewModel.isEmailPhoneError.value = false
     }
 
-    fun loadLogo() {
+    private fun loadLogo() {
         selfInviteViewModel.logo.value = preferenceManager.getfacilityLogo()
     }
 

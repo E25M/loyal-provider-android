@@ -117,7 +117,8 @@ class HomeScreen : AppCompatActivity() {
     }
 
     fun navigateToHome(view: View) {
-        loadHomeFragment(Constants.fragment_type_home)
+//        loadHomeFragment(Constants.fragment_type_home)
+        onBackPressed()
     }
 
     private fun loadHomeFragment(type: Int) {
@@ -293,9 +294,16 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
-
     fun onLogoClick(view: View) {
         loadPatientCardsFragment()
     }
 
+    fun onBackPressed(view: View) {
+        onBackPressed()
+    }
+
+    fun onBackPressedEditCard(view: View) {
+        onBackPressed()
+        onBackPressed(view)
+    }
 }

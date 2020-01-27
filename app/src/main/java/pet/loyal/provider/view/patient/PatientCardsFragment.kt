@@ -209,7 +209,8 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
         img_patient_cards_home.setOnClickListener {
             val activity = activity as HomeScreen
-            activity.navigateToHome(img_patient_cards_logout)
+//            activity.o(img_patient_cards_logout)
+            activity.onBackPressed()
         }
 
 
