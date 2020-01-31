@@ -41,7 +41,7 @@ class FacilityFragment : DialogFragment(), OnFacilityClickListener {
 
     override fun onStart() {
         super.onStart()
-        dialog.window.setLayout(400, 400)
+        dialog?.window?.setLayout(400, 400)
         loadData()
     }
 
