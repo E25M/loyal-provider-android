@@ -144,14 +144,14 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId) {
-//            android.R.id.home -> {
-//                activity!!.onBackPressed()
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                activity!!.onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun checkPermissions() {
 
@@ -286,9 +286,9 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             }
         }
 
-//        fragmentEditPatiantCardBinding.imgFacilityLogo.setOnClickListener {
-//            activity!!.onBackPressed()
-//        }
+        fragmentEditPatiantCardBinding.imgFacilityLogo.setOnClickListener {
+            activity!!.onBackPressed()
+        }
 
         (activity as HomeScreen).setEditCardPermissionListener(this)
 
