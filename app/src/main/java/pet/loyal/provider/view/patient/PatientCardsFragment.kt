@@ -98,7 +98,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             }
         }
 
-        mBroadcastReceiver = object :BroadcastReceiver(){
+        mBroadcastReceiver = object : BroadcastReceiver() {
 
             override fun onReceive(context: Context?, intent: Intent?) {
                 loadData()
@@ -150,21 +150,21 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             }
         }
 
-        tablayout_patient_cards_sort.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                sort = if (tablayout_patient_cards_sort.selectedTabPosition == 0) {
-                    Constants.sort_type_patient
-                } else {
-                    Constants.sort_type_parent
-                }
-                loadData()
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
-        })
+//        tablayout_patient_cards_sort.addOnTabSelectedListener(object :
+//            TabLayout.OnTabSelectedListener {
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                sort = if (tablayout_patient_cards_sort.selectedTabPosition == 0) {
+//                    Constants.sort_type_patient
+//                } else {
+//                    Constants.sort_type_parent
+//                }
+//                loadData()
+//            }
+//
+//            override fun onTabReselected(tab: TabLayout.Tab?) {}
+//
+//            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+//        })
 
         img_patient_cards_sort_by.setOnClickListener {
             if (sortBy == Constants.sort_ascending) {
@@ -173,6 +173,24 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
             } else {
                 sortBy = Constants.sort_ascending
                 viewModel.sortByIcon.value = resources.getDrawable(R.drawable.ic_sort_by, null)
+            }
+            loadData()
+        }
+
+        btn_sort_pet.setOnClickListener {
+            sort = if (btn_sort_pet.isChecked) {
+                Constants.sort_type_patient
+            } else {
+                ""
+            }
+            loadData()
+        }
+
+        btn_sort_parent.setOnClickListener {
+            sort = if (btn_sort_parent.isChecked) {
+                Constants.sort_type_parent
+            } else {
+                ""
             }
             loadData()
         }
@@ -387,15 +405,16 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     }
 
-    private fun setRepeatAlarm(){
+    private fun setRepeatAlarm() {
 
         val myIntent = Intent(activity, AlarmReceiver::class.java)
         myIntent.action = "pet.loyal.provider.reset"
 
         val pendingIntent = PendingIntent.getBroadcast(activity, 0, myIntent, 0)
-        val alarmManager = activity!!.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+        val alarmManager =
+            activity!!.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
-        val firingCal= Calendar.getInstance()
+        val firingCal = Calendar.getInstance()
         val currentCal = Calendar.getInstance()
 
         firingCal.set(Calendar.HOUR_OF_DAY, 0) // At the hour you wanna fire
@@ -405,18 +424,28 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         var intendedTime = firingCal.timeInMillis
         val currentTime = currentCal.timeInMillis
 
-        if(intendedTime >= currentTime){
+        if (intendedTime >= currentTime) {
             // you can add buffer time too here to ignore some small differences in milliseconds
             // set from today
-            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
-        } else{
+            alarmManager.setRepeating(
+                AlarmManager.RTC,
+                intendedTime,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+        } else {
             // set from next day
             // you might consider using calendar.add() for adding one day to the current day
 
             firingCal.add(Calendar.DAY_OF_MONTH, 1)
             intendedTime = firingCal.timeInMillis
 
-            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent)
+            alarmManager.setRepeating(
+                AlarmManager.RTC,
+                intendedTime,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
         }
     }
 

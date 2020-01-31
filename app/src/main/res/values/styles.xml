@@ -70,8 +70,8 @@
 
     <style name="TextFieldGrey" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="android:colorPrimary">@color/bg_color_gray_3</item>
-<!--        <item name="boxBackgroundColor">@color/colorPrimaryDarkBlue</item>-->
-        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxBackgroundColor">@color/colorPrimaryDarkBlue</item>
+<!--        <item name="boxBackgroundColor">@android:color/transparent</item>-->
         <item name="boxStrokeColor">@color/bg_color_gray_3</item>
         <item name="android:colorControlActivated">@color/font_color_light_grey</item>
         <item name="android:colorControlHighlight">@color/font_color_light_grey</item>
@@ -242,6 +242,9 @@
         <!--<item name="android:windowFullscreen">true</item>-->
         <item name="android:windowIsFloating">false</item>
         <item name="colorPrimaryDark">@color/colorPrimaryBlue</item>
+    </style>
+
+    <style name="ButtonNewBlue" parent="Widget.MaterialComponents.Button.OutlinedButton">
     </style>
 
 </resources>

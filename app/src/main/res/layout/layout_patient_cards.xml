@@ -186,32 +186,67 @@
                         app:layout_constraintTop_toBottomOf="@id/toolbar"
                         app:srcCompat="@drawable/ic_sort_by" />
 
-                <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tablayout_patient_cards_sort"
+<!--                <com.google.android.material.tabs.TabLayout-->
+<!--                        android:id="@+id/tablayout_patient_cards_sort"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="30dp"-->
+<!--                        android:layout_marginStart="16dp"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/img_patient_cards_sort_by"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/toolbar"-->
+<!--                        app:tabBackground="@drawable/sort_tab_background"-->
+<!--                        app:tabIndicatorColor="@android:color/transparent"-->
+<!--                        app:tabSelectedTextColor="@color/btn_color_gray"-->
+<!--                        app:tabTextAppearance="@style/MyCustomTextAppearance"-->
+<!--                        app:tabTextColor="@color/font_color_dark_grey_1">-->
+
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Pet" />-->
+
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Parent" />-->
+
+<!--                </com.google.android.material.tabs.TabLayout>-->
+
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/material_toggle_group_sort"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@android:color/transparent"
+                        android:layout_marginTop="8dp"
+                        android:elevation="0dp"
                         app:layout_constraintStart_toEndOf="@+id/img_patient_cards_sort_by"
                         app:layout_constraintTop_toBottomOf="@id/toolbar"
-                        app:tabBackground="@drawable/sort_tab_background"
-                        app:tabIndicatorColor="@android:color/transparent"
-                        app:tabSelectedTextColor="@color/btn_color_gray"
-                        app:tabTextAppearance="@style/MyCustomTextAppearance"
-                        app:tabTextColor="@color/font_color_dark_grey_1">
+                        app:singleSelection="true">
 
-                    <com.google.android.material.tabs.TabItem
+                    <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_sort_pet"
+                            style="@style/ButtonNewBlue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pet" />
+                            android:text="Pet"
+                            android:textColor="@color/bg_color_black">
 
-                    <com.google.android.material.tabs.TabItem
+                    </com.google.android.material.button.MaterialButton>
+
+                    <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_sort_parent"
+                            style="@style/ButtonNewBlue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Parent" />
+                            android:text="Parent"
+                            android:textColor="@color/bg_color_black">
 
-                </com.google.android.material.tabs.TabLayout>
+                    </com.google.android.material.button.MaterialButton>
+
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
