@@ -358,72 +358,142 @@ class PhaseMessageRecyclerViewAdapter(
             }
             PhaseMessage.Type.CUSTOM_MESSAGE -> {
                 val viewPhaseMessage = (viewHolder as PhaseMessageCustomViewHolder).itemBinding
-                viewPhaseMessage.edtTxtMessage.setText(itemPhaseMessage.message)
 
-                viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
+                if (position > 0 && phaseMessagesList[0].type == PhaseMessage.Type.PHASE_CHANGE){
+                    viewPhaseMessage.edtTxtMessage.setText(itemPhaseMessage.message)
 
-                viewPhaseMessage.btnAddPhoto.setOnClickListener {
-                    phaseMessageItemListener.onEditMessageCustom(
-                                viewPhaseMessage.edtTxtMessage.text.toString(),
-                                position,
-                                itemPhaseMessage._id)
-                    phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
-                        position, itemPhaseMessage._id)
-                }
+                    viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
 
-                viewPhaseMessage.edtTxtMessage.addTextChangedListener(object : TextWatcher{
-
-                    override fun afterTextChanged(s: Editable?) {
-                        updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
-                    }
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
-                                                   after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int
-                    ) {}
-                })
-
-                if (itemPhaseMessage.isSelected) {
-                    showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
-                    if (position == 0) {
-                        viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
-                    }else{
-                        viewPhaseMessage.btnAddMessage.visibility = View.GONE
-                    }
-                }else{
-                    showUncheckedCustomMessage(viewPhaseMessage)
-                }
-
-                viewPhaseMessage.chkBoxTicketMessage.setOnClickListener{
-                    phaseMessageItemListener.onClickTickCustom(
-                        viewPhaseMessage.chkBoxTicketMessage.isChecked,
-                        position,
-                        itemPhaseMessage._id
-                    )
-                }
-
-                viewPhaseMessage.btnAddMessage.setOnClickListener {
-                    if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
+                    viewPhaseMessage.btnAddPhoto.setOnClickListener {
                         phaseMessageItemListener.onEditMessageCustom(
-                            viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
-                        phaseMessageItemListener.onAddCustomMessage(position)
-                        notifyDataSetChanged()
-                    }else{
-                        showToast(viewHolder.itemView.context, "Message cannot be empty")
+                            viewPhaseMessage.edtTxtMessage.text.toString(),
+                            position,
+                            itemPhaseMessage._id)
+                        phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
+                            position, itemPhaseMessage._id)
                     }
-                }
 
-                val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
-                    Constants.view_type_custom_message,
-                    itemPhaseMessage._id,
-                    position,
-                    itemPhaseMessage.imageGallery,
-                    this)
-                viewPhaseMessage.recyclerViewImageGallery.layoutManager = LinearLayoutManagerWrapper(
-                    viewPhaseMessage.recyclerViewImageGallery.context,
-                    LinearLayoutManager.HORIZONTAL,
-                    false)
-                viewPhaseMessage.recyclerViewImageGallery.setHasFixedSize(true)
-                viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
+                    viewPhaseMessage.edtTxtMessage.addTextChangedListener(object : TextWatcher{
+
+                        override fun afterTextChanged(s: Editable?) {
+                            updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
+                        }
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
+                                                       after: Int) {}
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int
+                        ) {}
+                    })
+
+                    if (itemPhaseMessage.isSelected) {
+                        showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
+                        if (position == 1) {
+                            viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                        }else{
+                            viewPhaseMessage.btnAddMessage.visibility = View.GONE
+                        }
+                    }else{
+                        showUncheckedCustomMessage(viewPhaseMessage)
+                    }
+
+                    viewPhaseMessage.chkBoxTicketMessage.setOnClickListener{
+                        phaseMessageItemListener.onClickTickCustom(
+                            viewPhaseMessage.chkBoxTicketMessage.isChecked,
+                            position,
+                            itemPhaseMessage._id
+                        )
+                    }
+
+                    viewPhaseMessage.btnAddMessage.setOnClickListener {
+                        if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
+                            phaseMessageItemListener.onEditMessageCustom(
+                                viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
+                            phaseMessageItemListener.onAddCustomMessage(position)
+                            notifyDataSetChanged()
+                        }else{
+                            showToast(viewHolder.itemView.context, "Message cannot be empty")
+                        }
+                    }
+
+                    val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
+                        Constants.view_type_custom_message,
+                        itemPhaseMessage._id,
+                        position,
+                        itemPhaseMessage.imageGallery,
+                        this)
+                    viewPhaseMessage.recyclerViewImageGallery.layoutManager = LinearLayoutManagerWrapper(
+                        viewPhaseMessage.recyclerViewImageGallery.context,
+                        LinearLayoutManager.HORIZONTAL,
+                        false)
+                    viewPhaseMessage.recyclerViewImageGallery.setHasFixedSize(true)
+                    viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
+                }else{
+                    viewPhaseMessage.edtTxtMessage.setText(itemPhaseMessage.message)
+
+                    viewPhaseMessage.chkBoxTicketMessage.isChecked = itemPhaseMessage.isSelected
+
+                    viewPhaseMessage.btnAddPhoto.setOnClickListener {
+                        phaseMessageItemListener.onEditMessageCustom(
+                            viewPhaseMessage.edtTxtMessage.text.toString(),
+                            position,
+                            itemPhaseMessage._id)
+                        phaseMessageItemListener.onClickAddPhotos(viewPhaseMessage.btnAddPhoto,
+                            position, itemPhaseMessage._id)
+                    }
+
+                    viewPhaseMessage.edtTxtMessage.addTextChangedListener(object : TextWatcher{
+
+                        override fun afterTextChanged(s: Editable?) {
+                            updateCountValue(s.toString(), viewPhaseMessage.txtRemainingTextCount)
+                        }
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int,
+                                                       after: Int) {}
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int
+                        ) {}
+                    })
+
+                    if (itemPhaseMessage.isSelected) {
+                        showCheckedCustomMessage(viewPhaseMessage, itemPhaseMessage.canAddPhoto)
+                        if (position == 0) {
+                            viewPhaseMessage.btnAddMessage.visibility = View.VISIBLE
+                        }else{
+                            viewPhaseMessage.btnAddMessage.visibility = View.GONE
+                        }
+                    }else{
+                        showUncheckedCustomMessage(viewPhaseMessage)
+                    }
+
+                    viewPhaseMessage.chkBoxTicketMessage.setOnClickListener{
+                        phaseMessageItemListener.onClickTickCustom(
+                            viewPhaseMessage.chkBoxTicketMessage.isChecked,
+                            position,
+                            itemPhaseMessage._id
+                        )
+                    }
+
+                    viewPhaseMessage.btnAddMessage.setOnClickListener {
+                        if (!viewPhaseMessage.edtTxtMessage.text?.trim().isNullOrEmpty()){
+                            phaseMessageItemListener.onEditMessageCustom(
+                                viewPhaseMessage.edtTxtMessage.text.toString(), position, itemPhaseMessage._id)
+                            phaseMessageItemListener.onAddCustomMessage(position)
+                            notifyDataSetChanged()
+                        }else{
+                            showToast(viewHolder.itemView.context, "Message cannot be empty")
+                        }
+                    }
+
+                    val recyclerViewAdapter = PhaseMessageGalleryRecyclerViewAdapter(
+                        Constants.view_type_custom_message,
+                        itemPhaseMessage._id,
+                        position,
+                        itemPhaseMessage.imageGallery,
+                        this)
+                    viewPhaseMessage.recyclerViewImageGallery.layoutManager = LinearLayoutManagerWrapper(
+                        viewPhaseMessage.recyclerViewImageGallery.context,
+                        LinearLayoutManager.HORIZONTAL,
+                        false)
+                    viewPhaseMessage.recyclerViewImageGallery.setHasFixedSize(true)
+                    viewPhaseMessage.recyclerViewImageGallery.adapter = recyclerViewAdapter
+                }
             }
             PhaseMessage.Type.PHASE_CHANGE -> {
                 val viewPhaseMessage = (viewHolder as

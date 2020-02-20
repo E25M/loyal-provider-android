@@ -185,14 +185,19 @@ class HomeScreen : AppCompatActivity() {
         if (supportFragmentManager.backStackEntryCount == 0) {
             finishAffinity()
         } else {
-            supportFragmentManager.popBackStackImmediate()
-            val fragment =
-                supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
-            if (fragment != null && fragment.isVisible) {
-                if (fragment is PatientCardsFragment) {
-                    viewModel.toolbarVisibility.value = View.GONE
-                } else {
-                    viewModel.toolbarVisibility.value = View.VISIBLE
+            when (val fragment = supportFragmentManager.fragments.last()) {
+                is EditPetCardFragment -> fragment.onBackPressed()
+                else -> {
+                    supportFragmentManager.popBackStackImmediate()
+                    val fragment =
+                        supportFragmentManager.findFragmentById(R.id.constraint_layout_container_main)
+                    if (fragment != null && fragment.isVisible) {
+                        if (fragment is PatientCardsFragment) {
+                            viewModel.toolbarVisibility.value = View.GONE
+                        } else {
+                            viewModel.toolbarVisibility.value = View.VISIBLE
+                        }
+                    }
                 }
             }
         }

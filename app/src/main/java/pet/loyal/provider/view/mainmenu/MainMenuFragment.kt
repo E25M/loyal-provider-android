@@ -143,4 +143,8 @@ class MainMenuFragment : Fragment() {
         }
     }
 
+    fun onBackPressed(){
+        loadData()
+    }
+
 }

@@ -16,6 +16,7 @@ import com.cloudinary.Util
 import com.google.gson.Gson
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
+import pet.loyal.provider.api.responses.PhaseChangeDataResponse
 import pet.loyal.provider.api.responses.PhaseChangeResponse
 import pet.loyal.provider.databinding.LayoutPhaseChangeSelectorBinding
 import pet.loyal.provider.model.Appointment
@@ -34,7 +35,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     private var petName:String? = null
 
     interface PhaseListDialogFragmentListener{
-        fun onPhaseChangeSuccess(message: String, movingPhase: Int)
+        fun onPhaseChangeSuccess(phaseChangeResponse: PhaseChangeDataResponse, movingPhase: Int)
         fun onPhaseChangeFailed(errorMessage: String)
     }
 
@@ -86,6 +87,11 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     }
 
     private fun loadPhaseList(){
+
+        phaseList.forEach {
+            it.isSelected = false
+        }
+
         val phaseListRecyclerViewAdapter = PhaseListRecyclerViewAdapter(phaseList, this)
         layoutPhaseChangeSelectorBinding.recyclerViewPhaseList.setHasFixedSize(true)
         layoutPhaseChangeSelectorBinding.recyclerViewPhaseList.layoutManager = LinearLayoutManager(context)
@@ -135,7 +141,7 @@ class PhaseListDialogFragment : DialogFragment(), PhaseListRecyclerViewAdapter.P
     private fun showPhaseChange(phaseChangeResponse: PhaseChangeResponse?){
         if (phaseChangeResponse?.data != null){
             (targetFragment as EditPetCardFragment).onPhaseChangeSuccess(
-                phaseChangeResponse.data.message,
+                phaseChangeResponse.data,
                 sendingPhaseId)
             dismiss()
         }

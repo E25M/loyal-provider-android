@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:enabled="false"
-                    android:button="@drawable/bg_checkbox_custom"
+                    android:buttonTint="@color/btn_color_blue"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 

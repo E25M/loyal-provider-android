@@ -18,4 +18,5 @@ data class Appointment(@SerializedName("_id") val id:String,
                        @SerializedName("parentName") val parentName: String,
                        @SerializedName("parentFirstName") val parentFirstName: String,
                        @SerializedName("parentFastName") val parentLastName:String,
+                       @SerializedName("weAreHome") val weAreHome:Boolean,
                        @SerializedName("parentEmail") val parentEmail: String)

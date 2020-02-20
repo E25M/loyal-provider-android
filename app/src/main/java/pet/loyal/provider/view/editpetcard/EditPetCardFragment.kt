@@ -33,10 +33,13 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import com.google.gson.Gson
+import org.json.JSONException
+import org.json.JSONObject
 import pet.loyal.client.api.response.PetCardDataResponse
 import pet.loyal.provider.BuildConfig
 import pet.loyal.provider.R
 import pet.loyal.provider.api.responses.AppVersionResponse
+import pet.loyal.provider.api.responses.PhaseChangeDataResponse
 import pet.loyal.provider.databinding.FragmentEditPatiantCardBinding
 import pet.loyal.provider.model.Phase
 import pet.loyal.provider.model.PhaseMessage
@@ -97,7 +100,8 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 
     private var customMessageId = 0
     private lateinit var appointmentId: String
-    private var movingPhase = 0
+    private var movingPhase = 1
+    private var currentPhase = 1
     private var uploadedImageCount = 0
 
     private lateinit var mSocket: Socket
@@ -109,24 +113,34 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private val onNewMessageCard = Emitter.Listener { args ->
 
         activity!!.runOnUiThread {
-            loadAppointment()
+
+            val jsonMainObject = args[0] as JSONObject
+            try {
+                val jsonAppointment = jsonMainObject.getJSONObject("appointment")
+                if (jsonAppointment.getString("_id") == appointmentId) {
+                    loadAppointment()
+                    if (isDataChanged()) {
+                        showToast(activity!!, getString(R.string.info_anyone_changed_card))
+                    }
+                }
+            }catch (ex: JSONException){ }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        preferenceManager = PreferenceManager(context!!)
 
         try {
             mSocket = IO.socket(BuildConfig.SOCKET_URL)
         } catch (ex: URISyntaxException) {
-            showToast(activity!!, "Updating pet cards on real time is not working.")
+            showToast(activity!!, getString(R.string.error_socket_connection))
         }
 
-        mSocket.on("updateDashboard", onNewMessageCard)
+        mSocket.on(preferenceManager.getFacilityId() + "_updateDashboard", onNewMessageCard)
         mSocket.let {
-            it.connect().on(Socket.EVENT_CONNECT) {
-            }
+            it.connect().on(Socket.EVENT_CONNECT) {}
         }
     }
 
@@ -220,7 +234,6 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         viewModel = ViewModelProviders.of(this).get(EditPetCardViewModel::class.java)
         fragmentEditPatiantCardBinding.lifecycleOwner = this
         fragmentEditPatiantCardBinding.viewModel = viewModel
-        preferenceManager = PreferenceManager(context!!)
         viewModel.liveColor.value = resources.getDrawable(R.drawable.bg_general, null)
     }
 
@@ -259,31 +272,29 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
 
         fragmentEditPatiantCardBinding.layoutNext.setOnClickListener {
-            val selectedPhaseList = ArrayList<Phase>()
-            petCardDataResponse?.phases?.iterator()?.forEach { phase ->
-                if (phase.id > petCardDataResponse?.appointment?.phase!!){
-                    selectedPhaseList.add(phase)
-                }
-            }
-            if (selectedPhaseList.size > 0) {
-                loadPhaseChangeDialog(selectedPhaseList)
+            if (isDataChanged()){
+                showConfirmNextPhaseMessages(activity!!, getString(R.string.message_confirmation_move_phase), getString(
+                                    R.string.message_warning))
             }else{
-                showToast(activity!!, "This is the final phase..")
+                goToNextPhase()
             }
         }
 
         fragmentEditPatiantCardBinding.layoutPrevious.setOnClickListener {
-            val selectedPhaseList = ArrayList<Phase>()
-            petCardDataResponse?.phases?.iterator()?.forEach { phase ->
-                if (phase.id < petCardDataResponse?.appointment?.phase!!){
-                    selectedPhaseList.add(phase)
+            if (!petCardDataResponse?.appointment?.weAreHome!!) {
+                if (isDataChanged()) {
+                    showConfirmPreviousPhaseMessages(
+                        activity!!, getString(R.string.message_confirmation_move_phase), getString(
+                            R.string.message_warning
+                        )
+                    )
+                } else {
+                    goToPreviousPhase()
                 }
             }
-            if (selectedPhaseList.size > 0) {
-                loadPhaseChangeDialog(selectedPhaseList)
-            }else{
-                showToast(activity!!, "This is the earliest phase..")
-            }
+//            else{
+//                showToast(activity!!, "This appointment is no longer editable")
+//            }
         }
 
         fragmentEditPatiantCardBinding.imgFacilityLogo.setOnClickListener {
@@ -293,6 +304,34 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         (activity as HomeScreen).setEditCardPermissionListener(this)
 
         return fragmentEditPatiantCardBinding.root
+    }
+
+    private fun goToNextPhase(){
+        val selectedPhaseList = ArrayList<Phase>()
+        petCardDataResponse?.phases?.iterator()?.forEach { phase ->
+            if (phase.id > petCardDataResponse?.appointment?.phase!!){
+                selectedPhaseList.add(phase)
+            }
+        }
+        if (selectedPhaseList.size > 0) {
+            loadPhaseChangeDialog(selectedPhaseList)
+        }else{
+            showToast(activity!!, "This is the final phase..")
+        }
+    }
+
+    private fun goToPreviousPhase(){
+        val selectedPhaseList = ArrayList<Phase>()
+        petCardDataResponse?.phases?.iterator()?.forEach { phase ->
+            if (phase.id < petCardDataResponse?.appointment?.phase!!){
+                selectedPhaseList.add(phase)
+            }
+        }
+        if (selectedPhaseList.size > 0) {
+            loadPhaseChangeDialog(selectedPhaseList)
+        }else{
+            showToast(activity!!, "This is the earliest phase..")
+        }
     }
 
     private fun isDataChanged(): Boolean{
@@ -305,7 +344,21 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun showUpdateConfirmation(){
-        mSocket.emit("phaseUpdated", preferenceManager.getFacilityId())
+
+        val jsonObjectMain = JSONObject()
+        jsonObjectMain.put("facilityId", preferenceManager.getFacilityId())
+
+        val jsonAppointment = JSONObject()
+        jsonAppointment.put("_id", appointmentId)
+        jsonAppointment.put("phase", movingPhase)
+
+        val jsonPetObject = JSONObject()
+        jsonPetObject.put("_id", petCardDataResponse?.appointment?.petId)
+        jsonAppointment.put("pet", jsonPetObject)
+
+        jsonObjectMain.put("appointment", jsonAppointment)
+
+        mSocket.emit("phaseUpdated", jsonObjectMain)
         showUpdateConfirmPopup(activity!!,
             "Update sent to ${petCardDataResponse?.appointment?.petName} support network at" +
                     "\n ${getCurrentDateString()}, ${getCurrentTimeString()}",
@@ -321,7 +374,10 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 } else {
                     savePTBMessages()
                 }
-            } else {
+            }
+            else if (movingPhase == 1){
+                savePTBMessages()
+            }else {
                 showToast(activity!!, getString(R.string.error_no_selected_ptb_message))
             }
         }
@@ -346,7 +402,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     }
 
     private fun savePTBMessages(){
-        if ((movingPhase != 1) || (petCardDataResponse?.appointment?.phase!! == movingPhase)) {
+        if ((movingPhase != 1) || (currentPhase == movingPhase)) {
             sendPTBMessages()
         }else{
             showConfirmPopup(activity!!, getString(R.string.msg_expected_phase), getString(R.string.title_confirm))
@@ -356,7 +412,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
     private fun sendPTBMessages(){
         viewModel.savePTMMessages(
             getSelectedMessages()!!, preferenceManager.getLoginToken(),
-            petCardDataResponse?.appointment?.phase!!, petCardDataResponse?.appointment?.id!!,
+            currentPhase, petCardDataResponse?.appointment?.id!!,
             preferenceManager.getFacilityId(), movingPhase
         )
     }
@@ -417,7 +473,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             requestMessageList.add(RequestPTBMessage(
                 customMessageId++.toString(),
                 phaseChangeMessage.message,
-                isCustom = false,
+                isCustom = true,
                 isPhaseChange = true
             ))
         }
@@ -448,6 +504,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                         }
                     } else if (petCardResponse.petCardResponse != null){
                         petCardDataResponse = petCardResponse.petCardResponse?.data
+                        currentPhase = petCardDataResponse?.appointment?.phase!!
                         showCardDetails()
                     }
                 }
@@ -485,6 +542,7 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                             showPopup(activity!!, savePTBMessageResponse.throwable?.message!!, getString(R.string.text_info))
                         }
                     }else{
+                        currentPhase = petCardDataResponse?.appointment?.phase!!
                         showUpdateConfirmation()
                     }
                 }
@@ -665,7 +723,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
 //            hideKeyboard()
         val newCustomMessage = PhaseMessage(customMessageId.toString(), petCardDataResponse?.appointment?.phase!!,
             petCardDataResponse?.appointment?.id, false)
+        if (phaseMessages.size > 0 && (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE)){
+            phaseMessages.add(1, newCustomMessage)
+        }else {
             phaseMessages.add(0, newCustomMessage)
+        }
     }
 
     private fun showAddedImage(){
@@ -953,16 +1015,25 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         }
     }
 
-    override fun onPhaseChangeSuccess(message: String, movingPhase: Int) {
+    override fun onPhaseChangeSuccess(phaseChangeResponse: PhaseChangeDataResponse, movingPhase: Int) {
         if (phaseMessages[0].type == PhaseMessage.Type.PHASE_CHANGE){
             phaseMessages.removeAt(0)
         }
+
         this.movingPhase = movingPhase
-        if (message != "true") {
-            phaseMessages.add(0, PhaseMessage(message))
+        phaseMessages.clear()
+
+        val petCardDataResponse = PetCardDataResponse(phaseChangeResponse.appointment,
+            phaseChangeResponse.ptbSentMessages, phaseChangeResponse.ptbMessageTemplates,
+            this.petCardDataResponse!!.phases)
+        this.petCardDataResponse = petCardDataResponse
+        showCardDetails()
+
+        if (phaseChangeResponse.message != "true") {
+            phaseMessages.add(0, PhaseMessage(phaseChangeResponse.message))
         }else{
-            phaseMessages.add(0, PhaseMessage(""))
-            savePTBMessages()
+//            phaseMessages.add(0, PhaseMessage(""))
+//            savePTBMessages()
         }
         fragmentEditPatiantCardBinding.recyclerViewMessages.adapter!!.notifyDataSetChanged()
     }
@@ -1033,7 +1104,35 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
             .setMessage(message)
             .setTitle(title)
             .setPositiveButton(R.string.yes) { _, _ ->
-                activity!!.onBackPressed()
+                popThisFragment()
+            }
+            .setNegativeButton(R.string.no){_,_->
+
+            }
+            .create()
+        aDialog.show()
+    }
+
+    private fun showConfirmNextPhaseMessages(context: Context, message: String, title: String) {
+        val aDialog = AlertDialog.Builder(context)
+            .setMessage(message)
+            .setTitle(title)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                goToNextPhase()
+            }
+            .setNegativeButton(R.string.no){_,_->
+
+            }
+            .create()
+        aDialog.show()
+    }
+
+    private fun showConfirmPreviousPhaseMessages(context: Context, message: String, title: String) {
+        val aDialog = AlertDialog.Builder(context)
+            .setMessage(message)
+            .setTitle(title)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                goToPreviousPhase()
             }
             .setNegativeButton(R.string.no){_,_->
 
@@ -1077,21 +1176,30 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
         showPopup(activity!!, errorMessage, getString(R.string.text_info))
     }
 
-    private fun hideKeyboard() {
-        val imm = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = activity!!.currentFocus
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = View(activity)
+    fun onBackPressed(){
+        if (isDataChanged()) {
+            showConfirmNoUpdatedMessages(activity!!, getString(R.string.text_confirm_message),
+                getString(R.string.title_confirm))
+        }else{
+            popThisFragment()
         }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+//    private fun hideKeyboard() {
+//        val imm = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+//        //Find the currently focused view, so we can grab the correct window token from it.
+//        var view = activity!!.currentFocus
+//        //If no view currently has focus, create a new one, just so we can grab a window token from it
+//        if (view == null) {
+//            view = View(activity)
+//        }
+//        imm.hideSoftInputFromWindow(view.windowToken, 0)
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        mSocket.off("updateDashboard", onNewMessageCard)
+        mSocket.off(preferenceManager.getFacilityId()+ "_updateDashboard", onNewMessageCard)
 
         val root = Environment.getExternalStorageDirectory().toString()
         val loyalDir = File("$root${Constants.folder_loyal}")
@@ -1106,6 +1214,11 @@ class EditPetCardFragment : Fragment(), PhaseMessageRecyclerViewAdapter.PhaseMes
                 }
             }
         }
+    }
+
+    private fun popThisFragment() {
+        activity!!.supportFragmentManager.beginTransaction().remove(this).commitAllowingStateLoss()
+        activity!!.supportFragmentManager.popBackStackImmediate()
     }
 }
 

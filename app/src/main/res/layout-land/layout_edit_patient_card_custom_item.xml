@@ -14,20 +14,20 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/margin_12">
+                android:padding="@dimen/margin_8">
 
             <CheckBox android:id="@+id/chkBoxTicketMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:saveEnabled="false"
-                    android:button="@drawable/bg_checkbox_custom"
+                    android:buttonTint="@color/btn_color_blue"
                     app:layout_constraintTop_toTopOf="@id/layoutMessage"
                     app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8"
+                    android:layout_margin="@dimen/margin_4"
                     android:background="@drawable/bg_custom_message"
                     app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
                     app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextViewStyleBlue"
-                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:text="@string/text_add_custom_message"
                     app:layout_constraintStart_toEndOf="@id/chkBoxTicketMessage"
                     app:layout_constraintBottom_toBottomOf="@id/chkBoxTicketMessage"

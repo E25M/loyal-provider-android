@@ -80,24 +80,35 @@ class EditPetCardViewModel : ViewModel() {
                 jsonObject.put("gallery", jsonGallery)
             }
             jsonArray.put(jsonObject)
+            if (ptbMessage.isPhaseChange){
+                jsonObject.put("isDragMessage", true)
+            }
         }
         jsonObjectMain.put("messages", jsonArray)
-        jsonObjectMain.put("phaseId", phaseId)
+        jsonObjectMain.put("phaseId", movingPhase)
         jsonObjectMain.put("appointmentId", appointmentId)
         jsonObjectMain.put("facility", facilityId)
         when {
+            movingPhase == 1 -> {
+                jsonObjectMain.put("backward", true)
+            }
             movingPhase == phaseId -> {
                 jsonObjectMain.put("backward", false)
             }
             movingPhase > phaseId -> {
-                jsonObjectMain.put("backward", true)
+                jsonObjectMain.put("backward", false)
             }
             else -> {
-                jsonObjectMain.put("backward", false)
+                jsonObjectMain.put("backward", true)
             }
         }
 
-        if (ptbMessageList[ptbMessageList.size -1].isPhaseChange) {
+        if (ptbMessageList.size  > 0 && ptbMessageList[ptbMessageList.size -1].isPhaseChange) {
+            val dragJsonObject = JSONObject()
+            dragJsonObject.put("cardId", appointmentId)
+            dragJsonObject.put("laneId", movingPhase)
+            jsonObjectMain.put("drag", dragJsonObject)
+        } else if (movingPhase == 1){
             val dragJsonObject = JSONObject()
             dragJsonObject.put("cardId", appointmentId)
             dragJsonObject.put("laneId", movingPhase)

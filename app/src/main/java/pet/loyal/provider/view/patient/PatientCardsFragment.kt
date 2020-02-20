@@ -84,6 +84,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        preferenceManager = PreferenceManager(context!!)
 
         try {
             mSocket = IO.socket(BuildConfig.SOCKET_URL)
@@ -92,7 +93,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         }
 
 //        mSocket.connect()
-        mSocket.on("updateDashboard", onNewMessage)
+        mSocket.on(preferenceManager.getFacilityId() + "_updateDashboard", onNewMessage)
         mSocket.let {
             it.connect().on(Socket.EVENT_CONNECT) {
             }
@@ -252,7 +253,6 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         viewModel = ViewModelProviders.of(this).get(PatientCardsViewModel::class.java)
         layoutBinding.viewModel = viewModel
         layoutBinding.lifecycleOwner = this
-        preferenceManager = PreferenceManager(context!!)
         facilityId = preferenceManager.getFacilityId()
         viewModel.sortByIcon.value = resources.getDrawable(R.drawable.ic_sort_by, null)
     }
@@ -481,7 +481,7 @@ class PatientCardsFragment : Fragment(), OnPetCardClickListener, OnPhaseClickLis
         super.onDestroy()
 
         mSocket.disconnect()
-        mSocket.off("updateDashboard", onNewMessage)
+        mSocket.off(preferenceManager.getFacilityId()+ "_updateDashboard", onNewMessage)
         if (mBroadcastReceiver != null) {
             activity!!.unregisterReceiver(mBroadcastReceiver)
         }
